@@ -1,0 +1,36 @@
+name: Build LateX project (Release)
+
+on:
+    release:
+        types: [published]
+
+env:
+    TEX_SOURCE_DIRECTORY: Thesis
+    TEX_SOURCE: Thesis
+    TEX_PDF_NAME: Thesis
+
+jobs:
+    build:
+        name: Build
+        runs-on: ubuntu-latest
+        container: texlive/texlive
+
+        steps:
+            -   name: Clone
+                uses: actions/checkout@v2
+
+            -   name: Compile to PDF
+                run: sh .vscode/build.sh
+
+                env:
+                    TEX_PDF_NAME: ${{ env.TEX_PDF_NAME }}-${{ github.ref_name }}
+            
+            -   name: Upload PDF
+                uses: actions/upload-artifact@v3
+
+                with:
+                    name: ${{ env.TEX_PDF_NAME }}.pdf
+                    path: ${{ env.TEX_SOURCE_DIRECTORY }}/build/${{ env.TEX_PDF_NAME }}.pdf
+
+                env:
+                    TEX_PDF_NAME: ${{ env.TEX_PDF_NAME }}-${{ github.ref_name }}

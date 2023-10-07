@@ -1,0 +1,78 @@
+\input{Variables}
+
+\documentclass[
+    pdftex,
+    oneside,           % One sided printing
+    14pt,              % Font size
+    parskip=half,      % Half line spacing between paragraphs
+    headheight = 12pt, % Header height
+    headsepline,       % Line after header
+    footsepline,       % Line before footer
+    footheight = 16pt, % Height of footer
+    abstracton,        % Insert headings in abstract
+    DIV=calc,          % Calculate type area
+    BCOR=8mm,          % Binding correction left: 8mm
+    headinclude=false, % Do not include header in the type area
+    footinclude=false, % Do not include footer in the type area
+    listof=totoc,      % Display table of figures/tables in the table of contents
+    toc=bibliography,  % Display bibliography in the table of contents
+]{scrreport}
+
+\input{Preamble/Packages}
+\input{Preamble/Coding}
+\input{Preamble/Settings}
+
+\iflang{de}{\input{i18n/de}}
+\iflang{en}{\input{i18n/en}}
+
+\makeglossaries
+\input{Structure/8_Glossary}
+
+\begin{document}
+\input{Structure/1_Title}
+\newpage
+
+\input{Structure/2_Non-Disclosure-Notice}
+\newpage
+
+\input{Structure/3_Declaration}
+\newpage
+
+\pagenumbering{Roman}
+
+\input{Structure/4_Abstract}
+\newpage
+
+\pagestyle{plain}
+
+\input{Structure/5_Tabe-of-Contents}
+\newpage
+
+\cleardoublepage
+\input{Structure/6_Acronyms}
+
+\cleardoublepage
+\listoffigures
+
+\cleardoublepage
+\listoftables
+
+\cleardoublepage
+\lstlistoflistings
+
+\cleardoublepage
+\pagenumbering{arabic}
+\pagestyle{headings}
+
+\input{Structure/7_Text}
+
+\clearpage
+\cleardoublepage
+\printbibliography
+
+\printglossary[style=altlist, title=\labelGlossary]
+
+\clearpage
+\appendix
+\input{Structure/9_Appendix}
+\end{document}

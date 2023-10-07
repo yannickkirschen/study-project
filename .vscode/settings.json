@@ -6,6 +6,13 @@
         80,
         120
     ],
-    "cSpell.words": [
-    ]
+    "cSpell.words": [],
+    "latex-workshop.latex.autoBuild.cleanAndRetry.enabled": false,
+    "latex-workshop.latex.autoBuild.run": "never",
+    "latex-workshop.latexindent.args": [
+        "-c",
+        "%DIR%/build/",
+        "%TMPFILE%",
+        "-y=defaultIndent: '%INDENT%'"
+    ],
 }

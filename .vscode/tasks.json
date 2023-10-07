@@ -1,0 +1,21 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "command": "./.vscode/build.sh",
+            "type": "shell",
+            "options": {
+                "env": {
+                    "TEX_SOURCE_DIRECTORY": "Thesis",
+                    "TEX_SOURCE": "Thesis",
+                    "TEX_PDF_NAME": "Thesis"
+                }
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}

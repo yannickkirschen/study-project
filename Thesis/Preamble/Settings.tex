@@ -1,0 +1,31 @@
+%!TEX root = ../Thesis.tex
+
+\addtokomafont{caption}{\small} % Font size in captions slightly smaller
+
+% Spacing in tables
+\setlength{\tabcolsep}{10pt}
+\renewcommand{\arraystretch}{1.5}
+
+\RedeclareSectionCommand[beforeskip=20pt]{chapter}
+
+\addbibresource{Bibliography.bib}
+
+\newenvironment{margin}{\vspace*{14pt}}{\vspace*{14pt}}
+
+\definecolor{LinkColor}{HTML}{0134DB}
+
+% We want a dash in bullet lists
+\renewcommand\labelitemi{--}
+
+% Depth of TOC
+%
+% \chapter       is level 0
+% \section       is level 1
+% \subsection    is level 2
+% \subsubsection is level 3
+% \paragraph     is level 4
+% \subparagraph  is level 5
+\setcounter{tocdepth}{1}
+
+% Depth of headings (numbers accordingly to TOC)
+\setcounter{secnumdepth}{2}
