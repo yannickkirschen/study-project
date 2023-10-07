@@ -1,12 +1,12 @@
 {
     "cSpell.language": "en,de",
+    "cSpell.words": [],
     "editor.formatOnSave": true,
     "editor.wordWrap": "on",
     "editor.rulers": [
         80,
         120
     ],
-    "cSpell.words": [],
     "latex-workshop.latex.autoBuild.cleanAndRetry.enabled": false,
     "latex-workshop.latex.autoBuild.run": "never",
     "latex-workshop.latexindent.args": [
@@ -15,4 +15,24 @@
         "%TMPFILE%",
         "-y=defaultIndent: '%INDENT%'"
     ],
+    "[makefile]": {
+        "editor.insertSpaces": false,
+        "editor.detectIndentation": false
+    },
+    "files.associations": {
+        "stdio.h": "c"
+    },
+    "makefile.configurations": [
+        {
+            "name": "default",
+            "problemMatchers": [
+                "$gcc"
+            ],
+            "makeArgs": []
+        },
+    ],
+    "makefile.compileCommandsPath": ".vscode/compile_commands.json",
+    "makefile.alwaysPreConfigure": true,
+    "C_Cpp.errorSquiggles": "disabled",
+    "cmake.sourceDirectory": "/Users/yannick/Development/study-project/rail/lib/pico-sdk/src/host/hardware_divider",
 }

@@ -5,6 +5,9 @@
         "davidanson.vscode-markdownlint",
         "sonarsource.sonarlint-vscode",
         "wayou.vscode-todo-highlight",
-        "redhat.vscode-yaml"
+        "redhat.vscode-yaml",
+        "github.vscode-github-actions",
+        "ms-vscode.cpptools",
+        "ms-vscode.cpptools-extension-pack"
     ]
 }

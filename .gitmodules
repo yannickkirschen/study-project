@@ -1,0 +1,6 @@
+# Please edit this file with vim, as VS Code save actions will destroy the
+# formatting. And make sure to use tabs instead of spaces.
+
+[submodule "pico-sdk"]
+	path = rail/lib/pico-sdk
+	url = https://github.com/raspberrypi/pico-sdk.git
