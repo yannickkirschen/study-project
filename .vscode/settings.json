@@ -1,6 +1,10 @@
 {
     "cSpell.language": "en,de",
-    "cSpell.words": [],
+    "cSpell.words": [
+        "bootsel",
+        "pico",
+        "Pico"
+    ],
     "editor.formatOnSave": true,
     "editor.wordWrap": "on",
     "editor.rulers": [

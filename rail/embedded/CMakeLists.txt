@@ -1,6 +1,5 @@
 cmake_minimum_required(VERSION 3.25)
 
-set(ENV{PICO_SDK_PATH} ../../lib/pico-sdk)
 include(../lib/pico-sdk/external/pico_sdk_import.cmake)
 
 project(embedded)

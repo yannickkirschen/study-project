@@ -2,6 +2,9 @@ name: Build C project
 
 on: [push]
 
+env:
+  PICO_SDK_PATH: ../../lib/pico-sdk # Yeah, this variable is used within another directory
+
 jobs:
   build:
     runs-on: ubuntu-latest
