@@ -2,6 +2,8 @@
 
 # This script can be used to build the entire project.
 
+set -e
+
 WORKING_DIR=$(dirname $0 | realpath)
 export PICO_SDK_PATH=$WORKING_DIR/rail/lib/pico-sdk
 

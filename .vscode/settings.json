@@ -2,6 +2,7 @@
     "cSpell.language": "en,de",
     "cSpell.words": [
         "bootsel",
+        "gpio",
         "pico",
         "Pico"
     ],
@@ -24,7 +25,8 @@
         "editor.detectIndentation": false
     },
     "files.associations": {
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "error.h": "c"
     },
     "makefile.configurations": [
         {
