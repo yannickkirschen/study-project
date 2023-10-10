@@ -1,4 +1,4 @@
-MODULES = modules/vacancy-detection modules/test # $(wildcard modules/*)
+MODULES = modules/error modules/vacancy-detection modules/debug-detection # $(wildcard modules/*)
 
 rm    = rm -rf
 mkdir = mkdir -p
