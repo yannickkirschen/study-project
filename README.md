@@ -7,10 +7,13 @@
 
 ## Building the project
 
-The project is made up of two parts:
+The project is made up of several parts:
 
-- `rail/modules`: a set of libraries containing the business logic
-- `rail/embedded`: a set of binaries containing code specific for the Pico
+- `mini-rail/modules`: a set of libraries containing the business logic
+- `mini-rail/embedded`: a set of binaries containing code specific for the Pico
+- `mini-rail/apps`: a set of binaries containing the code for the host platform
+- `mini-rail/include`: public header files of the modules
+- `mini-rail/lib`: third-party libraries (via git modules)
 
 For an easy build, just execute `build.sh`. If you want to build the project
 manually, read on.
@@ -20,26 +23,27 @@ need to download the SDK by running `git submodule update --init`. Then set
 the environment variable `PICO_SDK_PATH` to the path of the SDK
 (`$(pwd)/rail/lib/pico-sdk`).
 
-### Building the modules on a normal computer
+### Building for the host computer
 
 If you want to test your code on your normal computer (and not flashing it to
-the Pico) you can build it using `make`:
+the Pico), pass `TARGET_ARCH=host` to `cmake`:
 
 ```shell
-make -C rail
+cmake -D TARGET_ARCH=host -B mini-rail/build/host -S mini-rail
+make -C mini-rail/host
 ```
 
-All libraries and binaries are compiled to `rail/target/{bin,lib}` using your
-computers architecture. You can now execute a binary to test some stuff.
+All libraries and binaries are compiled to `mini-rail/build/host` using your
+computers' architecture. You can now execute a binary to test some stuff.
 
 ### Building the embedded software
 
 If you want to flash your code to the Pico, you need to build the embedded code
-by using `cmake`:
+by passing `TARGET_ARCH=pico` to `cmake`:
 
 ```shell
-cmake -S rail/embedded -B rail/target/embedded
-make -C rail/target/embedded
+cmake -D TARGET_ARCH=pico -B mini-rail/build/embedded -S mini-rail
+make -C mini-rail/embedded
 ```
 
 Now connect the Pico to your computer while pressing the `bootsel` button. A

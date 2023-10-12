@@ -56,15 +56,10 @@ CMakeFiles/
 CMakeCache.txt
 cmake_install.cmake
 
-# Pico
-elf2uf2
-generated
-pico-sdk
-*.uf2
-*.bin
-*.dis
-
 # Custom files and directories
 build/
 target/
 .DS_Store
+.idea/
+*.iml
+lib/
