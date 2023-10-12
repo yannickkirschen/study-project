@@ -1,9 +1,6 @@
 name: Build C project
 
-on: [push]
-
-env:
-  PICO_SDK_PATH: ../../lib/pico-sdk # Yeah, this variable is used within another directory
+on: [ push ]
 
 jobs:
   build:
@@ -22,17 +19,27 @@ jobs:
           git submodule sync --recursive
           git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
 
+          # On a branch submodule checkout does not work
+          if [ ! -d "mini-rail/lib/pico-sdk" ]; then
+            git submodule add --force --name pico-sdk https://github.com/raspberrypi/pico-sdk.git mini-rail/lib/pico-sdk
+          fi
+
       - name: Install dependencies
         run: |
           sudo apt update
           sudo apt dist-upgrade
           sudo apt install -y cmake gcc-arm-none-eabi libnewlib-arm-none-eabi libstdc++-arm-none-eabi-newlib
 
-      - name: Build modules
+      - name: Build for host
         run: |
-          make -C rail
+          export PICO_SDK_PATH=$(pwd)/mini-rail/lib/pico-sdk
 
-      - name: Build embedded
+          cmake -D TARGET_ARCH=host -B mini-rail/build/host -S mini-rail
+          make -C mini-rail/build/host
+
+      - name: Build for pico
         run: |
-          cmake -B rail/embedded/build -S rail/embedded
-          make -C rail/embedded/build
+          export PICO_SDK_PATH=$(pwd)/mini-rail/lib/pico-sdk
+
+          cmake -D TARGET_ARCH=pico -B mini-rail/build/embedded -S mini-rail
+          make -C mini-rail/build/embedded

@@ -4,10 +4,11 @@
 
 set -e
 
-WORKING_DIR=$(dirname $0 | realpath)
-export PICO_SDK_PATH=$WORKING_DIR/rail/lib/pico-sdk
+WORKING_DIR=$(dirname "$0" | realpath)
+export PICO_SDK_PATH=$WORKING_DIR/mini-rail/lib/pico-sdk
 
-make -C ${WORKING_DIR}/rail
+cmake -D TARGET_ARCH=host -B "${WORKING_DIR}"/mini-rail/build/host -S "${WORKING_DIR}"/mini-rail
+cmake -D TARGET_ARCH=pico -B "${WORKING_DIR}"/mini-rail/build/embedded -S "${WORKING_DIR}"/mini-rail
 
-cmake -S ${WORKING_DIR}/rail/embedded -B ${WORKING_DIR}/rail/target/embedded
-make -C ${WORKING_DIR}/rail/target/embedded
+make -C "${WORKING_DIR}"/mini-rail/build/host
+make -C "${WORKING_DIR}"/mini-rail/build/embedded
