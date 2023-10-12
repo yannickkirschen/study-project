@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.27)
+cmake_minimum_required(VERSION 3.26)
 
 if (TARGET_ARCH STREQUAL "pico")
     include($ENV{PICO_SDK_PATH}/external/pico_sdk_import.cmake)
