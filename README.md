@@ -7,6 +7,8 @@
 
 ## Building the project
 
+**Tip: Open `mini-rail` as its own project in CLion.**
+
 The project is made up of several parts:
 
 - `mini-rail/modules`: a set of libraries containing the business logic
