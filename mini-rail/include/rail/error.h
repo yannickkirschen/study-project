@@ -1,17 +1,17 @@
-#ifndef RAIL_ERROR_H
-#define RAIL_ERROR_H
+#ifndef MINI_RAIL_ERROR_H
+#define MINI_RAIL_ERROR_H
 
 #include <stdbool.h>
 
-struct rail_error {
-    const char** messages;
-    int number_messages;
-} typedef rail_error;
+typedef struct {
+    int code;
+    const char *message;
+} rail_error_t;
 
-void rail_error_init(rail_error* error);
+void rail_error_init(rail_error_t *error);
 
-void rail_error_add(rail_error* error, const char* message);
+void rail_error_add(rail_error_t *error, int code, const char *message);
 
-bool rail_error_has_error(rail_error* error);
+bool rail_error_has_error(rail_error_t *error);
 
-#endif  // RAIL_ERROR_H
+#endif  // MINI_RAIL_ERROR_H

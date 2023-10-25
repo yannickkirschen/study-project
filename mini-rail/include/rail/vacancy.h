@@ -1,57 +1,60 @@
-#ifndef RAIL_VACANCY_H
-#define RAIL_VACANCY_H
+#ifndef MINI_RAIL_VACANCY_H
+#define MINI_RAIL_VACANCY_H
 
 #include <stdbool.h>
 #include <stdio.h>
 
 #include "rail/error.h"
 
-/*
-    A contact point is a point on the rail where a train can be detected. It may
-    be of any kind of sensor, e.g. a light barrier, a pressure sensor, Reed
-    contact, Hall sensor, etc.
-
-    When a contact point is triggered, it is not known whether a train is
-    entering or leaving the section. Therefore, a directed contact point can be
-    used.
-*/
-struct rail_contact_point {
+typedef struct {
     int id;
-} typedef rail_contact_point;
+} rail_contact_point_t;
 
-/*
-    A directed contact point is made up of two contact points. The outer contact
-    point is the contact point that is triggered first when a train is entering
-    a section. The inner contact point is the contact point that is triggered
-    first when a train is leaving a section.
-*/
-struct rail_contact_point_directed {
-    rail_contact_point *outer;
-    rail_contact_point *inner;
+void rail_contact_point_init(rail_contact_point_t *point, int id);
+
+typedef struct {
+    int id;
+
+    rail_contact_point_t *outer;
+    rail_contact_point_t *inner;
 
     bool is_entering;
     bool is_leaving;
-} typedef rail_contact_point_directed;
+} rail_contact_point_directed_t;
 
-struct rail_contact_counter {
-    rail_contact_point_directed **contact_points_directed;
+void rail_contact_point_directed_init(rail_contact_point_directed_t *point, int id, rail_contact_point_t *outer,
+                                      rail_contact_point_t *inner);
+
+typedef struct {
+    int id;
+    int count;
+
+    rail_contact_point_directed_t **contact_points_directed;
     int number_contact_points_directed;
 
-    int count;
-} typedef rail_contact_counter;
+    rail_contact_point_directed_t **directions_to;
+    int number_directions_to;
+} rail_contact_counter_t;
 
-struct rail_contact_trigger {
-    rail_contact_counter *contact_counter;
-    rail_contact_point_directed *contact_point_directed;
-} typedef rail_contact_trigger;
+void rail_contact_counter_init(rail_contact_counter_t *counter, int id);
+void rail_contact_counter_reset(rail_contact_counter_t *counter);
+void rail_contact_counter_add_contact_point_directed(rail_contact_counter_t *counter,
+                                                     rail_contact_point_directed_t *point);
+void rail_contact_counter_change_direction(rail_contact_counter_t *counter, rail_error_t *error);
 
-struct rail_vacancy {
-    rail_contact_counter **contact_counters;
+typedef struct {
+    rail_contact_counter_t *contact_counter;
+    rail_contact_point_directed_t *contact_point_directed;
+} rail_contact_trigger_t;
+
+typedef struct {
+    rail_contact_counter_t **contact_counters;
     int number_contact_counters;
-} typedef rail_vacancy;
+} rail_vacancy_t;
 
-void rail_vacancy_trigger(rail_vacancy *vacancy, rail_contact_point *contact_point, rail_error *error);
+void rail_vacancy_add_contact_counter(rail_vacancy_t *vacancy, rail_contact_counter_t *counter);
+void rail_vacancy_trigger(rail_vacancy_t *vacancy, rail_contact_point_t *raw_point, rail_error_t *error);
+void rail_vacancy_find_contact_counter(rail_vacancy_t *vacancy, rail_contact_point_t *contact_point,
+                                       rail_contact_trigger_t *trigger);
 
-void rail_vacancy_find_contact_counter(rail_vacancy *vacancy_detection, rail_contact_point *contact_point, rail_contact_trigger *trigger);
-
-#endif  // RAIL_VACANCY_H
+#endif  // MINI_RAIL_VACANCY_H
