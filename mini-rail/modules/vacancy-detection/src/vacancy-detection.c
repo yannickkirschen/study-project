@@ -4,6 +4,11 @@
 #include "rail/error.h"
 #include "rail/vacancy.h"
 
+void rail_vacancy_init(rail_vacancy_t *vacancy) {
+    vacancy->contact_counters = NULL;
+    vacancy->number_contact_counters = 0;
+}
+
 void rail_vacancy_add_contact_counter(rail_vacancy_t *vacancy, rail_contact_counter_t *counter) {
     rail_contact_counter_t **new = malloc(sizeof(rail_contact_counter_t *) * (vacancy->number_contact_counters + 1));
     for (int i = 0; i < vacancy->number_contact_counters; i++) {

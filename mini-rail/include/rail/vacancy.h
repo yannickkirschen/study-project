@@ -52,6 +52,7 @@ typedef struct {
     int number_contact_counters;
 } rail_vacancy_t;
 
+void rail_vacancy_init(rail_vacancy_t *vacancy);
 void rail_vacancy_add_contact_counter(rail_vacancy_t *vacancy, rail_contact_counter_t *counter);
 void rail_vacancy_trigger(rail_vacancy_t *vacancy, rail_contact_point_t *raw_point, rail_error_t *error);
 void rail_vacancy_find_contact_counter(rail_vacancy_t *vacancy, rail_contact_point_t *contact_point,
