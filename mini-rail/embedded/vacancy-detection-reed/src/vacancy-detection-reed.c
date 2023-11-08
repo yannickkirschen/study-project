@@ -74,8 +74,8 @@ int main() {
     rail_vacancy_init(v);
     rail_vacancy_add_contact_counter(v, c);
 
-    rail_error_t *error = malloc(sizeof(rail_error_t));
-    rail_error_init(error);
+    error_t *error = malloc(sizeof(error_t));
+    error_init(error);
 
     bool reed1_was_high = false;
     bool reed2_was_high = false;
@@ -128,7 +128,7 @@ int main() {
             reed4_was_high = false;
         }
 
-        if (rail_error_has_error(error)) {
+        if (error_has_error(error)) {
             show_three_bit_binary(error->code, ERROR_UPPER_LED_PIN, ERROR_MIDDLE_LED_PIN, ERROR_LOWER_LED_PIN);
         } else {
             gpio_put(ERROR_UPPER_LED_PIN, false);

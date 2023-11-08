@@ -37,8 +37,8 @@ int main() {
     rail_vacancy_t *v = malloc(sizeof(rail_vacancy_t));
     rail_vacancy_add_contact_counter(v, c);
 
-    rail_error_t *error = malloc(sizeof(rail_error_t));
-    rail_error_init(error);
+    error_t *error = malloc(sizeof(error_t));
+    error_init(error);
 
     assert(v, (rail_contact_point_t *[]){p1, p2, p3, p4}, 4);
     rail_contact_counter_reset(c);

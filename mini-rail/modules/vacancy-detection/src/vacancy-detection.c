@@ -1,7 +1,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-#include "rail/error.h"
+#include "error.h"
 #include "rail/vacancy.h"
 
 void rail_vacancy_init(rail_vacancy_t *vacancy) {
@@ -35,7 +35,7 @@ void rail_contact_counter_reset(rail_contact_counter_t *counter) {
     }
 }
 
-void rail_vacancy_trigger(rail_vacancy_t *vacancy, rail_contact_point_t *raw_point, rail_error_t *error) {
+void rail_vacancy_trigger(rail_vacancy_t *vacancy, rail_contact_point_t *raw_point, error_t *error) {
     rail_contact_trigger_t *trigger = malloc(sizeof(rail_contact_trigger_t));
     rail_vacancy_find_contact_counter(vacancy, raw_point, trigger);
 
@@ -43,7 +43,7 @@ void rail_vacancy_trigger(rail_vacancy_t *vacancy, rail_contact_point_t *raw_poi
     rail_contact_point_directed_t *point = trigger->contact_point_directed;
 
     if (counter == NULL || point == NULL) {
-        rail_error_add(error, 1, "Contact counter not found");
+        error_add(error, 1, "Contact counter not found");
         return;
     }
 
@@ -74,7 +74,7 @@ void rail_vacancy_trigger(rail_vacancy_t *vacancy, rail_contact_point_t *raw_poi
                 }
 
                 if (!found) {
-                    rail_error_add(error, 6, "Logic error");
+                    error_add(error, 6, "Logic error");
                     return;
                 }
 
@@ -88,11 +88,11 @@ void rail_vacancy_trigger(rail_vacancy_t *vacancy, rail_contact_point_t *raw_poi
                 if (counter->directions_to[0] == point) {
                     point->is_leaving = true;
                 } else {
-                    rail_error_add(error, 4, "Eschede error");
+                    error_add(error, 4, "Eschede error");
                     return;
                 }
             } else {
-                rail_error_add(error, 5, "Logic error");
+                error_add(error, 5, "Logic error");
                 return;
             }
         } else if (is_outer) {
@@ -107,7 +107,7 @@ void rail_vacancy_trigger(rail_vacancy_t *vacancy, rail_contact_point_t *raw_poi
             }
 
             if (found) {
-                rail_error_add(error, 3, "Section is blocked by another train");
+                error_add(error, 3, "Section is blocked by another train");
                 return;
             }
 
@@ -124,7 +124,7 @@ void rail_vacancy_trigger(rail_vacancy_t *vacancy, rail_contact_point_t *raw_poi
             }
         }
     } else {
-        rail_error_add(error, 2, "Invalid contact point");
+        error_add(error, 2, "Invalid contact point");
         return;
     }
 }

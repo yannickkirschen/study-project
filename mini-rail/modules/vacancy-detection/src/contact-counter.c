@@ -32,19 +32,19 @@ void rail_contact_counter_add_contact_point_directed(rail_contact_counter_t *cou
     }
 }
 
-void rail_contact_counter_change_direction(rail_contact_counter_t *counter, rail_error_t *error) {
+void rail_contact_counter_change_direction(rail_contact_counter_t *counter, error_t *error) {
     if (counter->count == 0) {
-        rail_error_add(error, 7, "No train in section");
+        error_add(error, 7, "No train in section");
         return;
     }
 
     if (counter->number_directions_to == 0) {
-        rail_error_add(error, 8, "No direction to change to");
+        error_add(error, 8, "No direction to change to");
         return;
     }
 
     if (counter->number_contact_points_directed > 2) {
-        rail_error_add(error, 9, "Multiple directions to change to");
+        error_add(error, 9, "Multiple directions to change to");
         return;
     }
 
