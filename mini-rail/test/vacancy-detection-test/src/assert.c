@@ -2,6 +2,8 @@
 
 #include <stdlib.h>
 
+#include "error.h"
+
 void assert(rail_vacancy_t *v, rail_contact_point_t *points[], int number_points) {
     error_t *error = malloc(sizeof(error_t));
     error_init(error);

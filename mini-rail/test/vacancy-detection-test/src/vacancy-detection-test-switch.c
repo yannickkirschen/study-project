@@ -1,7 +1,7 @@
 #include <stdlib.h>
 
 #include "assert.h"
-#include "rail/error.h"
+#include "error.h"
 #include "rail/vacancy.h"
 
 int main() {

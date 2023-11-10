@@ -2,7 +2,7 @@
 
 #include <stdio.h>
 
-#include "stb_ds.h"
+#include "stb_ds_helper.h"
 
 void error_init(error_t *error) {
     error->codes = NULL;

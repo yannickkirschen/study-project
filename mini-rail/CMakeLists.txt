@@ -12,6 +12,7 @@ if (TARGET_ARCH STREQUAL "pico")
 endif ()
 
 include_directories(include)
+include_directories(lib/stb)
 add_subdirectory(modules)
 
 if (TARGET_ARCH STREQUAL "pico")

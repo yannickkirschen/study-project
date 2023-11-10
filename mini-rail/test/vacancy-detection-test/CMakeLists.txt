@@ -12,5 +12,5 @@ add_executable(vacancy-detection-test-switch
         src/vacancy-detection-test-switch.c
 )
 
-target_link_libraries(vacancy-detection-test-straight vacancy-detection error)
-target_link_libraries(vacancy-detection-test-switch vacancy-detection error)
+target_link_libraries(vacancy-detection-test-straight vacancy-detection stb-ds-helper error)
+target_link_libraries(vacancy-detection-test-switch vacancy-detection stb-ds-helper error)
