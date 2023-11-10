@@ -28,7 +28,7 @@ jobs:
         run: |
           sudo apt update
           sudo apt dist-upgrade
-          sudo apt install -y cmake gcc-arm-none-eabi libnewlib-arm-none-eabi libstdc++-arm-none-eabi-newlib
+          sudo apt install -y cmake gcc-arm-none-eabi libnewlib-arm-none-eabi libstdc++-arm-none-eabi-newlib sqlite3
 
       - name: Build for host
         run: |
