@@ -1,4 +1,16 @@
-project(mini-rail-embedded LANGUAGES C CXX ASM VERSION 1.0.0 DESCRIPTION "Executables of MiniRail for the Raspberry Pi Pico.")
+project(mini-rail-embedded LANGUAGES C CXX ASM)
 
-add_subdirectory(blink)
-add_subdirectory(vacancy-detection-reed)
+add_executable(vacancy-detection-reed src/vacancy-detection-reed.c)
+add_executable(blink src/blink.c)
+
+pico_add_extra_outputs(vacancy-detection-reed)
+pico_add_extra_outputs(blink)
+
+target_link_libraries(vacancy-detection-reed
+        pico_stdlib
+        vacancy-detection
+        error
+        stb-ds-helper
+)
+
+target_link_libraries(blink pico_stdlib)

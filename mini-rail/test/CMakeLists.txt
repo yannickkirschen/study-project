@@ -1,4 +1,4 @@
-project(mini-rail-test LANGUAGES C VERSION 1.0.0 DESCRIPTION "Test executables of MiniRail for the current machine.")
+project(mini-rail-test LANGUAGES C)
 
 add_executable(database-test src/database-test.c)
 add_executable(graph-test src/graph-test.c)
@@ -17,7 +17,6 @@ add_executable(vacancy-detection-switch-test
 target_link_libraries(database-test
         vacancy-detection
         interlocking
-        database
         sqlite3
         stb-ds-helper
         graph
@@ -27,7 +26,6 @@ target_link_libraries(database-test
 target_link_libraries(graph-test
         vacancy-detection
         interlocking
-        database
         sqlite3
         stb-ds-helper
         graph
@@ -37,7 +35,6 @@ target_link_libraries(graph-test
 target_link_libraries(interlocking-test
         vacancy-detection
         interlocking
-        database
         sqlite3
         stb-ds-helper
         graph
@@ -47,7 +44,6 @@ target_link_libraries(interlocking-test
 target_link_libraries(vacancy-detection-straight-test
         vacancy-detection
         interlocking
-        database
         sqlite3
         stb-ds-helper
         graph
@@ -57,7 +53,6 @@ target_link_libraries(vacancy-detection-straight-test
 target_link_libraries(vacancy-detection-switch-test
         vacancy-detection
         interlocking
-        database
         sqlite3
         stb-ds-helper
         graph
