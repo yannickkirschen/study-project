@@ -1,11 +1,9 @@
-# Please edit this file with vim, as VS Code save actions will destroy the
-# formatting. And make sure to use tabs instead of spaces.
-
-[submodule "pico-sdk"]
+[submodule "mini-rail/lib/pio-sdk"]
+	path = mini-rail/lib/pio-sdk
+	url = https://github.com/raspberrypi/pico-sdk.git
+[submodule "mini-rail/lib/stb"]
+	path = mini-rail/lib/stb
+	url = https://github.com/nothings/stb.git
+[submodule "mini-rail/lib/pico-sdk"]
 	path = mini-rail/lib/pico-sdk
 	url = https://github.com/raspberrypi/pico-sdk.git
-
-[submodule "stb"]
-	path = mini-rail/lib/stb
-    url = https://github.com/nothings/stb.git
-

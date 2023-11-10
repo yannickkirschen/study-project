@@ -129,7 +129,7 @@ int main() {
         }
 
         if (error_has_error(error)) {
-            show_three_bit_binary(error->code, ERROR_UPPER_LED_PIN, ERROR_MIDDLE_LED_PIN, ERROR_LOWER_LED_PIN);
+            show_three_bit_binary(error->codes[0], ERROR_UPPER_LED_PIN, ERROR_MIDDLE_LED_PIN, ERROR_LOWER_LED_PIN);
         } else {
             gpio_put(ERROR_UPPER_LED_PIN, false);
             gpio_put(ERROR_MIDDLE_LED_PIN, false);
