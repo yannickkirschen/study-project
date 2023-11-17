@@ -24,7 +24,10 @@ void rail_database_read_switches(rail_database_t *database, mini_rail_switch_t *
 void rail_database_find_open_track_by_id(rail_database_t *database, int id, mini_rail_open_track_t *open_track);
 void rail_database_read_open_tracks(rail_database_t *database, mini_rail_open_track_t **open_tracks);
 
-void database_find_open_track_by_id(database_t *database, int id, mini_rail_open_track_t *open_track);
-void database_read_open_tracks(database_t *database, mini_rail_open_track_t **open_tracks);
+void rail_database_read_elements(rail_database_t *database, mini_rail_element_t **elements);
+
+void rail_database_read_graph(rail_database_t *database, graph_t *graph);
+
+void rail_database_interlocking_load(mini_rail_interlocking_t *interlocking, rail_database_t *database, error_t *error);
 
 #endif  // MINI_RAIL_DATABASE_H

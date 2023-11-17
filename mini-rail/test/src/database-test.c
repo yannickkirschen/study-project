@@ -9,18 +9,26 @@ int main() {
     error_t *error = malloc(sizeof(error_t));
     error_init(error);
 
-    database_t *database = malloc(sizeof(database_t));
-    database_open(database, "examples/simple-layout-1.sqlite", error);
+    rail_database_t *database = malloc(sizeof(rail_database_t));
+    rail_database_open(database, "examples/simple-layout-1.sqlite", error);
     error_print(error);
 
     mini_rail_signal_t *signals = NULL;
-    database_read_signals(database, &signals);
+    rail_database_read_signals(database, &signals);
 
     mini_rail_switch_t *switches = NULL;
-    database_read_switches(database, &switches);
+    rail_database_read_switches(database, &switches);
 
     mini_rail_open_track_t *open_tracks = NULL;
-    database_read_open_tracks(database, &open_tracks);
+    rail_database_read_open_tracks(database, &open_tracks);
+
+    mini_rail_element_t *elements = NULL;
+    rail_database_read_elements(database, &elements);
+
+    graph_t *graph = malloc(sizeof(graph_t));
+    graph_init(graph);
+
+    rail_database_read_graph(database, graph);
 
     for (int i = 0; i < arrlen(signals); i++) {
         rail_signal_print(&signals[i]);
@@ -34,5 +42,10 @@ int main() {
         rail_open_track_print(&open_tracks[i]);
     }
 
-    database_close(database);
+    rail_elements_print(elements);
+
+    int **paths = graph_find_paths(graph, 1, 6);
+    stb_array_print_two_dimensional(paths);
+
+    rail_database_close(database);
 }
