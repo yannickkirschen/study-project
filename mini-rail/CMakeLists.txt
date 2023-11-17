@@ -23,6 +23,10 @@ if (TARGET_ARCH STREQUAL "pico")
     include_directories($ENV{PICO_SDK_PATH}/**)
     add_subdirectory(embedded)
     add_subdirectory(research)
+
+    # The can2040 library
+    include_directories(lib/can2040/src)
+    add_library(can2040 STATIC lib/can2040/src/can2040.c)
 else ()
     add_subdirectory(test)
 endif ()
