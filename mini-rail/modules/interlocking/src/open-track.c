@@ -7,6 +7,12 @@ void rail_open_track_init(mini_rail_open_track_t *open_track, int id) {
     open_track->display_name = "";
 }
 
+char *rail_open_track_string(mini_rail_open_track_t *open_track) {
+    char *buffer = malloc(100);
+    sprintf(buffer, "mini_rail_open_track_t{id=%d, display_name=\"%s\"}", open_track->id, open_track->display_name);
+    return buffer;
+}
+
 void rail_open_track_print(mini_rail_open_track_t *open_track) {
-    printf("mini_rail_open_track_t{id=%d, display_name=\"%s\"}\n", open_track->id, open_track->display_name);
+    printf("%s\n", rail_open_track_string(open_track));
 }

@@ -60,6 +60,8 @@ int main() {
     graph_edge_add(graph, vertex6, vertex8);
     graph_edge_add(graph, vertex8, vertex2);
 
+    graph_print(graph);
+
     int **paths = graph_find_paths(graph, vertex1->key, vertex6->key);
     stb_array_print_two_dimensional(paths);
 

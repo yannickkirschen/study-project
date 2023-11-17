@@ -20,8 +20,14 @@ void rail_switch_init(mini_rail_switch_t *switch_, int id, mini_rail_switch_posi
     switch_->right_id = right_id;
 }
 
+char *rail_switch_string(mini_rail_switch_t *switch_) {
+    char *buffer = malloc(150);
+    sprintf(buffer, "mini_rail_switch_t{id=%d, display_name=\"%s\", position=%s, base_position=%s, left_id=%i, right_id=%i}", switch_->id, switch_->display_name, rail_switch_position_string(switch_->position), rail_switch_position_string(switch_->base_position), switch_->left_id, switch_->right_id);
+    return buffer;
+}
+
 void rail_switch_print(mini_rail_switch_t *switch_) {
-    printf("mini_rail_switch_t{id=%d, display_name=\"%s\", position=%s, base_position=%s, left_id=%i, right_id=%i}\n", switch_->id, switch_->display_name, rail_switch_position_string(switch_->position), rail_switch_position_string(switch_->base_position), switch_->left_id, switch_->right_id);
+    printf("%s\n", rail_switch_string(switch_));
 }
 
 void rail_switch_set_position(mini_rail_switch_t *switch_, mini_rail_switch_position_t position) {

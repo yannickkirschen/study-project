@@ -7,6 +7,40 @@ void graph_init(graph_t *graph) {
     graph->adjacency_list = NULL;
 }
 
+void graph_print(graph_t *graph) {
+    printf("graph_t{adjacency_list=[\n");
+    for (int i = 0; i < hmlen(graph->adjacency_list); i++) {
+        graph_vertex_t *vertex = &graph->adjacency_list[i];
+        printf("    %d: [", vertex->key);
+
+        graph_vertex_t *vertices = vertex->value;
+        for (int j = 0; j < arrlen(vertices); j++) {
+            graph_vertex_t *value = &vertices[j];
+            printf("%d", value->key);
+
+            if (j < arrlen(vertices) - 1) {
+                printf(", ");
+            }
+        }
+
+        printf("]");
+        if (i < hmlen(graph->adjacency_list) - 1) {
+            printf(",\n");
+        }
+    }
+    printf("\n}\n");
+}
+
+bool graph_edge_contains(graph_vertex_t *vertices, graph_vertex_t vertex) {
+    for (int i = 0; i < arrlen(vertices); i++) {
+        if (vertices[i].key == vertex.key) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 void graph_vertex_add(graph_t *graph, graph_vertex_t *vertex) {
     hmput(graph->vertices, vertex->key, vertex);
 
