@@ -1,38 +1,32 @@
-INSERT INTO ELEMENT (ID, LOCKED, ELEMENT_TYPE)
-VALUES (1, 0, 'SIGNAL'),
-       (2, 0, 'SIGNAL'),
-       (3, 0, 'SIGNAL'),
-       (4, 0, 'SIGNAL'),
-       (5, 0, 'SIGNAL'),
-       (6, 0, 'SIGNAL'),
-       (7, 0, 'SWITCH'),
-       (8, 0, 'SWITCH'),
-       (9, 0, 'OPEN_TRACK'),
-       (10, 0, 'OPEN_TRACK');
+INSERT INTO ELEMENT (ID, ELEMENT_TYPE)
+VALUES (1, 'signal'),
+       (2, 'signal'),
+       (3, 'signal'),
+       (4, 'signal'),
+       (5, 'signal'),
+       (6, 'signal'),
+       (7, 'switch'),
+       (8, 'switch'),
+       (9, 'open-track'),
+       (10, 'open-track');
 
-INSERT INTO SIGNAL (ID, DISPLAY_NAME, POINTS_TO)
-VALUES (1, 'A', 7),
-       (2, 'F', 8),
-       (3, 'N1', 7),
-       (4, 'N2', 7),
-       (5, 'P1', 8),
-       (6, 'P2', 8);
+INSERT INTO SIGNAL (ID, DISPLAY_NAME, POINTS_TO_TYPE, POINTS_TO)
+VALUES (1, 'A', 'switch', 7),
+       (2, 'F', 'switch', 8),
+       (3, 'N1', 'switch', 7),
+       (4, 'N2', 'switch', 7),
+       (5, 'P1', 'switch', 8),
+       (6, 'P2', 'switch', 8);
 
-SELECT ID, DISPLAY_NAME, INDICATION
-FROM SIGNAL;
-
-INSERT INTO SWITCH (ID, DISPLAY_NAME, POSITION, BASE_POSITION, LEFT_ID, RIGHT_ID)
-VALUES (7, 'W1', 1, 1, 4, 3),
-       (8, 'W2', 0, 0, 5, 6);
-
-SELECT ID, DISPLAY_NAME, POSITION, BASE_POSITION, LEFT_ID, RIGHT_ID
-FROM SWITCH;
+INSERT INTO SWITCH (ID, DISPLAY_NAME, BASE_POSITION, LEFT_ID, RIGHT_ID)
+VALUES (7, 'W1', 1, 4, 3),
+       (8, 'W2', 0, 5, 6);
 
 INSERT INTO OPEN_TRACK (ID, DISPLAY_NAME)
 VALUES (9, 'v.u.n. links'),
        (10, 'v.u.n. rechts');
 
-INSERT INTO GRAPH (VERTEX, NEIGHBOUR)
+INSERT INTO GRAPH (VERTEX, EDGE)
 VALUES (9, 1),
        (1, 7),
        (7, 3),
