@@ -4,7 +4,7 @@
 
 #include "stb_ds_helper.h"
 
-void database_open(database_t *database, char *file, error_t *error) {
+void rail_database_open(rail_database_t *database, char *file, error_t *error) {
     int rc = sqlite3_open(file, &database->db);
     if (rc) {
         error_add(error, ERROR_DATABASE_OPEN, sqlite3_errmsg(database->db));
@@ -12,11 +12,11 @@ void database_open(database_t *database, char *file, error_t *error) {
     }
 }
 
-void database_close(database_t *database) {
+void rail_database_close(rail_database_t *database) {
     sqlite3_close(database->db);
 }
 
-void database_find_signal_by_id(database_t *database, int id, mini_rail_signal_t *signal) {
+void rail_database_find_signal_by_id(rail_database_t *database, int id, mini_rail_signal_t *signal) {
     sqlite3_stmt *stmt;
     sqlite3_prepare_v2(database->db, "SELECT ID, DISPLAY_NAME FROM SIGNAL WHERE ID = ?;", -1, &stmt, NULL);
     sqlite3_bind_int(stmt, 1, id);
@@ -33,7 +33,7 @@ void database_find_signal_by_id(database_t *database, int id, mini_rail_signal_t
     sqlite3_finalize(stmt);
 }
 
-void database_read_signals(database_t *database, mini_rail_signal_t **signals) {
+void rail_database_read_signals(rail_database_t *database, mini_rail_signal_t **signals) {
     sqlite3_stmt *stmt;
     sqlite3_prepare_v2(database->db, "SELECT ID, DISPLAY_NAME FROM SIGNAL;", -1, &stmt, NULL);
 
@@ -53,7 +53,7 @@ void database_read_signals(database_t *database, mini_rail_signal_t **signals) {
     sqlite3_finalize(stmt);
 }
 
-void database_find_switch_by_id(database_t *database, int id, mini_rail_switch_t *switch_) {
+void rail_database_find_switch_by_id(rail_database_t *database, int id, mini_rail_switch_t *switch_) {
     sqlite3_stmt *stmt;
     sqlite3_prepare_v2(database->db, "SELECT ID, DISPLAY_NAME, BASE_POSITION, LEFT_ID, RIGHT_ID FROM SWITCH WHERE ID = ?;", -1, &stmt, NULL);
     sqlite3_bind_int(stmt, 1, id);
@@ -73,7 +73,7 @@ void database_find_switch_by_id(database_t *database, int id, mini_rail_switch_t
     sqlite3_finalize(stmt);
 }
 
-void database_read_switches(database_t *database, mini_rail_switch_t **switches) {
+void rail_database_read_switches(rail_database_t *database, mini_rail_switch_t **switches) {
     sqlite3_stmt *stmt;
     sqlite3_prepare_v2(database->db, "SELECT ID, DISPLAY_NAME, BASE_POSITION, LEFT_ID, RIGHT_ID FROM SWITCH;", -1, &stmt, NULL);
 
@@ -96,7 +96,7 @@ void database_read_switches(database_t *database, mini_rail_switch_t **switches)
     sqlite3_finalize(stmt);
 }
 
-void database_find_open_track_by_id(database_t *database, int id, mini_rail_open_track_t *open_track) {
+void rail_database_find_open_track_by_id(rail_database_t *database, int id, mini_rail_open_track_t *open_track) {
     sqlite3_stmt *stmt;
     sqlite3_prepare_v2(database->db, "SELECT ID, DISPLAY_NAME FROM OPEN_TRACK WHERE ID = ?;", -1, &stmt, NULL);
     sqlite3_bind_int(stmt, 1, id);
@@ -113,7 +113,7 @@ void database_find_open_track_by_id(database_t *database, int id, mini_rail_open
     sqlite3_finalize(stmt);
 }
 
-void database_read_open_tracks(database_t *database, mini_rail_open_track_t **open_tracks) {
+void rail_database_read_open_tracks(rail_database_t *database, mini_rail_open_track_t **open_tracks) {
     sqlite3_stmt *stmt;
     sqlite3_prepare_v2(database->db, "SELECT ID, DISPLAY_NAME FROM OPEN_TRACK;", -1, &stmt, NULL);
 
