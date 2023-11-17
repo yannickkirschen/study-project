@@ -124,14 +124,14 @@ int main() {
     graph_t *graph = malloc(sizeof(graph_t));
     graph_init(graph);
 
-    graph_vertex_t *vertex1 = &(graph_vertex_t){.key = sig_A->id, .value = sig_A};
-    graph_vertex_t *vertex2 = &(graph_vertex_t){.key = sig_F->id, .value = sig_F};
-    graph_vertex_t *vertex3 = &(graph_vertex_t){.key = sig_N1->id, .value = sig_N1};
-    graph_vertex_t *vertex4 = &(graph_vertex_t){.key = sig_N2->id, .value = sig_N2};
-    graph_vertex_t *vertex5 = &(graph_vertex_t){.key = sig_P1->id, .value = sig_P1};
-    graph_vertex_t *vertex6 = &(graph_vertex_t){.key = sig_P2->id, .value = sig_P2};
-    graph_vertex_t *vertex7 = &(graph_vertex_t){.key = sw_1->id, .value = sw_1};
-    graph_vertex_t *vertex8 = &(graph_vertex_t){.key = sw_2->id, .value = sw_2};
+    graph_vertex_t *vertex1 = &(graph_vertex_t){.key = sig_A->id, .value = NULL};
+    graph_vertex_t *vertex2 = &(graph_vertex_t){.key = sig_F->id, .value = NULL};
+    graph_vertex_t *vertex3 = &(graph_vertex_t){.key = sig_N1->id, .value = NULL};
+    graph_vertex_t *vertex4 = &(graph_vertex_t){.key = sig_N2->id, .value = NULL};
+    graph_vertex_t *vertex5 = &(graph_vertex_t){.key = sig_P1->id, .value = NULL};
+    graph_vertex_t *vertex6 = &(graph_vertex_t){.key = sig_P2->id, .value = NULL};
+    graph_vertex_t *vertex7 = &(graph_vertex_t){.key = sw_1->id, .value = NULL};
+    graph_vertex_t *vertex8 = &(graph_vertex_t){.key = sw_2->id, .value = NULL};
 
     graph_vertex_add(graph, vertex1);
     graph_vertex_add(graph, vertex2);
@@ -158,7 +158,7 @@ int main() {
 
     mini_rail_element_t *route = rail_interlocking_route_find_and_set(interlocking, sig_A->id, sig_P2->id, error);
     error_print(error);
-    rail_element_print(route);
+    rail_elements_print(route);
 
     return 0;
 }
