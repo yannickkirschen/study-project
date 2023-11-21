@@ -9,4 +9,4 @@ add_library(interlocking STATIC
         src/open-track.c
 )
 
-target_link_libraries(interlocking stb-ds-helper error)
+target_link_libraries(interlocking stb-ds-helper error str.c)

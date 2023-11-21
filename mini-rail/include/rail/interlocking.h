@@ -105,6 +105,7 @@ typedef struct {
 
 void rail_interlocking_init(mini_rail_interlocking_t *interlocking);
 void rail_interlocking_element_add(mini_rail_interlocking_t *interlocking, int id, mini_rail_element_t *element);
+int rail_interlocking_element_find(mini_rail_interlocking_t *interlocking, char *name);
 mini_rail_element_t *rail_interlocking_route_translate(mini_rail_interlocking_t *interlocking, int *path);
 mini_rail_element_t *rail_interlocking_route_find_and_set(mini_rail_interlocking_t *interlocking, int start_id, int end_id, error_t *error);
 

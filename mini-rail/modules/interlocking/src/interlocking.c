@@ -4,6 +4,7 @@
 
 #include "graph.h"
 #include "stb_ds_helper.h"
+#include "str.h"
 
 void rail_interlocking_init(mini_rail_interlocking_t *interlocking) {
     interlocking->elements = NULL;
@@ -12,6 +13,35 @@ void rail_interlocking_init(mini_rail_interlocking_t *interlocking) {
 
 void rail_interlocking_element_add(mini_rail_interlocking_t *interlocking, int id, mini_rail_element_t *element) {
     hmput(interlocking->elements, id, element);
+}
+
+int rail_interlocking_element_find(mini_rail_interlocking_t *interlocking, char *name) {
+    for (int i = 0; i < hmlen(interlocking->elements); i++) {
+        mini_rail_element_t *element = interlocking->elements[i].value;
+
+        switch (element->type) {
+        case RAIL_ELEMENT_SIGNAL:
+            if (string_equals(element->spec.signal->display_name, name)) {
+                return element->id;
+            }
+            break;
+        case RAIL_ELEMENT_SWITCH: {
+            if (string_equals(element->spec._switch->display_name, name)) {
+                return element->id;
+            }
+            break;
+        }
+        case RAIL_ELEMENT_OPEN_TRACK:
+            if (string_equals(element->spec.open_track->display_name, name)) {
+                return element->id;
+            }
+            break;
+        case RAIL_ELEMENT_NONE:
+            break;
+        }
+    }
+
+    return -1;
 }
 
 mini_rail_element_t *rail_interlocking_route_translate(mini_rail_interlocking_t *interlocking, int *path) {
