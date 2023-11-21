@@ -15,11 +15,6 @@ include_directories(include)
 include_directories(lib/stb)
 add_subdirectory(modules)
 
-add_subdirectory(lib/error)
-add_subdirectory(lib/graph)
-add_subdirectory(lib/stb_ds_helper)
-add_subdirectory(lib/str.c)
-
 if (TARGET_ARCH STREQUAL "pico")
     include_directories($ENV{PICO_SDK_PATH}/**)
     add_subdirectory(embedded)

@@ -1,3 +1,7 @@
+#define GRAPH_IMPLEMENTATION
+#define ERROR_IMPLEMENTATION
+#define STB_DS_IMPLEMENTATION
+
 #include "graph.h"
 
 #include <stdlib.h>

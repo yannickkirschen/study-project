@@ -1,3 +1,7 @@
+#define ERROR_IMPLEMENTATION
+#define STB_DS_IMPLEMENTATION
+#define RAIL_TEST_ASSERT_IMPLEMENTATION
+
 #include <stdlib.h>
 
 #include "assert.h"
@@ -40,31 +44,31 @@ int main() {
     error_t *error = malloc(sizeof(error_t));
     error_init(error);
 
-    assert(v, (rail_contact_point_t *[]){p1, p2, p3, p4}, 4);
+    rail_vacancy_assert(v, (rail_contact_point_t *[]){p1, p2, p3, p4}, 4);
     rail_contact_counter_reset(c);
 
-    assert(v, (rail_contact_point_t *[]){p4, p3, p2, p1}, 4);
+    rail_vacancy_assert(v, (rail_contact_point_t *[]){p4, p3, p2, p1}, 4);
     rail_contact_counter_reset(c);
 
-    assert(v, (rail_contact_point_t *[]){p1, p2, p1, p2, p3, p4, p3, p4}, 8);
+    rail_vacancy_assert(v, (rail_contact_point_t *[]){p1, p2, p1, p2, p3, p4, p3, p4}, 8);
     rail_contact_counter_reset(c);
 
-    assert(v, (rail_contact_point_t *[]){p1, p2, p3, p4, p1, p2, p3, p4}, 8);
+    rail_vacancy_assert(v, (rail_contact_point_t *[]){p1, p2, p3, p4, p1, p2, p3, p4}, 8);
     rail_contact_counter_reset(c);
 
-    assertError(v, (rail_contact_point_t *[]){p4, p3, p4, p3, p2, p1, p5, p6}, 8, 4);
+    rail_vacancy_assert_error(v, (rail_contact_point_t *[]){p4, p3, p4, p3, p2, p1, p5, p6}, 8, 4);
     rail_contact_counter_reset(c);
 
-    assertError(v, (rail_contact_point_t *[]){p1, p2, p6, p5, p3, p4, p3, p4}, 8, 3);
+    rail_vacancy_assert_error(v, (rail_contact_point_t *[]){p1, p2, p6, p5, p3, p4, p3, p4}, 8, 3);
     rail_contact_counter_reset(c);
 
-    assert(v, (rail_contact_point_t *[]){p1, p2, p5, p6}, 4);
+    rail_vacancy_assert(v, (rail_contact_point_t *[]){p1, p2, p5, p6}, 4);
     rail_contact_counter_reset(c);
 
-    assertError(v, (rail_contact_point_t *[]){p1, p2, p2, p1}, 4, 6);
+    rail_vacancy_assert_error(v, (rail_contact_point_t *[]){p1, p2, p2, p1}, 4, 6);
     rail_contact_counter_reset(c);
 
-    assertError(v, (rail_contact_point_t *[]){p2, p1}, 2, 5);
+    rail_vacancy_assert_error(v, (rail_contact_point_t *[]){p2, p1}, 2, 5);
     rail_contact_counter_reset(c);
     return 0;
 }

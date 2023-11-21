@@ -1,11 +1,18 @@
+#include <stdio.h>
+
 #ifdef _WIN32
 #include <conio.h>
 #define clear_screen() clrscr()
 #else
-#include <stdio.h>
 #define clear_screen() printf("\e[1;1H\e[2J")
 #endif
 
+#define STR_IMPLEMENTATION
+#define GRAPH_IMPLEMENTATION
+#define ERROR_IMPLEMENTATION
+#define STB_DS_IMPLEMENTATION
+
+#include "error.h"
 #include "rail/database.h"
 #include "rail/interlocking.h"
 #include "str.h"
@@ -107,7 +114,6 @@ int rail_main(mini_rail_state_t *state) {
                 break;
             }
         }
-        printf("\n");
         return RAIL_COMMAND_SET;
     }
     }

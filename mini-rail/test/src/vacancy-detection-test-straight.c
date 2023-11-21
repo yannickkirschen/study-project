@@ -1,3 +1,7 @@
+#define ERROR_IMPLEMENTATION
+#define STB_DS_IMPLEMENTATION
+#define RAIL_TEST_ASSERT_IMPLEMENTATION
+
 #include <stdlib.h>
 
 #include "assert.h"
@@ -29,18 +33,18 @@ int main() {
     rail_vacancy_t *v = malloc(sizeof(rail_vacancy_t));
     rail_vacancy_add_contact_counter(v, c);
 
-    assert(v, (rail_contact_point_t *[]){p1, p2, p3, p4}, 4);
+    rail_vacancy_assert(v, (rail_contact_point_t *[]){p1, p2, p3, p4}, 4);
     rail_contact_counter_reset(c);
 
-    assert(v, (rail_contact_point_t *[]){p4, p3, p2, p1}, 4);
+    rail_vacancy_assert(v, (rail_contact_point_t *[]){p4, p3, p2, p1}, 4);
     rail_contact_counter_reset(c);
 
-    assertError(v, (rail_contact_point_t *[]){p1, p2, p2, p1}, 4, 4);
+    rail_vacancy_assert_error(v, (rail_contact_point_t *[]){p1, p2, p2, p1}, 4, 4);
     rail_contact_counter_reset(c);
 
-    assertError(v, (rail_contact_point_t *[]){p2, p1}, 2, 5);
+    rail_vacancy_assert_error(v, (rail_contact_point_t *[]){p2, p1}, 2, 5);
     rail_contact_counter_reset(c);
 
-    assertWithChange(v, c, (rail_contact_point_t *[]){p1, p2, p1, p2}, 4, (rail_contact_point_t *[]){p2, p1, p2, p1}, 4);
+    rail_vacancy_assert_with_change(v, c, (rail_contact_point_t *[]){p1, p2, p1, p2}, 4, (rail_contact_point_t *[]){p2, p1, p2, p1}, 4);
     return 0;
 }

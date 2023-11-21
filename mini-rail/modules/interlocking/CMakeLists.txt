@@ -1,4 +1,4 @@
-project(interlocking LANGUAGES C VERSION 1.0.0 DESCRIPTION "Digital interlocking system for a model railway")
+project(interlocking LANGUAGES C)
 
 add_library(interlocking STATIC
         src/database.c
@@ -9,4 +9,4 @@ add_library(interlocking STATIC
         src/open-track.c
 )
 
-target_link_libraries(interlocking stb-ds-helper error str.c)
+target_link_libraries(interlocking)

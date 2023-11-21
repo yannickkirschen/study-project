@@ -11,14 +11,12 @@ pico_add_extra_outputs(blink)
 target_link_libraries(decoder
         pico_stdlib
         interlocking
-        error
         stb-ds-helper
 )
 
 target_link_libraries(vacancy-detection-reed
         pico_stdlib
         vacancy-detection
-        error
         stb-ds-helper
 )
 

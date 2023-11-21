@@ -1,3 +1,5 @@
+#define ERROR_IMPLEMENTATION
+
 #include <stdbool.h>
 #include <stdlib.h>
 

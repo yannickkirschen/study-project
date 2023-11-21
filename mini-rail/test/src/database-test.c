@@ -1,6 +1,10 @@
+#define STR_IMPLEMENTATION
+#define GRAPH_IMPLEMENTATION
+#define ERROR_IMPLEMENTATION
+#define STB_DS_IMPLEMENTATION
+
 #include "rail/database.h"
 
-#include <stdio.h>
 #include <stdlib.h>
 
 #include "stb_ds_helper.h"

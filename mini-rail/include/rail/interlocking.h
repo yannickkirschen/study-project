@@ -3,6 +3,7 @@
 
 #include "error.h"
 #include "graph.h"
+#include "str.h"
 
 #define ERROR_INTERLOCKING_ROUTE_TOO_SHORT 1
 #define ERROR_INTERLOCKING_ROUTE_START_NOT_SIGNAL 2

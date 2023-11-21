@@ -1,3 +1,8 @@
+#define STR_IMPLEMENTATION
+#define GRAPH_IMPLEMENTATION
+#define ERROR_IMPLEMENTATION
+#define STB_DS_IMPLEMENTATION
+
 #include "rail/interlocking.h"
 
 #include "rail/database.h"
