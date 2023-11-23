@@ -1,4 +1,5 @@
 #define ERROR_IMPLEMENTATION
+#define STB_DS_IMPLEMENTATION
 
 #include <stdbool.h>
 #include <stdlib.h>
