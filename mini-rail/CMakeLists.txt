@@ -16,10 +16,10 @@ include_directories(lib/stb)
 add_subdirectory(modules/vacancy-detection)
 
 if (TARGET_ARCH STREQUAL "pico")
+    include_directories(lib/can2040/src)
+    
     add_subdirectory(embedded)
     add_subdirectory(research)
-
-    include_directories(lib/can2040/src)
 else ()
     add_subdirectory(modules/interlocking)
     add_subdirectory(apps)
