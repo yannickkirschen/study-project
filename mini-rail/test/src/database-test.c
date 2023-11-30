@@ -49,7 +49,7 @@ int main() {
     rail_elements_print(elements);
 
     int **paths = graph_find_paths(graph, 1, 6);
-    stb_array_print_two_dimensional(paths);
+    stb_ds_array_print_two_dimensional(paths);
 
     rail_database_close(database);
 }

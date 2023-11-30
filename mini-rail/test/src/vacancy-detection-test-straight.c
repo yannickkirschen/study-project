@@ -33,18 +33,27 @@ int main() {
     rail_vacancy_t *v = malloc(sizeof(rail_vacancy_t));
     rail_vacancy_add_contact_counter(v, c);
 
+    printf("Test normal route\n");
     rail_vacancy_assert(v, (rail_contact_point_t *[]){p1, p2, p3, p4}, 4);
     rail_contact_counter_reset(c);
 
+    printf("Test reverse route\n");
     rail_vacancy_assert(v, (rail_contact_point_t *[]){p4, p3, p2, p1}, 4);
     rail_contact_counter_reset(c);
 
+    printf("Test change in direction (results in error)\n");
     rail_vacancy_assert_error(v, (rail_contact_point_t *[]){p1, p2, p2, p1}, 4, 4);
     rail_contact_counter_reset(c);
 
+    printf("Test drive with no entry\n");
     rail_vacancy_assert_error(v, (rail_contact_point_t *[]){p2, p1}, 2, 5);
     rail_contact_counter_reset(c);
 
+    printf("Test drive with double inner trigger\n");
+    rail_vacancy_assert(v, (rail_contact_point_t *[]){p1, p2, p1, p3, p2, p4, p3, p4}, 8);
+    rail_contact_counter_reset(c);
+
+    printf("Test change in direction with change before\n");
     rail_vacancy_assert_with_change(v, c, (rail_contact_point_t *[]){p1, p2, p1, p2}, 4, (rail_contact_point_t *[]){p2, p1, p2, p1}, 4);
     return 0;
 }

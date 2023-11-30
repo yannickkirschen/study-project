@@ -1,10 +1,20 @@
 #define ERROR_IMPLEMENTATION
 #define STB_DS_IMPLEMENTATION
 
+#define MINI_RAIL_DECODER_IMPLEMENTATION
+#define MINI_RAIL_MESSAGING_IMPLEMENTATION
+
 #include <stdbool.h>
 #include <stdlib.h>
 
+#include "RP2040.h"
+#include "can2040.h"
+#include "core_cm0plus.h"
+#include "hardware/gpio.h"
+#include "hardware/irq.h"
 #include "pico/stdlib.h"
+#include "rail/decoder.h"
+#include "rail/messaging.h"
 #include "rail/vacancy.h"
 
 const uint ONBOARD_LED_PIN = 25;
@@ -17,16 +27,45 @@ const uint OCCUPIED_UPPER_LED_PIN = 13;
 const uint OCCUPIED_MIDDLE_LED_PIN = 14;
 const uint OCCUPIED_LOWER_LED_PIN = 15;
 
-const uint REED_1_PIN = 19;
-const uint REED_2_PIN = 18;
-const uint REED_3_PIN = 17;
-const uint REED_4_PIN = 16;
+#define CAN_RX_PIN 0
+#define CAN_TX_PIN 1
+#define BUTTON_PIN 2
+
+static mini_rail_decoder_t *decoder;
+static can2040_t can;
+
+bool toggle = false;
+
+static void vacancy_detection_can_callback(can2040_t *bus, uint32_t notify, can2040_msg_t *msg) {
+    if (notify & CAN2040_NOTIFY_RX) {
+        gpio_put(ERROR_UPPER_LED_PIN, toggle);
+        toggle = !toggle;
+
+        switch (rail_message_decode_type(msg->id)) {
+        case MINI_RAIL_MESSAGE_INIT_ENTER:
+            decoder->state = MINI_RAIL_DECODER_STATE_INIT;
+            break;
+        case MINI_RAIL_MESSAGE_INIT_OK:
+            decoder->state = MINI_RAIL_DECODER_STATE_RUNNING;
+            decoder->id = rail_message_decode_receiver(msg->id);
+            break;
+        }
+    } else if (notify & CAN2040_NOTIFY_TX) {
+    }
+}
+
+static void PIOx_IRQHandler() {
+    can2040_pio_irq_handler(&can);
+}
 
 void init_sign();
 
 void show_three_bit_binary(int number, uint upper, uint middle, uint lower);
 
 int main() {
+    decoder = malloc(sizeof(mini_rail_decoder_t));
+    mini_rail_decoder_init(decoder);
+
     gpio_init(ONBOARD_LED_PIN);
     gpio_init(ERROR_UPPER_LED_PIN);
     gpio_init(ERROR_MIDDLE_LED_PIN);
@@ -34,10 +73,6 @@ int main() {
     gpio_init(OCCUPIED_UPPER_LED_PIN);
     gpio_init(OCCUPIED_MIDDLE_LED_PIN);
     gpio_init(OCCUPIED_LOWER_LED_PIN);
-    gpio_init(REED_1_PIN);
-    gpio_init(REED_2_PIN);
-    gpio_init(REED_3_PIN);
-    gpio_init(REED_4_PIN);
 
     gpio_set_dir(ONBOARD_LED_PIN, GPIO_OUT);
     gpio_set_dir(ERROR_UPPER_LED_PIN, GPIO_OUT);
@@ -46,10 +81,11 @@ int main() {
     gpio_set_dir(OCCUPIED_UPPER_LED_PIN, GPIO_OUT);
     gpio_set_dir(OCCUPIED_MIDDLE_LED_PIN, GPIO_OUT);
     gpio_set_dir(OCCUPIED_LOWER_LED_PIN, GPIO_OUT);
-    gpio_set_dir(REED_1_PIN, GPIO_IN);
-    gpio_set_dir(REED_2_PIN, GPIO_IN);
-    gpio_set_dir(REED_3_PIN, GPIO_IN);
-    gpio_set_dir(REED_4_PIN, GPIO_IN);
+
+    gpio_init(BUTTON_PIN);
+    gpio_set_dir(BUTTON_PIN, GPIO_IN);
+
+    decoder->state = MINI_RAIL_DECODER_STATE_READY;
 
     rail_contact_point_t *p1 = malloc(sizeof(rail_contact_point_t));
     rail_contact_point_t *p2 = malloc(sizeof(rail_contact_point_t));
@@ -89,59 +125,74 @@ int main() {
     sleep_ms(1000);
     gpio_put(ONBOARD_LED_PIN, false);
 
+    bool button_was_high = false;
+    can_setup(&can, PIOx_IRQHandler, vacancy_detection_can_callback, CAN_RX_PIN, CAN_TX_PIN);
+
     while (true) {
-        bool reed1 = gpio_get(REED_1_PIN);
-        bool reed2 = gpio_get(REED_2_PIN);
-        bool reed3 = gpio_get(REED_3_PIN);
-        bool reed4 = gpio_get(REED_4_PIN);
+        if (gpio_get(BUTTON_PIN) && !button_was_high && decoder->state == MINI_RAIL_DECODER_STATE_INIT) {
+            button_was_high = true;
+            decoder->state = MINI_RAIL_DECODER_STATE_INIT_TRIGGER;
 
-        if (reed1 && !reed1_was_high) {
-            reed1_was_high = true;
-            rail_vacancy_trigger(v, p1, error);
+            can2040_msg_t *msg = &(can2040_msg_t){.id = 0x3, .dlc = 0, .data = {0}};
+            can2040_transmit(&can, msg);
+        } else if ((!gpio_get(BUTTON_PIN) && button_was_high) || !gpio_get(BUTTON_PIN)) {
+            button_was_high = false;
         }
 
-        if (reed2 && !reed2_was_high) {
-            reed2_was_high = true;
-            rail_vacancy_trigger(v, p2, error);
-        }
+        sleep_ms(100);
 
-        if (reed3 && !reed3_was_high) {
-            reed3_was_high = true;
-            rail_vacancy_trigger(v, p3, error);
-        }
-
-        if (reed4 && !reed4_was_high) {
-            reed4_was_high = true;
-            rail_vacancy_trigger(v, p4, error);
-        }
-
-        if (!reed1 && reed1_was_high) {
-            reed1_was_high = false;
-        }
-
-        if (!reed2 && reed2_was_high) {
-            reed2_was_high = false;
-        }
-
-        if (!reed3 && reed3_was_high) {
-            reed3_was_high = false;
-        }
-
-        if (!reed4 && reed4_was_high) {
-            reed4_was_high = false;
-        }
-
-        if (error_has_error(error)) {
-            show_three_bit_binary(error->codes[0], ERROR_UPPER_LED_PIN, ERROR_MIDDLE_LED_PIN, ERROR_LOWER_LED_PIN);
-        } else {
-            gpio_put(ERROR_UPPER_LED_PIN, false);
-            gpio_put(ERROR_MIDDLE_LED_PIN, false);
-            gpio_put(ERROR_LOWER_LED_PIN, false);
-        }
-
-        show_three_bit_binary(c->count, OCCUPIED_UPPER_LED_PIN, OCCUPIED_MIDDLE_LED_PIN, OCCUPIED_LOWER_LED_PIN);
-
-        sleep_ms(10);
+        //        bool reed1 = gpio_get(REED_1_PIN);
+        //        bool reed2 = gpio_get(REED_2_PIN);
+        //        bool reed3 = gpio_get(REED_3_PIN);
+        //        bool reed4 = gpio_get(REED_4_PIN);
+        //
+        //        if (reed1 && !reed1_was_high) {
+        //            reed1_was_high = true;
+        //            rail_vacancy_trigger(v, p1, error);
+        //        }
+        //
+        //        if (reed2 && !reed2_was_high) {
+        //            reed2_was_high = true;
+        //            rail_vacancy_trigger(v, p2, error);
+        //        }
+        //
+        //        if (reed3 && !reed3_was_high) {
+        //            reed3_was_high = true;
+        //            rail_vacancy_trigger(v, p3, error);
+        //        }
+        //
+        //        if (reed4 && !reed4_was_high) {
+        //            reed4_was_high = true;
+        //            rail_vacancy_trigger(v, p4, error);
+        //        }
+        //
+        //        if (!reed1 && reed1_was_high) {
+        //            reed1_was_high = false;
+        //        }
+        //
+        //        if (!reed2 && reed2_was_high) {
+        //            reed2_was_high = false;
+        //        }
+        //
+        //        if (!reed3 && reed3_was_high) {
+        //            reed3_was_high = false;
+        //        }
+        //
+        //        if (!reed4 && reed4_was_high) {
+        //            reed4_was_high = false;
+        //        }
+        //
+        //        if (error_has_error(error)) {
+        //            show_three_bit_binary(error->codes[0], ERROR_UPPER_LED_PIN, ERROR_MIDDLE_LED_PIN, ERROR_LOWER_LED_PIN);
+        //        } else {
+        //            gpio_put(ERROR_UPPER_LED_PIN, false);
+        //            gpio_put(ERROR_MIDDLE_LED_PIN, false);
+        //            gpio_put(ERROR_LOWER_LED_PIN, false);
+        //        }
+        //
+        //        show_three_bit_binary(c->count, OCCUPIED_UPPER_LED_PIN, OCCUPIED_MIDDLE_LED_PIN, OCCUPIED_LOWER_LED_PIN);
+        //
+        //        sleep_ms(10);
     }
 }
 

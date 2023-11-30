@@ -67,7 +67,7 @@ int main() {
     graph_print(graph);
 
     int **paths = graph_find_paths(graph, vertex1->key, vertex6->key);
-    stb_array_print_two_dimensional(paths);
+    stb_ds_array_print_two_dimensional(paths);
 
     return 0;
 }

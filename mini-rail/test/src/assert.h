@@ -5,6 +5,7 @@
 
 #include "error.h"
 #include "rail/vacancy.h"
+#include "stb_ds_helper.h"
 
 void rail_vacancy_assert(rail_vacancy_t *v, rail_contact_point_t *points[], int number_points);
 void rail_vacancy_assert_error(rail_vacancy_t *v, rail_contact_point_t *points[], int number_points, int error_code);
@@ -19,6 +20,9 @@ void rail_vacancy_assert(rail_vacancy_t *v, rail_contact_point_t *points[], int 
     for (int i = 0; i < number_points; i++) {
         rail_vacancy_trigger(v, points[i], error);
         error_print(error);
+        if (error_has_error(error)) {
+            exit(1);
+        }
     }
 
     free(error);
@@ -30,7 +34,22 @@ void rail_vacancy_assert_error(rail_vacancy_t *v, rail_contact_point_t *points[]
 
     for (int i = 0; i < number_points; i++) {
         rail_vacancy_trigger(v, points[i], error);
-        error_print(error);
+    }
+
+    if (error_has_error(error)) {
+        if (!stb_ds_array_contains(error->codes, error_code)) {
+            printf("Expected error code %d ", error_code);
+            if (!error_has_error(error)) {
+                printf("but no error was thrown\n");
+            } else {
+                printf("but error codes were thrown: \n");
+                stb_ds_array_print(error->codes);
+            }
+            exit(1);
+        }
+    } else {
+        printf("Expected error code %d\n", error_code);
+        exit(1);
     }
 
     free(error);

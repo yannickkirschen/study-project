@@ -10,8 +10,8 @@ bool stb_ds_array_contains(const int *a, int b);
 int *stb_ds_array_copy(const int *a);
 void stb_ds_array_remove(int **a, int b);
 void stb_ds_array_remove_last(int **a);
-void stb_array_print(int *a);
-void stb_array_print_two_dimensional(int **a);
+void stb_ds_array_print(int *a);
+void stb_ds_array_print_two_dimensional(int **a);
 
 #ifdef STB_DS_IMPLEMENTATION
 
@@ -46,7 +46,7 @@ void stb_ds_array_remove_last(int **a) {
     arrdel(*a, arrlen(*a) - 1);
 }
 
-void stb_array_print(int *a) {
+void stb_ds_array_print(int *a) {
     printf("[");
     for (int i = 0; i < arrlen(a); i++) {
         printf("%i", a[i]);
@@ -58,7 +58,7 @@ void stb_array_print(int *a) {
     printf("]\n");
 }
 
-void stb_array_print_two_dimensional(int **a) {
+void stb_ds_array_print_two_dimensional(int **a) {
     printf("[\n");
     for (int i = 0; i < arrlen(a); i++) {
         int *b = a[i];
