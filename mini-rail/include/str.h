@@ -7,6 +7,7 @@
 #include "stb_ds_helper.h"
 
 bool string_equals(char *string1, char *string2);
+bool string_equals_ignore_case(char *string1, char *string2);
 bool string_starts_with(char *string, char *prefix);
 void string_split(char *string, char delimiter, char ***strings);
 
@@ -14,6 +15,10 @@ void string_split(char *string, char delimiter, char ***strings);
 
 bool string_equals(char *string1, char *string2) {
     return strcmp(string1, string2) == 0;
+}
+
+bool string_equals_ignore_case(char *string1, char *string2) {
+    return strcasecmp(string1, string2) == 0;
 }
 
 bool string_starts_with(char *string, char *prefix) {
