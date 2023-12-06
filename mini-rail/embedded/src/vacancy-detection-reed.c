@@ -40,16 +40,6 @@ static void vacancy_detection_can_callback(can2040_t *bus, uint32_t notify, can2
     if (notify & CAN2040_NOTIFY_RX) {
         gpio_put(ERROR_UPPER_LED_PIN, toggle);
         toggle = !toggle;
-
-        switch (rail_message_decode_type(msg->id)) {
-        case MINI_RAIL_MESSAGE_INIT_ENTER:
-            decoder->state = MINI_RAIL_DECODER_STATE_INIT;
-            break;
-        case MINI_RAIL_MESSAGE_INIT_OK:
-            decoder->state = MINI_RAIL_DECODER_STATE_RUNNING;
-            decoder->id = rail_message_decode_receiver(msg->id);
-            break;
-        }
     } else if (notify & CAN2040_NOTIFY_TX) {
     }
 }
