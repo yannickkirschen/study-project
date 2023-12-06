@@ -1,7 +1,8 @@
 project(interlocking LANGUAGES C)
 
 add_library(interlocking STATIC
-        src/database.c
+        src/database-interlocking.c
+        src/database-ui.c
         src/signal.c
         src/switch.c
         src/interlocking.c

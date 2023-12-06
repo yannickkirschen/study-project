@@ -5,6 +5,7 @@
 
 #include "error.h"
 #include "rail/interlocking.h"
+#include "rail/ui.h"
 
 #define ERROR_DATABASE_OPEN 1
 
@@ -29,5 +30,8 @@ void rail_database_read_elements(rail_database_t *database, mini_rail_element_t 
 void rail_database_read_graph(rail_database_t *database, graph_t *graph);
 
 void rail_database_interlocking_load(mini_rail_interlocking_t *interlocking, rail_database_t *database, error_t *error);
+
+void rail_database_ui_load(rail_database_t *database, ui_t *ui);
+void rail_database_ui_read_lines(rail_database_t *database, int component, ui_line_t **lines);
 
 #endif  // MINI_RAIL_DATABASE_H

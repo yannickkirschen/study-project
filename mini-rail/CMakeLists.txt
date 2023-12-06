@@ -17,10 +17,13 @@ add_subdirectory(modules/vacancy-detection)
 
 if (TARGET_ARCH STREQUAL "pico")
     include_directories(lib/can2040/src)
-    
+
     add_subdirectory(embedded)
     add_subdirectory(research)
 else ()
+    find_package(SDL2 REQUIRED)
+    include_directories(${SDL2_INCLUDE_DIRS})
+
     add_subdirectory(modules/interlocking)
     add_subdirectory(apps)
     add_subdirectory(test)

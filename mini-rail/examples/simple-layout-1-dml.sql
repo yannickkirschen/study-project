@@ -47,3 +47,9 @@ VALUES (9, 1),
        (4, 7),
        (7, 1),
        (1, 9);
+
+INSERT INTO UI_COMPONENT (ID)
+VALUES (1);
+
+INSERT INTO UI_LINE (ID, COMPONENT_ID, X_1, Y_1, X_2, Y_2, SCALE_X, SCALE_Y, COLOR)
+VALUES (1, 1, 0, 25, 50, 25, 1, 2, 'yellow');
