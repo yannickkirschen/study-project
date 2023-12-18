@@ -5,10 +5,12 @@
 #include "graph.h"
 #include "str.h"
 
-#define ERROR_INTERLOCKING_ROUTE_TOO_SHORT 1
-#define ERROR_INTERLOCKING_ROUTE_START_NOT_SIGNAL 2
+#define ERROR_INTERLOCKING_ROUTE_NOT_FOUND                    0
+#define ERROR_INTERLOCKING_ROUTE_TOO_SHORT                    1
+#define ERROR_INTERLOCKING_ROUTE_START_NOT_SIGNAL             2
 #define ERROR_INTERLOCKING_ROUTE_END_NOT_SIGNAL_OR_OPEN_TRACK 3
-#define ERROR_INTERLOCKING_ROUTE_CONTAINS_LOCKED_ELEMENT 4
+#define ERROR_INTERLOCKING_ROUTE_CONTAINS_LOCKED_ELEMENT      4
+#define ERROR_INTERLOCKING_ROUTE_NOT_POSSIBLE                 5
 
 typedef enum {
     RAIL_SIGNAL_INDICATION_STOP,
@@ -110,7 +112,8 @@ int rail_interlocking_element_find(mini_rail_interlocking_t *interlocking, char 
 mini_rail_element_t *rail_interlocking_route_translate(mini_rail_interlocking_t *interlocking, int *path);
 mini_rail_element_t *rail_interlocking_route_find_and_set(mini_rail_interlocking_t *interlocking, int start_id, int end_id, error_t *error);
 
-void rail_interlocking_routes_clean(mini_rail_element_t **routes);
+void rail_interlocking_routes_clean_unlogical_routes(mini_rail_element_t **routes);
+void rail_interlocking_routes_clean_opposite_end_signals(mini_rail_element_t **routes, error_t *error);
 mini_rail_element_t *rail_interlocking_route_choose_best(mini_rail_element_t **routes);
 void rail_interlocking_route_set(mini_rail_element_t *route, error_t *error);
 

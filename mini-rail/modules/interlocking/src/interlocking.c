@@ -56,6 +56,10 @@ mini_rail_element_t *rail_interlocking_route_translate(mini_rail_interlocking_t 
 
 mini_rail_element_t *rail_interlocking_route_find_and_set(mini_rail_interlocking_t *interlocking, int start_id, int end_id, error_t *error) {
     int **paths = graph_find_paths(interlocking->graph, start_id, end_id);
+    if (arrlen(paths) == 0) {
+        error_add(error, ERROR_INTERLOCKING_ROUTE_NOT_FOUND, "Route not found");
+        return NULL;
+    }
 
     mini_rail_element_t **routes = NULL;
     for (int i = 0; i < arrlen(paths); i++) {
@@ -63,7 +67,11 @@ mini_rail_element_t *rail_interlocking_route_find_and_set(mini_rail_interlocking
         arrput(routes, route);
     }
 
-    rail_interlocking_routes_clean(routes);
+    rail_interlocking_routes_clean_unlogical_routes(routes);
+    rail_interlocking_routes_clean_opposite_end_signals(routes, error);
+    if (error_has_error(error)) {
+        return NULL;
+    }
 
     mini_rail_element_t *route = rail_interlocking_route_choose_best(routes);
     rail_interlocking_route_set(route, error);
@@ -74,7 +82,7 @@ mini_rail_element_t *rail_interlocking_route_find_and_set(mini_rail_interlocking
     return route;
 }
 
-void rail_interlocking_routes_clean(mini_rail_element_t **routes) {
+void rail_interlocking_routes_clean_unlogical_routes(mini_rail_element_t **routes) {
     for (int i = 0; i < arrlen(routes); i++) {
         mini_rail_element_t *route = routes[i];
 
@@ -89,6 +97,51 @@ void rail_interlocking_routes_clean(mini_rail_element_t **routes) {
                 if ((previous->id == sw->left_id && next->id == sw->right_id) ||
                     (previous->id == sw->right_id && next->id == sw->left_id)) {
                     arrdel(routes, i);
+                    break;
+                }
+            }
+        }
+    }
+}
+
+void rail_interlocking_routes_clean_opposite_end_signals(mini_rail_element_t **routes, error_t *error) {
+    for (int i = 0; i < arrlen(routes); i++) {
+        mini_rail_element_t *route = routes[i];
+
+        for (int j = 0; j < arrlen(route); j++) {
+            mini_rail_element_t *element = &route[j];
+            mini_rail_element_t *next = j < arrlen(route) - 1 ? &route[j + 1] : NULL;
+
+            if (next != NULL) {
+                switch (next->type) {
+                case RAIL_ELEMENT_SIGNAL: {
+                    int points_to_id;
+                    switch (next->points_to_type) {
+                    case RAIL_ELEMENT_SIGNAL:
+                        points_to_id = next->points_to_spec.signal->id;
+                        break;
+                    case RAIL_ELEMENT_SWITCH:
+                        points_to_id = next->points_to_spec._switch->id;
+                        break;
+                    case RAIL_ELEMENT_OPEN_TRACK:
+                        points_to_id = next->points_to_spec.open_track->id;
+                        break;
+                    case RAIL_ELEMENT_NONE:
+                        points_to_id = -1;
+                        break;
+                    }
+
+                    if (arrlen(route) - 2 == j && points_to_id == element->id) {
+                        printf("%d %d\n", points_to_id, element->id);
+                        //                        arrdel(routes, i);
+                        error_add(error, ERROR_INTERLOCKING_ROUTE_NOT_POSSIBLE, "Route is not possible");
+                        return;
+                    }
+                    break;
+                }
+                case RAIL_ELEMENT_SWITCH:
+                case RAIL_ELEMENT_OPEN_TRACK:
+                case RAIL_ELEMENT_NONE:
                     break;
                 }
             }
