@@ -16,7 +16,7 @@ include_directories(lib/stb)
 add_subdirectory(modules/vacancy-detection)
 
 if (TARGET_ARCH STREQUAL "pico")
-    include_directories(lib/can2040/src)
+    include_directories($ENV{CAN2040_LIB_PATH}/src)
 
     add_subdirectory(embedded)
     add_subdirectory(research)

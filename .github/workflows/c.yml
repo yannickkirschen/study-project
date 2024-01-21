@@ -33,6 +33,7 @@ jobs:
       - name: Build for host
         run: |
           export PICO_SDK_PATH=$(pwd)/mini-rail/lib/pico-sdk
+          export CAN2040_LIB_PATH=$(pwd)/mini-rail/lib/can2040
 
           cmake -D TARGET_ARCH=host -B mini-rail/build/host -S mini-rail
           make -C mini-rail/build/host
