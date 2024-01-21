@@ -41,6 +41,7 @@ jobs:
       - name: Build for pico
         run: |
           export PICO_SDK_PATH=$(pwd)/mini-rail/lib/pico-sdk
+          export CAN2040_LIB_PATH=$(pwd)/mini-rail/lib/can2040
 
           cmake -D TARGET_ARCH=pico -B mini-rail/build/embedded -S mini-rail
           make -C mini-rail/build/embedded
