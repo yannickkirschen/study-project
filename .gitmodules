@@ -1,4 +1,4 @@
-[submodule "mini-rail/lib/pio-sdk"]
+[submodule "mini-rail/lib/pico-sdk"]
 	path = mini-rail/lib/pio-sdk
 	url = https://github.com/raspberrypi/pico-sdk.git
 [submodule "mini-rail/lib/stb"]
