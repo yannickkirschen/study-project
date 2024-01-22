@@ -13,6 +13,7 @@ endif ()
 
 include_directories(include)
 include_directories(lib/stb)
+add_subdirectory(modules/serial)
 add_subdirectory(modules/vacancy-detection)
 
 if (TARGET_ARCH STREQUAL "pico")

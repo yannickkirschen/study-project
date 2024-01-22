@@ -10,6 +10,7 @@ bool string_equals(char *string1, char *string2);
 bool string_equals_ignore_case(char *string1, char *string2);
 bool string_starts_with(char *string, char *prefix);
 void string_split(char *string, char delimiter, char ***strings);
+char *string_trim(char *string);
 
 #ifdef STR_IMPLEMENTATION
 
@@ -40,6 +41,12 @@ void string_split(char *string, char delimiter, char ***strings) {
     } while (c != '\0');
 
     arrput(*strings, s);
+}
+
+char *string_trim(char *string) {
+    char *trimmed = malloc(strlen(string) + 1);
+    strcpy(string, trimmed);
+    return trimmed;
 }
 
 #endif  // STR_IMPLEMENTATION

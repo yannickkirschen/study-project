@@ -6,9 +6,11 @@
 #include "RP2040.h"
 #include "can2040.h"
 #include "core_cm0plus.h"
+#include "error.h"
 #include "hardware/irq.h"
 #include "pico/stdlib.h"
 #include "stb_ds_helper.h"
+#include "str.h"
 
 //
 // Definition of the CAN message IDs for setup messages.
@@ -54,20 +56,20 @@
 // Definition of the response codes.
 //
 
-#define MINI_RAIL_RESPONSE_OK                                           0x00  // No error. 20 bit for the element ID.
+#define MINI_RAIL_MESSAGE_RESPONSE_OK                                           0x00  // No error. 20 bit for the element ID.
 
-#define MINI_RAIL_RESPONSE_SIGNAL_LED_BROKEN                            0x11  // A signal LED should turn on but does not. 20 bit for the signal ID.
+#define MINI_RAIL_MESSAGE_RESPONSE_SIGNAL_LED_BROKEN                            0x11  // A signal LED should turn on but does not. 20 bit for the signal ID.
 
-#define MINI_RAIL_RESPONSE_SWITCH_NO_FINAL_POSITION                     0x21  // A switch could not be changed to final position. 20 bit for the switch ID.
-#define MINI_RAIL_RESPONSE_SWITCH_OPENED                                0x22  // A switch has been driven open by a train. 20 bits for the switch ID.
+#define MINI_RAIL_MESSAGE_RESPONSE_SWITCH_NO_FINAL_POSITION                     0x21  // A switch could not be changed to final position. 20 bit for the switch ID.
+#define MINI_RAIL_MESSAGE_RESPONSE_SWITCH_OPENED                                0x22  // A switch has been driven open by a train. 20 bits for the switch ID.
 
-#define MINI_RAIL_RESPONSE_VACANCY_ESCHEDE_ERROR                        0x31  // A train wants to leave a switch in two different directions. 20 bit for the counter ID.
-#define MINI_RAIL_RESPONSE_VACANCY_TRAINS_APPROACH                      0x32  // Two trains approach each other on a single segment. 20 bit for the counter ID.
-#define MINI_RAIL_RESPONSE_VACANCY_CHANGE_DIRECTION_VACANT              0x33  // There is no train in the section. 20 bit for the counter ID.
-#define MINI_RAIL_RESPONSE_VACANCY_CHANGE_DIRECTION_NO_DIRECTION        0x34  // There is no direction to change to. 20 bit for the counter ID.
-#define MINI_RAIL_RESPONSE_VACANCY_CHANGE_DIRECTION_MULTIPLE_DIRECTIONS 0x35  // There are multiple directions to change to (switch). 20 bit for the counter ID.
+#define MINI_RAIL_MESSAGE_RESPONSE_VACANCY_ESCHEDE_ERROR                        0x31  // A train wants to leave a switch in two different directions. 20 bit for the counter ID.
+#define MINI_RAIL_MESSAGE_RESPONSE_VACANCY_TRAINS_APPROACH                      0x32  // Two trains approach each other on a single segment. 20 bit for the counter ID.
+#define MINI_RAIL_MESSAGE_RESPONSE_VACANCY_CHANGE_DIRECTION_VACANT              0x33  // There is no train in the section. 20 bit for the counter ID.
+#define MINI_RAIL_MESSAGE_RESPONSE_VACANCY_CHANGE_DIRECTION_NO_DIRECTION        0x34  // There is no direction to change to. 20 bit for the counter ID.
+#define MINI_RAIL_MESSAGE_RESPONSE_VACANCY_CHANGE_DIRECTION_MULTIPLE_DIRECTIONS 0x35  // There are multiple directions to change to (switch). 20 bit for the counter ID.
 
-#define MINI_RAIL_RESPONSE_INTERNAL_ERROR                               0xFF  // An error that cannot be further specified.
+#define MINI_RAIL_MESSAGE_RESPONSE_INTERNAL_ERROR                               0xFF  // An error that cannot be further specified.
 
 //
 // Definition of the CAN message IDs for shutdown.
@@ -75,10 +77,18 @@
 
 #define MINI_RAIL_MESSAGE_SHUTDOWN 0x7FF  // Instructs the decoders to shut down.
 
+//
+// Definition of internal error codes, not populated to the CAN bus.
+//
+
+#define MINI_RAIL_MESSAGING_ERROR_DATA_TOO_SHORT 0x01  // The data of a CAN message is too short to be interpreted in the current context.
+
 typedef struct can2040 can2040_t;
 typedef struct can2040_msg can2040_msg_t;
 
 void can_setup(can2040_t *can, irq_handler_t handler, can2040_rx_cb callback, uint32_t rx, uint32_t tx);
+char *can_to_serial_string(can2040_msg_t *msg);
+uint32_t can_get_element_id(can2040_msg_t *msg, error_t *error);
 
 #ifdef MINI_RAIL_MESSAGING_IMPLEMENTATION
 
@@ -95,6 +105,30 @@ void can_setup(can2040_t *can, irq_handler_t handler, can2040_rx_cb callback, ui
     NVIC_EnableIRQ(PIO0_IRQ_0_IRQn);
 
     can2040_start(can, sys_clock, bitrate, rx, tx);
+}
+
+char *can_to_serial_string(can2040_msg_t *msg) {
+    char *buffer = malloc(100);
+
+    printf("%lX;", msg->id);
+    for (int i = 0; i < 8; i++) {
+        printf("%02X", msg->data[i]);
+    }
+
+    return string_trim(buffer);
+}
+
+uint32_t can_get_element_id(can2040_msg_t *msg, error_t *error) {
+    if (msg->dlc < 3) {
+        error_add(error, MINI_RAIL_MESSAGING_ERROR_DATA_TOO_SHORT, "At least 20 bits are required to extract the element ID.");
+        return 0;
+    }
+
+    uint32_t upper = msg->data[0] << 12;
+    uint32_t middle = msg->data[1] << 4;
+    uint32_t lower = (msg->data[2] & 0xF0) >> 4;
+
+    return (upper | middle | lower);
 }
 
 #endif  // MINI_RAIL_MESSAGING_IMPLEMENTATION

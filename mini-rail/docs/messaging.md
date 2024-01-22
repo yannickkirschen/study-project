@@ -48,6 +48,10 @@ There are the following message types:
 | `xxxx xxxx xxxx xxxx xxxx dddd` | `SET_SIGNAL` | Set a signal to a given indication, where `x` is the signal ID and `d` the indication (`0` = stop, `1` = clear).  |
 | `xxxx xxxx xxxx xxxx xxxx 000d` | `SET_SWITCH` | Set a switch to a given position,  where `x` is the switch ID and `d` the position (`0` = base, `1` = alternate). |
 
+xxxx xxxx
+xxxx xxxx << 4
+xxxx >> 4
+
 ### Response codes
 
 | Code (bin)                   | Code (hex) | Name                                           | Description                                                                             |
