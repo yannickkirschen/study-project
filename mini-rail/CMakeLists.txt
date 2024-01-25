@@ -13,7 +13,6 @@ endif ()
 
 include_directories(include)
 include_directories(lib/stb)
-add_subdirectory(modules/serial)
 add_subdirectory(modules/vacancy-detection)
 
 if (TARGET_ARCH STREQUAL "pico")
@@ -25,6 +24,7 @@ else ()
     find_package(SDL2 REQUIRED)
     include_directories(${SDL2_INCLUDE_DIRS})
 
+    add_subdirectory(modules/serial)
     add_subdirectory(modules/interlocking)
     add_subdirectory(apps)
     add_subdirectory(test)
