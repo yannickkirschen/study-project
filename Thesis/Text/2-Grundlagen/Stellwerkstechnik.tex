@@ -47,7 +47,6 @@ Weiche gibt es in vielen verschiedenen Ausführungen. Die wichtigste Unterscheid
 
 Ein weiteres wichtiges Konzept der Sicherungstechnik ist der Flankenschutz. Er verhindert, dass ein Zug mit einem anderen Zug seitlich kollidiert, also in dessen Flanke fährt. Dies kann insbesondere dann auftreten, falls ein Zug eine ungeplante Fahr- oder Rollbewegung durchführt. Ein Beispiel hierfür ist das zu späte Bremsen bei der Einfahrt in einen Bahnhof. Um Flankenschutz zu gewährleisten, werden Weichen, die gar nicht von einem Zug befahren werden, so gestellt, dass ein auf einem anderen Gleis ungeplant fahrender Zug, nicht in die Flanke des anderen Zuges fahren kann. Um dieses Konzept zu verdeutlichen, sei in \autoref{abb:Grundlagen:Stellwerkstechnik:Gleisplan-einfach} ein beispielhafter, vereinfachter Gleisplan dargestellt.
 
-\todo{Zitat für Vorlage}
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{Assets/Images/2-Grundlagen/Gleisplan-Einfacher-Bahnhof-Nur-Gleisplan.png}
@@ -88,6 +87,28 @@ Der Weg, den ein Zug zurücklegt, setzt sich aus verschiedenen Elementen zusamme
 Die Kombination dieser Elemente wird als \textit{Fahrstraße} bezeichnet. Eine Fahrstraße beginnt und endet in der Regel an einem Signal. Der \ac{Fdl} fordert das Stellwerk zum stellen einer bestimmten Fahrstraße auf, indem er das Start- und Zielsignal eingibt. Aufgabe des Stellwerks ist es nun, einen Fahrweg zwischen den gewünschten Signalen zu finden. Hierbei müssen alle nötigen Fahrwegelemente gefunden und (im Falle von Weichen und Signalen) in die entsprechende Stellung gebracht werden. Wichtig ist hierbei auch das Gewähren von Flankenschutz. Beim Befahren einer Fahrstraße durch einen Zug, werden die Fahrwegelemente nach und nach frei gefahren und können vom Stellwerk wieder für andere Fahrstraßen verwendet werden. Man sagt, die Fahrstraße wird \textit{aufgelöst}.
 
 \subsection{Mechanische Stellwerke}\label{text:Grundlagen:Stellwerkstechnik:Mechanische-Stellwerke}
+
+Mechanische Stellwerke sind die historisch älteste Bauart und werden in Deutschland seit Ende des 19. Jahrhunderts im Einsatz. Bis heute machen sie ein Viertel aller bei der Deutschen Bahn in Betrieb befindlichen Stellwerke aus, steuern aber nur rund 15\% des Streckennetzes.~\cite{bib:DB:Stellwerke} Sie sind die einfachste Bauart und werden heute nicht mehr neu gebaut, sondern nur noch instand gehalten. In diesem Abschnitt werden die wichtigsten Konzepte mechanischer Stellwerke erläutert.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.8\textwidth]{Assets/Images/2-Grundlagen/Mechanisches-Stellwerk-Hebelbank.jpg}
+    \caption{Hebelbank in einem mechanischen Stellwerk~\cite{bib:stellwerke.de:Einheit}}\label{abb:Grundlagen:Stellwerkstechnik:Mechanische-Stellwerke:Hebelbank}
+\end{figure}
+
+Weichen und Signale werden in einem mechanischen Stellwerk über Seilzüge und Hebel gestellt. Die Hebel sind dabei im Stellwerk in einer Hebelbank angebracht, wobei jedem Signal und jeder Weiche je ein Hebel zugeordnet ist. Bei den Signalen handelt es sich im Formsignale, wie im linken Bild in \autoref{abb:Grundlagen:Stellwerkstechnik:Signale} zu sehen ist. Im Verschlusskasten hinter der Hebelbank, können einzelne Hebel in einem bestimmten System verschlossen werden, sodass ihre Position nicht mehr verändert werden kann. Dazu bedient man sich des Prinzips der Fahrstraßen: in einem mechanischen Stellwerk sind alle möglichen Fahrstraßen gest definiert und über Fahrstraßenhebel wählbar. Wird ein Fahrstraßenhebel betätigt, so werden wie bei einem Türschloss die für die Fahrstraße benötigten Hebel im Verschlusskasten verschlossen. Ist eine Weiche nicht in der richtigen Stellung, kann der Fahrstraßenhebel nicht betätigt werden.~\cite*[][S.173 ff.]{bib:Sicherung-des-Schienenverkehrs}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.8\textwidth]{Assets/Images/2-Grundlagen/Mechanisches-Stellwerk-Blocksperren.jpg}
+    \caption{Blocksperren in einem mechanischen Stellwerk~\cite{bib:stellwerke.de:Einheit}}\label{abb:Grundlagen:Stellwerkstechnik:Mechanische-Stellwerke:Blocksperren}
+\end{figure}
+
+Die mit Abstand wichtigste Sicherheitseinrichtung in einem mechanischen Stellwerk ist das Blockwerk. Hierbei handelt es sich vereinfacht gesagt um eine bidirektionale Schnittstelle zwischen Mechanik und Elektronik. Während ein Stellwerk rein mechanisch betrieben wird, geschieht die Kommunikation mit dem nächsten Stellwerk über Wechselströme. Über das Blockwerk kann sich der \ac{Fdl} beispielsweise vom Nachbarstellwerk die Erlaubnis geben lassen, einen Zug auf die Strecke zu schicken, oder mitteilen, dass ein Zug unterwegs ist. Die Blockfelder fügen sich ebenfalls in die Sperrmechanismen des Verschlusskastens ein.~\cite*[][S.179 ff.]{bib:Sicherung-des-Schienenverkehrs}
+
+Aufgrund einer großen Vielfalt von inkompatiblen Stellwerken, wurde in Deutschland 1924 die \textit{Einheitsbauart} eingeführt. Diese vereinheitlichte die Bauweise von mechanischen Stellwerken und ermöglichte so einen einfacheren Betrieb.~\cite*[][S.173]{bib:Sicherung-des-Schienenverkehrs}
+
+Weichen können in einem mechanischen Stellwerk auf 800 Meter Entfernung gestellt werden und Signale auf 1800 Meter Entfernung.~\cite{bib:DB:Stellwerke}
 
 \subsection{Relaisstellwerke}\label{text:Grundlagen:Stellwerkstechnik:Relaisstellwerke}
 
