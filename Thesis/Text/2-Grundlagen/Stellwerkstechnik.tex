@@ -86,9 +86,18 @@ Der Weg, den ein Zug zurücklegt, setzt sich aus verschiedenen Elementen zusamme
 
 Die Kombination dieser Elemente wird als \textit{Fahrstraße} bezeichnet. Eine Fahrstraße beginnt und endet in der Regel an einem Signal. Der \ac{Fdl} fordert das Stellwerk zum stellen einer bestimmten Fahrstraße auf, indem er das Start- und Zielsignal eingibt. Aufgabe des Stellwerks ist es nun, einen Fahrweg zwischen den gewünschten Signalen zu finden. Hierbei müssen alle nötigen Fahrwegelemente gefunden und (im Falle von Weichen und Signalen) in die entsprechende Stellung gebracht werden. Wichtig ist hierbei auch das Gewähren von Flankenschutz. Beim Befahren einer Fahrstraße durch einen Zug, werden die Fahrwegelemente nach und nach frei gefahren und können vom Stellwerk wieder für andere Fahrstraßen verwendet werden. Man sagt, die Fahrstraße wird \textit{aufgelöst}.
 
+Die Bildung einer Fahrstraße kann entweder nach dem \textit{Verschlussplanprinzip} oder dem \textit{Spurplanprinzip} geschehen:
+
+\begin{description}
+    \item[Verschlussplanprinzip] Alle möglichen Fahrstraßen sind tabellarisch festgehalten und im Stellwerk fest einprogrammiert. Der Verschlussplan enthält für jede Fahrstraße die Ausschlüsse anderer Fahrstraßen und die Stellung der Fahrwegelemente.~\cite*[][S. 122 f.]{bib:Sicherung-des-Schienenverkehrs}
+    \item[Spurplanprinzp] Die Topologie der Fahrwegelemente mit Nachbarschaftsbeziehungen ist im Spurplan hinterlegt. Um eine Fahrstraße zu bilden wird \textquote{eine Routensuche zwischen Start- und Zielelement entlang der Verbindungen der einzelnen Fahrwegelemente [\dots] durchgeführt.}~\cite*[][S. 123]{bib:Sicherung-des-Schienenverkehrs}
+\end{description}
+
+Das Verschlussplanprinzip eignet sich vor allem für kleine Stellwerke, während es bei größeren Anlagen für Mensch kaum noch zu handhaben ist. Das Spurplanprinzip ist hingegen sehr flexibel und eignet sich für große Anlagen.~\cite*[][S. 124 f.]{bib:Sicherung-des-Schienenverkehrs}
+
 \subsection{Mechanische Stellwerke}\label{text:Grundlagen:Stellwerkstechnik:Mechanische-Stellwerke}
 
-Mechanische Stellwerke sind die historisch älteste Bauart und werden in Deutschland seit Ende des 19. Jahrhunderts im Einsatz. Bis heute machen sie ein Viertel aller bei der Deutschen Bahn in Betrieb befindlichen Stellwerke aus, steuern aber nur rund 15\% des Streckennetzes.~\cite{bib:DB:Stellwerke} Sie sind die einfachste Bauart und werden heute nicht mehr neu gebaut, sondern nur noch instand gehalten. In diesem Abschnitt werden die wichtigsten Konzepte mechanischer Stellwerke erläutert.
+Mechanische Stellwerke sind die historisch älteste Bauart und werden in Deutschland seit Ende des 19. Jahrhunderts im Einsatz. Bis heute machen sie ein Viertel aller bei der Deutschen Bahn in Betrieb befindlichen Stellwerke aus, steuern aber nur rund 15\% des Streckennetzes.~\cite{bib:DB:Stellwerke} Sie sind die einfachste Bauart und werden heute nicht mehr neu gebaut, sondern nur noch instand gehalten. In diesem Abschnitt werden die wichtigsten Konzepte mechanischer Stellwerke erläutert. \autoref{abb:Grundlagen:Stellwerkstechnik:Mechanische-Stellwerke:Hebelbank} zeigt beispielhaft eine Hebelbank in einem mechanischen Stellwerk.
 
 \begin{figure}[H]
     \centering
@@ -96,7 +105,8 @@ Mechanische Stellwerke sind die historisch älteste Bauart und werden in Deutsch
     \caption{Hebelbank in einem mechanischen Stellwerk~\cite{bib:stellwerke.de:Einheit}}\label{abb:Grundlagen:Stellwerkstechnik:Mechanische-Stellwerke:Hebelbank}
 \end{figure}
 
-Weichen und Signale werden in einem mechanischen Stellwerk über Seilzüge und Hebel gestellt. Die Hebel sind dabei im Stellwerk in einer Hebelbank angebracht, wobei jedem Signal und jeder Weiche je ein Hebel zugeordnet ist. Bei den Signalen handelt es sich im Formsignale, wie im linken Bild in \autoref{abb:Grundlagen:Stellwerkstechnik:Signale} zu sehen ist. Im Verschlusskasten hinter der Hebelbank, können einzelne Hebel in einem bestimmten System verschlossen werden, sodass ihre Position nicht mehr verändert werden kann. Dazu bedient man sich des Prinzips der Fahrstraßen: in einem mechanischen Stellwerk sind alle möglichen Fahrstraßen gest definiert und über Fahrstraßenhebel wählbar. Wird ein Fahrstraßenhebel betätigt, so werden wie bei einem Türschloss die für die Fahrstraße benötigten Hebel im Verschlusskasten verschlossen. Ist eine Weiche nicht in der richtigen Stellung, kann der Fahrstraßenhebel nicht betätigt werden.~\cite*[][S.173 ff.]{bib:Sicherung-des-Schienenverkehrs}
+Weichen und Signale werden in einem mechanischen Stellwerk über Seilzüge und Hebel gestellt. Die Hebel sind dabei im Stellwerk in einer Hebelbank angebracht, wobei jedem Signal und jeder Weiche je ein Hebel zugeordnet ist. Bei den Signalen handelt es sich im Formsignale, wie im linken Bild in \autoref{abb:Grundlagen:Stellwerkstechnik:Signale} zu sehen ist.
+Im Verschlusskasten hinter der Hebelbank, können einzelne Hebel in einem bestimmten System verschlossen werden, sodass ihre Position nicht mehr verändert werden kann. Dazu bedient man sich des Prinzips der Fahrstraßen: in einem mechanischen Stellwerk sind alle möglichen Fahrstraßen fest definiert und über Fahrstraßenhebel wählbar. Mechanische Stellwerke arbeiten also grundsätzlich nach dem Verschlussplanprinzip. Wird ein Fahrstraßenhebel betätigt, so werden wie bei einem Türschloss die für die Fahrstraße benötigten Hebel im Verschlusskasten verschlossen. Ist eine Weiche nicht in der richtigen Stellung, kann der Fahrstraßenhebel nicht betätigt werden.~\cite*[][S.173 ff.]{bib:Sicherung-des-Schienenverkehrs}
 
 \begin{figure}[H]
     \centering
@@ -112,6 +122,42 @@ Weichen können in einem mechanischen Stellwerk auf 800 Meter Entfernung gestell
 
 \subsection{Relaisstellwerke}\label{text:Grundlagen:Stellwerkstechnik:Relaisstellwerke}
 
+Aufgrund des hohen Personalbedarfs und der geringen Stellentfernung von mechanischen Stellwerken, wurde in den 1930er und 1940er Jahren begonnen, Relais zur Informationsverarbeitung in Stellwerken zu nutzen. Seit Mitte der 1950er Jahre wurden Relaisstellwerke in Deutschland flächendeckend eingesetzt.~\cite*[][S. 188]{bib:Sicherung-des-Schienenverkehrs} Relaisstellwerke sind die heute am weitesten verbreitete Bauart und steuern rund 43\% des Streckennetzes.~\cite{bib:DB:Stellwerke} In diesem Abschnitt werden die wichtigsten Konzepte von Relaisstellwerken erläutert. \autoref{abb:Grundlagen:Stellwerkstechnik:Relaisstellwerke:Kf} zeigt beispielhaft eine Stelltafel in einem Relaisstellwerk.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{Assets/Images/2-Grundlagen/Kf.jpg}
+    \caption{Stelltafel im Stellwerk Köln Hbf (Kf)~\cite{bib:stellwerke.info:Kf}}\label{abb:Grundlagen:Stellwerkstechnik:Relaisstellwerke:Kf}
+\end{figure}
+
+Der für den \ac{Fdl} größte Unterschied eines Relaisstellwerks zu einem mechanischen Stellwerks ist die Bedienung: statt Hebeln werden Tasten verwendet und die Gleisanlagen sind schematisch auf einer Stelltafel dargestellt. In großen Stellwerken, wie das des Kölner Hauptbahnhofs in \autoref{abb:Grundlagen:Stellwerkstechnik:Relaisstellwerke:Kf}, findet die Bedienung nicht direkt über die Tafel statt, sondern über Nummernstellpulte. Kleinere Stellwerke haben die Stelltafel in einem Tisch verbaut.
+
+Die Fahrstraßenbildung erfolgt nun über das Drücken zweier Tasten: einem Start und einem Ziel. Da ein Relaisstellwerk nach dem Spurplanprinzip arbeitet, wird die Fahrstraße nach drücken der Tasten automatisch gesucht und gebildet.~\cite*[][S. 188 ff.]{bib:Sicherung-des-Schienenverkehrs} \autoref{abb:Grundlagen:Stellwerkstechnik:Relaisstellwerke:Stelltafel-Ausschnitt} zeigt beispielhaft einen Ausschnitt aus einer Stelltafel mit eingestellter Fahrstraße.
+
+% https://de.wikipedia.org/wiki/Datei:Ausschnitt.png
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{Assets/Images/2-Grundlagen/Stelltafel-Ausschnitt.png}
+    \caption{Ausschnitt aus einer beispielhaften Stelltafel~\cite{bib:stellwerke.info:Kf}}\label{abb:Grundlagen:Stellwerkstechnik:Relaisstellwerke:Stelltafel-Ausschnitt}
+\end{figure}
+
+Im Technikraum des Stellwerks ist die gesamte Stelllogik über standardisierte Baugruppen realisiert. Verwendet werden spezielle \textit{Signalrelais}, die den hohen Sicherheitsanforderungen genügen. Signale und Weichen werden nun elektrisch über eine Entfernung von bis zu sieben Kilometern gestellt.~\cite{bib:DB:Stellwerke} Die Signale sind als Lichtsignale ausgeführt, wie beispielhaft im rechten Bild in \autoref{abb:Grundlagen:Stellwerkstechnik:Signale} zu sehen ist.
+
 \subsection{Elektronische Stellwerke}\label{text:Grundlagen:Stellwerkstechnik:Elektronische-Stellwerke}
 
+Elektronische Stellwerke sind die jüngste Bauart und steuern rund 32\% des Streckennetzes Der Deutschen Bahn.~\cite{bib:DB:Stellwerke} Die ersten elektronischen Stellwerke wurden Ende der 1970er Jahre in Betrieb genommen. In Deutschland gingen die ersten Stellwerke in den 1980er Jahren ans Netz, flächendeckend jedoch erst ab Anfang der 1990er Jahre. In diesem Abschnitt werden die wichtigsten Konzepte elektronischer Stellwerke erläutert. \autoref{abb:Grundlagen:Stellwerkstechnik:Elektronische-Stellwerke:ESTW} zeigt beispielhaft die Bedienoberfläche eins elektronisches Stellwerks.
+
+% https://de.wikipedia.org/wiki/Datei:ESTW_L_90.PNG
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{Assets/Images/2-Grundlagen/ESTW-L-90.png}
+    \caption{Bedienoberfläche eines elektronischen Stellwerks}\label{abb:Grundlagen:Stellwerkstechnik:Elektronische-Stellwerke:ESTW-L-90}
+\end{figure}
+
+Die Bedienung eines elektronischen Stellwerks erfolgt über eine auf einem Computerbildschirm dargestellte Bedienoberfläche, wie in \autoref{abb:Grundlagen:Stellwerkstechnik:Elektronische-Stellwerke:ESTW-L-90} zu sehen ist. Die gesamte Stelllogik wird nicht mehr über Relais, sondern durch Computer realisiert. Die Fahrstraßenbildung erfolgt über einfache Mausklicks. Durch die Verwendung von Computern ist eine einfache Fernsteuerung von Stellwerken möglich, was die Zentralisierung von Stellwerken ermöglicht. Relais- und elektrische Stellwerke haben eine wichtige Architekturentscheidung gemeinsam: die Verkabelung ist sternförmig aufgebaut und die Ansteuerung der Signale und Weichen geschieht über parallele Kupferleitungen. Dadurch liegt die maximale Stellentfernung bei 7 Kilometern.
+
 \subsection{Digitale Stellwerke}\label{text:Grundlagen:Stellwerkstechnik:Digitale-Stellwerke}
+
+Digitale Stellwerke sind eine Sonderbauform von elektronischen Stellwerken und befinden sich in Deutschland noch in der Entwicklungsphase, beziehungsweise sind erst in wenigen Stellwerken im Einsatz.
+
+Der größte Unterschied zu elektronischen Stellwerken ist die Art der Verkabelung: statt sternförmig, ist die Verkabelung in einem digitalen Stellwerk als Ring aufgebaut. Als Medium werden Glasfaserkabel verwendet, und mit diesen ein IP-Netz über den gesamten Stellbereich aufgespannt. Die Ansteuerung der Signale und Weichen geschieht über Ethernet.

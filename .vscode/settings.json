@@ -5,7 +5,10 @@
         "Flankenschutzweichen",
         "gpio",
         "pico",
-        "Pico"
+        "Pico",
+        "Routensuche",
+        "Spurplanprinzip",
+        "Verschlussplanprinzip"
     ],
     "editor.formatOnSave": true,
     "editor.wordWrap": "on",
