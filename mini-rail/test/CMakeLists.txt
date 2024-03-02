@@ -1,5 +1,6 @@
 project(mini-rail-test LANGUAGES C)
 
+add_executable(bin-test src/bin-test.c)
 add_executable(serial-listener-test src/serial-listener-test.c)
 add_executable(database-test src/database-test.c)
 add_executable(graph-test src/graph-test.c)

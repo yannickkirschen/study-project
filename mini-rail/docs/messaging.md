@@ -20,8 +20,8 @@ There are the following message types:
 | `000 0000 0011`                 | `0x003`          | `INIT_CONTACT_POINT`          | Controller | Decoder      | 20 bit for the contact point ID and 5 bit for the GPIO pin (2x).                                                                            |
 | `000 0000 0100`                 | `0x004`          | `INIT_CONTACT_POINT_DIRECTED` | Controller | Decoder      | 20 bit for the directed contact point ID, 20 bit for the first contact point ID and 20 bit for the second contact point ID.                 |
 | `000 0000 0101`                 | `0x005`          | `INIT_CONTACT_COUNTER`        | Controller | Decoder      | 20 bit for the contact counter ID and 20 bit for the directed contact point ID.                                                             |
-| `000 0000 0110`                 | `0x006`          | `INIT_SIGNAL`                 | Controller | Decoder      | 20 bit for the signal ID and 5 bits for the relay GPIO pin (2x).                                                                            |
-| `000 0000 0111`                 | `0x007`          | `INIT_SIGNAL_NO_RELAY`        | Controller | Decoder      | 20 bit for the signal ID and 10 bits for the LED GPIO pins (2x).                                                                            |
+| `000 0000 0110`                 | `0x006`          | `INIT_SIGNAL`                 | Controller | Decoder      | 20 bit for the signal ID and 10 bits for the LED GPIO pins. The first 5 bits are the red LED, the second the green. (2x).                   |
+| `000 0000 0111`                 | `0x007`          | `INIT_SIGNAL_RELAY`           | Controller | Decoder      | 20 bit for the signal ID and 5 bits for the relay GPIO pin (2x).                                                                            |
 | `000 0000 1000`                 | `0x008`          | `INIT_SWITCH`                 | Controller | Decoder      |                                                                                                                                             |
 | `000 0000 1001`                 | `0x009`          | `INIT_OK`                     | Controller | One decoder  | Init phase is finished for decoder.                                                                                                         |
 | `000 0000 1010`                 | `0x00A`          | `INIT_EXIT`                   | Controller | All decoders | Announce that the init phase is done. Decoders now start working.                                                                           |
@@ -48,9 +48,7 @@ There are the following message types:
 | `xxxx xxxx xxxx xxxx xxxx dddd` | `SET_SIGNAL` | Set a signal to a given indication, where `x` is the signal ID and `d` the indication (`0` = stop, `1` = clear).  |
 | `xxxx xxxx xxxx xxxx xxxx 000d` | `SET_SWITCH` | Set a switch to a given position,  where `x` is the switch ID and `d` the position (`0` = base, `1` = alternate). |
 
-xxxx xxxx
-xxxx xxxx << 4
-xxxx >> 4
+001 0000 0001 - 0000 0000 0000 0000 0001 0001
 
 ### Response codes
 
