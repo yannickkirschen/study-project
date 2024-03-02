@@ -15,10 +15,10 @@ jobs:
 
     steps:
       - name: Clone
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Get short commit SHA
-        uses: benjlevesque/short-sha@v1.2
+        uses: benjlevesque/short-sha@v3.0
         id: short-sha
 
         with:
@@ -31,7 +31,7 @@ jobs:
           TEX_PDF_NAME: ${{ env.TEX_PDF_NAME }}-${{ env.SHA }}
 
       - name: Upload PDF
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
 
         with:
           name: ${{ env.TEX_PDF_NAME }}.pdf

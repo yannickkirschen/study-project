@@ -8,7 +8,7 @@ jobs:
 
     steps:
       - name: Clone # Checkout root
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Clone submodules # Checkout rest
         shell: bash
