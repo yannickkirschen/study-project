@@ -58,6 +58,7 @@ int main() {
 
     can_setup(&can, PIOx_IRQHandler, slave_can_callback, CAN_RX_PIN, CAN_TX_PIN);
 
+    int interval = 1000;
     while (true) {
         gpio_put(ONBOARD_LED_PIN, true);
 
@@ -66,10 +67,13 @@ int main() {
             .dlc = 8,
             .data = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06}};
 
-        can2040_transmit(&can, msg);
+        int rc = can2040_transmit(&can, msg);
+        if (rc != 0) {
+            interval = 100;
+        }
 
-        sleep_ms(1000);
+        sleep_ms(interval);
         gpio_put(ONBOARD_LED_PIN, false);
-        sleep_ms(1000);
+        sleep_ms(interval);
     }
 }

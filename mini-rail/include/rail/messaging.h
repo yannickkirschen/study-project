@@ -4,6 +4,7 @@
 #include <stdint.h>
 
 #include "RP2040.h"
+#include "bin.h"
 #include "can2040.h"
 #include "core_cm0plus.h"
 #include "error.h"
@@ -21,8 +22,8 @@
 #define MINI_RAIL_MESSAGE_INIT_CONTACT_POINT          0x003  // 20 bit for the contact point ID and 5 bit for the GPIO pin (2x).
 #define MINI_RAIL_MESSAGE_INIT_CONTACT_POINT_DIRECTED 0x004  // 20 bit for the directed contact point ID, 20 bit for the first contact point ID and 20 bit for the second contact point ID.
 #define MINI_RAIL_MESSAGE_INIT_CONTACT_COUNTER        0x005  // 20 bit for the contact counter ID and 20 bit for the directed contact point ID.
-#define MINI_RAIL_MESSAGE_INIT_SIGNAL                 0x006  // 20 bit for the signal ID and 5 bits for the relay GPIO pin (2x).
-#define MINI_RAIL_MESSAGE_INIT_SIGNAL_NO_RELAY        0x007  // 20 bit for the signal ID and 10 bits for the LED GPIO pins (2x).
+#define MINI_RAIL_MESSAGE_INIT_SIGNAL                 0x006  // 20 bit for the signal ID and 10 bits for the LED GPIO pins. The first 5 bits are the red LED, the second the green. (2x).
+#define MINI_RAIL_MESSAGE_INIT_SIGNAL_RELAY           0x007  // 20 bit for the signal ID and 5 bits for the relay GPIO pin (2x).
 #define MINI_RAIL_MESSAGE_INIT_SWITCH                 0x008  // TODO: how do we want to handle switches?
 #define MINI_RAIL_MESSAGE_INIT_OK                     0x009  // Init phase is finished for decoder.
 #define MINI_RAIL_MESSAGE_INIT_EXIT                   0x00A  // Announce that the init phase is done. Decoders now start working.
@@ -81,14 +82,20 @@
 // Definition of internal error codes, not populated to the CAN bus.
 //
 
-#define MINI_RAIL_MESSAGING_ERROR_DATA_TOO_SHORT 0x01  // The data of a CAN message is too short to be interpreted in the current context.
+#define MINI_RAIL_MESSAGING_ERROR_DATA_TOO_SHORT    0x01  // The data of a CAN message is too short to be interpreted in the current context.
+#define MINI_RAIL_MESSAGING_ERROR_ELEMENT_NOT_FOUND 0x02  // The element with the given ID was not found.
+#define MINI_RAIL_MESSAGING_ERROR_INVALID_DATA      0x03  // The data of a CAN message is invalid.
 
 typedef struct can2040 can2040_t;
 typedef struct can2040_msg can2040_msg_t;
 
 void can_setup(can2040_t *can, irq_handler_t handler, can2040_rx_cb callback, uint32_t rx, uint32_t tx);
-char *can_to_serial_string(can2040_msg_t *msg);
+void can_read_serial_string(can2040_msg_t *msg, char *string);
+void can_print_serial_string(can2040_msg_t *msg);
+void can_create_message(can2040_msg_t *msg, uint32_t id, bin_uint8_array_t *data);
+void can_create_message_from_int(can2040_msg_t *msg, uint32_t id, uint32_t data);
 uint32_t can_get_element_id(can2040_msg_t *msg, error_t *error);
+uint64_t can_get_element_data(can2040_msg_t *msg);
 
 #ifdef MINI_RAIL_MESSAGING_IMPLEMENTATION
 
@@ -107,15 +114,39 @@ void can_setup(can2040_t *can, irq_handler_t handler, can2040_rx_cb callback, ui
     can2040_start(can, sys_clock, bitrate, rx, tx);
 }
 
-char *can_to_serial_string(can2040_msg_t *msg) {
-    char *buffer = malloc(100);
+void can_read_serial_string(can2040_msg_t *msg, char *string) {
+    char *token = strtok(string, ";");
+    uint32_t id = bin_string_to_uint32(token);
 
-    printf("%lX;", msg->id);
-    for (int i = 0; i < 8; i++) {
-        printf("%02X", msg->data[i]);
+    token = strtok(NULL, ";");
+    bin_uint8_array_t *data = bin_string_to_uint8_array(token);
+
+    can_create_message(msg, id, data);
+}
+
+void can_print_serial_string(can2040_msg_t *msg) {
+    printf("%s;%s\n",
+           bin_uint32_to_string(msg->id),
+           bin_uint8_array_to_string(msg->data, msg->dlc));
+}
+
+void can_create_message(can2040_msg_t *msg, uint32_t id, bin_uint8_array_t *data) {
+    msg->id = id;
+
+    msg->dlc = data->size;
+    for (int j = 0; j < msg->dlc; j++) {
+        msg->data[j] = data->data[j];
     }
+}
 
-    return string_trim(buffer);
+void can_create_message_from_int(can2040_msg_t *msg, uint32_t id, uint32_t data) {
+    msg->id = id;
+
+    msg->dlc = 4;
+    msg->data[0] = (data & 0xFF000000) >> 24;
+    msg->data[1] = (data & 0x00FF0000) >> 16;
+    msg->data[2] = (data & 0x0000FF00) >> 8;
+    msg->data[3] = (data & 0x000000FF);
 }
 
 uint32_t can_get_element_id(can2040_msg_t *msg, error_t *error) {
@@ -129,6 +160,11 @@ uint32_t can_get_element_id(can2040_msg_t *msg, error_t *error) {
     uint32_t lower = (msg->data[2] & 0xF0) >> 4;
 
     return (upper | middle | lower);
+}
+
+uint64_t can_get_element_data(can2040_msg_t *msg) {
+    uint32_t upper = (msg->data[2] & 0x0F) << 8;
+    return (upper | msg->data[3] | msg->data[4] | msg->data[5] | msg->data[6] | msg->data[7]);
 }
 
 #endif  // MINI_RAIL_MESSAGING_IMPLEMENTATION

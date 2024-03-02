@@ -23,3 +23,16 @@ target_link_libraries(can-slave pico_stdlib cmsis_core)
 target_link_libraries(hall pico_stdlib)
 target_link_libraries(reed pico_stdlib)
 target_link_libraries(reed-multi pico_stdlib)
+
+if (TARGET tinyusb_device)
+    message(STATUS "Building uart because TinyUSB submodule is initialized in the SDK")
+    add_executable(uart src/uart.c)
+    target_link_libraries(uart pico_stdlib hardware_uart cmsis_core)
+
+    pico_enable_stdio_usb(uart 1)
+    pico_enable_stdio_uart(uart 1)
+
+    pico_add_extra_outputs(uart)
+elseif (PICO_ON_DEVICE)
+    message(WARNING "Not building uart because TinyUSB submodule is not initialized in the SDK")
+endif ()

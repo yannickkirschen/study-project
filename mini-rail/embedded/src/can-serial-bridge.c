@@ -1,11 +1,12 @@
 #define ERROR_IMPLEMENTATION
 #define STB_DS_IMPLEMENTATION
 #define STR_IMPLEMENTATION
+#define BIN_IMPLEMENTATION
 
 #define MINI_RAIL_MESSAGING_IMPLEMENTATION
 
-#define CAN_RX_PIN       0
-#define CAN_TX_PIN       1
+#define CAN_RX_PIN       2
+#define CAN_TX_PIN       3
 #define ONBOARD_LED_PIN  25
 #define CAN_RX_LED_PIN_1 17
 #define CAN_RX_LED_PIN_2 16
@@ -25,8 +26,12 @@ static void can_serial_callback(can2040_t *bus, uint32_t notify, can2040_msg_t *
         gpio_put(CAN_RX_LED_PIN_2, !toggle_rx);
         toggle_rx = !toggle_rx;
 
-        printf("%s\n", can_to_serial_string(msg));
+        printf("Received from Bus: ");
+        can_print_serial_string(msg);
     } else if (notify & CAN2040_NOTIFY_TX) {
+        gpio_put(CAN_RX_LED_PIN_1, toggle_rx);
+        gpio_put(CAN_RX_LED_PIN_2, !toggle_rx);
+        toggle_rx = !toggle_rx;
     }
 }
 
@@ -46,6 +51,12 @@ int main() {
     gpio_init(CAN_RX_LED_PIN_2);
     gpio_set_dir(CAN_RX_LED_PIN_2, GPIO_OUT);
 
+    gpio_put(CAN_RX_LED_PIN_1, true);
+    gpio_put(CAN_RX_LED_PIN_2, true);
+    sleep_ms(500);
+    gpio_put(CAN_RX_LED_PIN_1, false);
+    gpio_put(CAN_RX_LED_PIN_2, false);
+
     can_setup(&can, PIOx_IRQHandler, can_serial_callback, CAN_RX_PIN, CAN_TX_PIN);
 
     while (true) {
@@ -53,10 +64,13 @@ int main() {
         fgets(buffer, MAX_MESSAGE_SIZE, stdin);
         buffer[strcspn(buffer, "\n")] = 0;
 
-        if (string_equals(buffer, "ping")) {
-            printf("pong\n");
-        } else {
-            printf("WTF? Received '%s'\n", buffer);
-        }
+        can2040_msg_t *msg = malloc(sizeof(can2040_msg_t));
+        can_read_serial_string(msg, buffer);
+
+        printf("Sending onto Bus: ");
+        can_print_serial_string(msg);
+
+        int rc = can2040_transmit(&can, msg);
+        printf("Transmit status: %d\n", rc);
     }
 }
