@@ -4,9 +4,11 @@
         "Besetztsein",
         "bootsel",
         "Flankenschutzweichen",
+        "Gleisoval",
         "gpio",
         "pico",
         "Pico",
+        "Polwendeschaltern",
         "Routensuche",
         "Spurplanprinzip",
         "Verschlussplanprinzip"
