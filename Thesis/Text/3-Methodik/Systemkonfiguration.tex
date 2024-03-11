@@ -1,0 +1,25 @@
+\section{Systemkonfiguration}\label{text:Methodik:Systemkonfiguration}
+
+Die Automatisierung einer Modelleisenbahn stellt ein faszinierendes Unterfangen dar, das eine Brücke zwischen technischer Innovation und nostalgischer Leidenschaft schlägt. Die Auswahl der geeigneten Technik zur Realisierung dieses Ziels erfordert eine gründliche Überlegung verschiedener Ansätze. Dieser Abschnitt widmet sich der Vorstellung von zwei maßgeblichen Varianten, die für die Implementierung des Projekts in Erwägung gezogen werden. Dabei werden nicht nur die technischen Aspekte beleuchtet, sondern auch die praktischen Auswirkungen jeder Variante auf das Gesamtprojekt diskutiert.
+
+\subsection{Zentrale Steuerung}\label{text:Methodik:Systemkonfiguration:Zentrale-Steuerung}
+
+Die Idee einer zentralen Steuerung ist in der Welt der Automatisierung keineswegs neu, findet aber in der Konzeption von Modelleisenbahnsystemen eine besondere Anwendung. Kern dieses Ansatzes ist es, sämtliche Komponenten - von den Weichen über die Signale bis hin zu den Achszählern - unter der Ägide einer zentralen Steuereinheit zu vereinen. Ein Raspberry Pi, bekannt für seine Vielseitigkeit und Leistungsfähigkeit, erweist sich als ideale Wahl für eine solche Steuereinheit. Seine Fähigkeit, zahlreiche Sensoren und Aktuatoren über GPIO-Pins anzusteuern, ermöglicht eine nahtlose Integration und Kontrolle der verschiedenen Systemelemente.
+\newline
+Ein bedeutender Aspekt der zentralen Steuerung ist die Kommunikation mit dem Benutzer. Der Raspberry Pi kann über eine grafische Benutzeroberfläche (GUI) verfügen, die es dem Benutzer ermöglicht, die Modelleisenbahn zu steuern und zu überwachen. Die GUI kann beispielsweise die Position der Züge auf der Anlage anzeigen, die Weichen und Signale steuern und die Achszähler überwachen. Die zentrale Steuerung bietet somit eine umfassende Kontrolle über die Modelleisenbahn und ermöglicht eine intuitive Interaktion mit dem System.
+
+\subsection{Dezentrale Steuerung}\label{text:Methodik:Systemkonfiguration:Dezentrale-Steuerung}
+
+Während die zentrale Steuerung durch ihre Einheitlichkeit besticht, bietet die dezentrale Steuerung eine Flexibilität, die in komplexen oder sich erweiternden Systemen von unschätzbarem Wert sein kann. Hierbei werden die Achszähler und weitere Systemkomponenten als autonome Einheiten konzipiert, die über individuelle Mikrocontroller gesteuert werden. Diese Mikrocontroller, beispielsweise aus der Arduino- oder ESP-Familie, sind dafür verantwortlich, ihre jeweiligen Bereiche autonom zu verwalten und dabei dennoch eine übergeordnete Koordination durch einen zentralen Computer - das virtuelle Stellwerk - zu ermöglichen.
+\newline
+Diese Methode brilliert durch ihre modulare Natur. Jede Komponente kann unabhängig entwickelt, getestet und bei Bedarf ersetzt oder erweitert werden. Darüber hinaus erlaubt die dezentrale Architektur eine skalierbare Erweiterung der Anlage, ohne dass die Grundstruktur des Systems grundlegend überdacht werden muss. Allerdings erfordert dieser Ansatz eine sorgfältige Planung der Kommunikationswege zwischen den Mikrocontrollern und dem zentralen Stellwerk, um Effizienz und Zuverlässigkeit zu gewährleisten.
+
+\subsection{Entscheidung}\label{text:Methodik:Systemkonfiguration:Entscheidung}
+
+Nach eingehender Betrachtung der Vor- und Nachteile beider Systeme fiel die Entscheidung auf eine innovative Hybridlösung, die die Stärken beider Ansätze vereint. Diese Lösung sieht vor, dass Achszähler, Weichen und Signale dezentral über Mikrocontroller gesteuert werden, wobei mehrere Sensoren und Aktuatoren an einen einzigen Controller angeschlossen werden können. Ein Beispiel hierfür ist die Nutzung eines Raspberry Pi Pico, der mehrere Achszähler steuert und somit die Effizienz des Systems steigert.
+\newline
+Die zentrale Steuerung des Stellwerks erfolgt durch ein speziell entwickeltes Programm auf einem Laptop, der eine direkte Verbindung zu den Mikrocontrollern unterhält. Diese Konfiguration optimiert die Flexibilität und Modularität der Anlage und ermöglicht gleichzeitig eine zentrale Überwachung und Steuerung. Durch die Kombination der Sensoren und Aktuatoren an einzelnen Mikrocontrollern können die Kosten effektiv gesenkt werden, während die Modularität und Erweiterbarkeit des Systems erhalten bleiben.
+\newline
+Die Entscheidung für diese Hybridlösung spiegelt das Bestreben wider, eine Balance zwischen technischer Effizienz, Kostenkontrolle und der Realisierung einer realitätsnahen Modelleisenbahn zu finden. Sie symbolisiert einen innovativen Ansatz in der Welt der Modelleisenbahnautomatisierung, der die Grundlage für zukünftige Entwicklungen und Erweiterungen bildet.
+\newline
+Die Kommunikation zwischen den Mikrocontrollern untereinander und dem Laptop wird in \autoref{text:Methodik:Kommunikation} näher erläutert.

@@ -1,6 +1,6 @@
 \section{Kommunikation}\label{text:Methodik:Kommunikation}
 
-Wie in \autoref{text:Methodik:Aufbau-des-Systems} beschrieben, wird das Stellwerk auf einem Laptop realisiert. Dieser Laptop muss mit den Mikrocontrollern, die die Achszähler steuern, kommunizieren können. Die Kommunikation kann über verschiedene Schnittstellen realisiert werden. In diesem Abschnitt werden die verschiedenen Möglichkeiten der Kommunikation vorgestellt.
+Die effiziente und zuverlässige Kommunikation zwischen dem Laptop, der als Steuerzentrale dient, und den Mikrocontrollern, welche die Achszähler steuern, ist ein fundamentales Element für die Funktionalität des gesamten Systems. Hierbei kommen verschiedene Schnittstellen und Protokolle in Frage, um eine reibungslose und effektive Übertragung von Steuerbefehlen und Zustandsinformationen zu gewährleisten. Im Folgenden werden die charakteristischen Merkmale und Implementierungsdetails der verschiedenen Kommunikationsmöglichkeiten erörtert, wobei auch auf deren Eignung für spezifische Anwendungsfälle eingegangen wird.
 
 \subsection{CAN-Bus}\label{text:Methodik:Kommunikation:CAN-Bus}
 
@@ -26,4 +26,4 @@ Die Kommunikation zwischen den Mikrocontrollern kann auch über analoge Signale 
 
 \subsection{Anmerkung}\label{text:Methodik:Kommunikation:Anmerkung}
 
-Die Kommunikation zwischen den Mikrocontrollern und dem Laptop erfolgt über die USB-Schnittstelle. Dieser ist hierbei an einen Pico angeschlossen, welcher als Bridge zwischen dem Laptop und dem Bus fungiert. Die Kommunikation zwischen Laptop und Bridge wird mit der \lstinline{tinyusb} \footnote{\url{https://github.com/hathach/tinyusb}} Bibliothek realisiert. 
+Die Verbindung zwischen dem Steuerlaptop und den Mikrocontrollern über die USB-Schnittstelle stellt eine zentrale Komponente des Kommunikationssystems dar. Ein Raspberry Pi Pico agiert hierbei als Brücke, indem er als USB-zu-Bus-Interface fungiert. Die \lstinline{tinyusb} \footnote{\url{https://github.com/hathach/tinyusb}} Bibliothek ermöglicht eine effiziente und flexible Kommunikation über diese Schnittstelle, wodurch eine hohe Kompatibilität und einfache Integration in das Gesamtsystem gewährleistet wird. 
