@@ -1,0 +1,23 @@
+\section{Achszähler}\label{text:Methodik:Achszähler}
+
+Wie in \autoref{text:Grundlagen:Gleisfreimeldung:Achszähler} beschrieben, werden Achszähler in der Realität mit Elektromagneten realisiert. Diese Methode ist jedoch für die Umsetzung bei einer Klemmbaustein-Eisenbahn nicht geeignet, da die Plastikräder der Fahrzeuge das Magnetfeld bei einer Überfahrt nicht stören. Dennoch ist es auf andere Weise möglich, Achszähler zu realisieren.
+\newline
+In den folgenden Abschnitten werden drei verschiedene Umsetzungsmöglichkeiten für Schienenkontakte vorgestellt. Zwei solcher Schienenkontakte können dann zu einem Achszähler kombiniert werden, welcher die Anzahl der Achsen zählt und die Fahrtrichtung bestimmt.
+
+\subsection{IR-Lichtschranke}\label{text:Methodik:Achszähler:Lichtschranke}
+
+Eine Möglichkeit, Achszähler zu realisieren, ist die Verwendung von Infrarot-Lichtschranken. Diese bestehen aus einer Infrarot-LED und einem Fototransistor. Wird das Licht der LED durch ein Objekt unterbrochen, wird der Fototransistor nichtmehr angestrahlt und gibt keinen Strom mehr durch. Dieser Zustand kann dann auftreten, wenn ein Fahrzeug die Lichtschranke überfährt. Die Anzahl der Achsen, die die Lichtschranke überfahren, kann dann gezählt werden. 
+
+\subsection{Hall-Sensor}\label{text:Methodik:Achszähler:Hall-Sensor}
+
+Eine weitere Möglichkeit für die Realisierung eines Achszählers ist die Verwendung von Hall-Sensoren. Diese Sensoren reagieren auf Magnetfelder und können so die Überfahrt von Fahrzeugen detektieren. Da die Räder der Fahrzeuge aus Plastik sind, können keine Magnetfelder erzeugt werden. Es ist jedoch möglich, in die Fahrzeuge Magnete einzubauen, die dann von den Hall-Sensoren erkannt werden. 
+
+\subsection{Reed-Kontakt}\label{text:Methodik:Achszähler:Reed-Kontakt}
+
+Die dritte Möglichkeit, Achszähler zu realisieren, ist die Verwendung von Reed-Kontakten. Diese bestehen aus zwei Metallstreifen, die in einem Glasröhrchen eingebaut sind. Wird ein Magnetfeld in die Nähe des Reed-Kontakts gebracht, schließen sich die beiden Metallstreifen und es fließt Strom. Wird das Magnetfeld entfernt, öffnen sich die Metallstreifen wieder und es fließt kein Strom mehr.
+
+\subsection{Entscheidungsfindung}\label{text:Methodik:Achszähler:Entscheidungsfindung}
+
+Die Entscheidung für eine der drei Methoden hängt von verschiedenen Faktoren ab. Da dieses private Projekt versucht die Kosten so gering wie möglich zu halten, sind die Anschaffungskosten ein wichtiger Faktor. Außerdem soll die Anlage möglichst realitätsnah sein.
+
+
