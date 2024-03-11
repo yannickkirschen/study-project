@@ -1,0 +1,19 @@
+\section{Aufbau des Systems}\label{text:Methodik:Aufbau-des-Systems}
+
+Die Automatisierung einer Modelleisenbahn kann auf verschiedene Weisen realisiert werden. In diesem Abschnitt werden zwei Varianten vorgestellt, die für die Umsetzung des Projekts in Frage kommen. Die Entscheidung für eine der beiden Varianten wird anhand verschiedener Kriterien getroffen.
+
+\subsection{Zentrale Steuerung}\label{text:Methodik:Aufbau-des-Systems:Zentrale-Steuerung}
+
+Bei der zentralen Steuerung bilden alle Komponenten eines Stellwerks und dessen Gleisbereichs eine Einheit. Die Steuerung erfolgt über eine zentrale Steuereinheit, welche die Signale und Weichen steuert und direkt mit den einzelnen Achszählern verbunden ist. Als mögliche zentrale Steuereinheit kommt ein Raspberry Pi in Frage, da dieser über genügend Rechenleistung und Anschlüsse verfügt, um die Anlage zu steuern. Die Achszähler können über die GPIO-Pins des Raspberry Pi angeschlossen werden. Die Kommunikation mit dem Benutzer erfolgt über ein Display, welches ebenfalls an den Raspberry Pi angeschlossen ist.
+
+\subsection{Dezentrale Steuerung}\label{text:Methodik:Aufbau-des-Systems:Dezentrale-Steuerung}
+
+Bei der dezentralen Steuerung bilden die Achszähler eine eigene Einheit, welche unabhängig von der Steuereinheit arbeitet. Hierbei werden Mikrocontroller verwendet um die einzelnen Komponenten zu steuern. Diese Controller werden dann von einem zentralen Computer gesteuert, welcher das Stellwerk darstellt. Als Mikrocontroller kommen zum Beispiel Arduino-, ESP8266-, ESP32- oder RP-2040-Boards in Frage. Diese Boards müssen nicht viel Rechenleistung besitzen, allerdings über genügend GPIO-Pins verfügen, um Gleiskontakte, Weichen und Signale anzusteuern. Das Stellwerk kann ebenfalls auf einem Raspberry Pi realisiert werden, welcher dann die Kommunikation mit den Mikrocontrollern übernimmt.
+\newline
+Bei unserem Realbeispiel wird die dezentrale Steuerung verwendet, da diese Variante eine größere Flexibilität bietet und die Anlage modular aufgebaut werden kann. Die einzelnen Komponenten können unabhängig voneinander entwickelt und getestet werden. Die dezentrale Steuerung ist allerdings auch teurer, da für jeden Achszähler ein Mikrocontroller benötigt wird.
+
+\subsection{Entscheidung}\label{text:Methodik:Aufbau-des-Systems:Entscheidung}
+
+Die Entscheidung für den Aufbau des Systems, fiel auf eine Mischung aus zentraler und dezentraler Steuerung. Die Achszähler, Weichen und Signale werden dezentral umgesetzt, allerdings können mehrere Sensoren und Aktoren über einen Mikrocontroller gesteuert werden. So können zum Beispiel mehrere Achszähler über einen Raspberry Pi Pico angesprochen werden. Das Stellwerk läuft als zentrales Programm auf einem Laptop, welcher mittels USB-Schnittstelle mit den Mikrocontrollern verbunden ist. Die Möglichkeiten der Kommunikation zwischen den Mikrocontrollern und dem Laptop werden in \autoref{text:Methodik:Kommunikation} erläutert. 
+\newline
+Die Entscheidung für diese Variante wurde getroffen, da sie die Vorteile beider Varianten vereint und die Realitätsnähe der Anlage trotzdem gewährleistet ist. Diese Mischung bietet eine hohe Flexibilität und ermöglicht eine modulare Entwicklung der Anlage. Die Kosten für die Anschaffung der Mikrocontroller sind zwar höher als bei einer zentralen Steuerung, können aber durch die Kombination mehrerer Sensoren und Aktoren pro Mikrocontroller und der daraus entstehenden geringeren Anzahl reduziert werden.

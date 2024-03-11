@@ -1,0 +1,29 @@
+\section{Kommunikation}\label{text:Methodik:Kommunikation}
+
+Wie in \autoref{text:Methodik:Aufbau-des-Systems} beschrieben, wird das Stellwerk auf einem Laptop realisiert. Dieser Laptop muss mit den Mikrocontrollern, die die Achszähler steuern, kommunizieren können. Die Kommunikation kann über verschiedene Schnittstellen realisiert werden. In diesem Abschnitt werden die verschiedenen Möglichkeiten der Kommunikation vorgestellt.
+
+\subsection{CAN-Bus}\label{text:Methodik:Kommunikation:CAN-Bus}
+
+Der CAN-Bus, ein für die Automobilbranche konzipiertes serielles Bussystem, ermöglicht eine effiziente Kommunikation zwischen den diversen Steuergeräten innerhalb eines Fahrzeugs. Als Zweidrahtsystem konstruiert, basiert es auf einem High- und einem Low-Pin für den Datenaustausch. Diese Architektur gewährleistet eine robuste Vernetzung der Steuergeräte, wodurch sie Informationen teilen und aufeinander abstimmen können. Hervorzuheben ist die ausgeprägte Fehlertoleranz des Systems sowie seine Fähigkeit, hohe Datenübertragungsraten zu unterstützen. Neben seiner Anwendung in Fahrzeugen eignet sich der CAN-Bus auch hervorragend für Modelleisenbahnen, dank seiner hohen Leistungsfähigkeit und Zuverlässigkeit. Ein CAN-Bus zwischen mehreren Raspberry Pi Pico Mikrocontrollern kann wie folgt realisiert werden:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Assets/Images/3-Methodik/CANBus-Test.png}
+    \caption{CAN-Bus zwischen mehreren Raspberry Pi Pico Mikrocontrollern}\label{abb:Methodik:Kommunikation:CAN-Bus}
+\end{figure}
+
+In \autoref{abb:Methodik:Kommunikation:CAN-Bus} ist ein CAN-Bus zwischen zwei Raspberry Pi Pico Mikrocontrollern dargestellt. Der CAN-Bus besteht aus einem Kreis, welcher mit 120 Ohm Widerständen an beiden Enden abgeschlossen ist. Die beiden Mikrocontroller sind über den CAN-Bus miteinander verbunden und können so miteinander kommunizieren. Die Kommunikation erfolgt über die Pins GPIO0 und GPIO1 beider Controller. Die Kommunikation zwischen den Mikrocontrollern wird mit der \lstinline{can2040} \footnote{\url{https://github.com/KevinOConnor/can2040}} Bibliothek realisiert. Diese Bibliothek ermöglicht die Kommunikation über den CAN-Bus und bietet eine einfache API, um Nachrichten zu senden und zu empfangen. Die LEDs auf dem Breadboard veranschaulichen das Ping-Pong-Programm, welches die Kommunikation zwischen den beiden Mikrocontrollern darstellt. Der Mikrocontroller 1 sendet eine Nachricht an den Mikrocontroller 2, welcher diese Nachricht empfängt und eine Antwort zurücksendet. Der Mikrocontroller 1 empfängt diese Antwort und sendet wieder eine Nachricht an den Mikrocontroller 2. Dieser Vorgang wiederholt sich in einer Endlosschleife.
+
+\subsection{UART}\label{text:Methodik:Kommunikation:UART}
+
+UART (Universal Asynchronous Receiver Transmitter) ist ein asynchrones seriell arbeitendes Kommunikationsprotokoll, das in der Regel für die Kommunikation zwischen Mikrocontrollern und anderen Geräten verwendet wird. Es ermöglicht die Übertragung von Daten zwischen zwei Geräten über eine einzige Datenleitung. Die Kommunikation erfolgt über die Pins TX und RX beider Geräte.
+\newline
+Der Raspberry Pi Pico verfügt über zwei UART-Ports. Mithilfe dieser Ports kann ein Bus zwischen mehreren Mikrocontrollern realisiert werden, welcher quasi unendlich erweiterbar ist. Die Kommunikation zwischen den Mikrocontrollern mittels UART ist bereits in der pico-sdk Bibliothek implementiert.
+
+\subsection{Analoge Kommunikation}\label{text:Methodik:Kommunikation:Analoge-Kommunikation}
+
+Die Kommunikation zwischen den Mikrocontrollern kann auch über analoge Signale realisiert werden. Hierbei wird ein Signal von einem Mikrocontroller erzeugt und an den anderen Mikrocontroller übertragen. Dieser Mikrocontroller empfängt das Signal und kann daraufhin eine Aktion ausführen. Die Kommunikation erfolgt über die Pins eines Mikrocontrollers. Die Kommunikation mittels analoger Signale ist jedoch sehr langsam und unzuverlässig. Deshalb wird diese Methode nicht weiter betrachtet.
+
+\subsection{Anmerkung}\label{text:Methodik:Kommunikation:Anmerkung}
+
+Die Kommunikation zwischen den Mikrocontrollern und dem Laptop erfolgt über die USB-Schnittstelle. Dieser ist hierbei an einen Pico angeschlossen, welcher als Bridge zwischen dem Laptop und dem Bus fungiert. Die Kommunikation zwischen Laptop und Bridge wird mit der \lstinline{tinyusb} \footnote{\url{https://github.com/hathach/tinyusb}} Bibliothek realisiert. 
