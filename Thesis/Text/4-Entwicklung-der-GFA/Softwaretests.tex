@@ -19,3 +19,47 @@ Das Testprogramm startet mit der Initialisierung der einzelnen Komponenten. Da d
     \item v ist die Gleisfreimeldeanlage
 \end{itemize}
 
+Das Testprogramm testet die folgenden Fälle:
+\begin{itemize}
+    \item Ein Zug fährt normal über die Gerade 
+    \item Ein Zug fährt rückwärts über die Gerade
+    \item Ein Zug ändert unangekündigt die Richtung im Streckenabschnitt
+    \item Ein Zug fährt aus einem Streckenabschnitt, ohne in diesen eingefahren zu sein
+    \item Ein Zug mit mehreren Achsen fährt über die Gerade
+    \item Ein Zug fährt über die Gerade, wendet und fährt wieder zurück
+\end{itemize}
+
+Beim Testen der Geraden wird die Methode \texttt{rail\_vacancy\_assert} verwendet, um die Funktionalität der Gleisfreimeldeanlage zu überprüfen. Diese Methode erwartet als Parameter die Gleisfreimeldeanlage, ein Array von Kontaktpunkten und die Anzahl der Kontaktpunkte. Die Methode triggert die Kontaktpunkte in der Reihenfolge, in der sie im Array übergeben wurden und überprüft, dass kein Fehler auftritt.\newline 
+Die Methode \texttt{rail\_vacancy\_assert\_error} erwartet zusätzlich den Fehlercode, der erwartet wird. Diese Methode wird verwendet, um Fehler zu testen, die auftreten, wenn ein Zug unangekündigt die Richtung ändert oder aus einem Streckenabschnitt fährt, ohne in diesen eingefahren zu sein.\newline 
+Die Methode \texttt{rail\_vacancy\_assert\_with\_change} erhält zwei Arrays von Kontaktpunkten. In dieser Methode werden zunächst die Kontaktpunkte im ersten Array getriggert, dann wird die Funktion zum Ändern der Richtung aufgerufen und anschließend die Kontaktpunkte im zweiten Array getriggert. Diese Methode wird verwendet, um zu testen, ob die Gleisfreimeldeanlage korrekt reagiert, wenn ein Zug die Richtung ändert. Der Ausschnitt des Testprogramms ist in \autoref{lst:Testprogramm} dargestellt.
+
+\begin{lstlisting}[caption={Ausschnitt des Testprogramms für Geraden},label={lst:Testprogramm},language=C]
+  printf("Test normal route\n");
+  rail_vacancy_assert(v, (rail_contact_point_t *[]){p1, p2, p3, p4}, 4);
+  rail_contact_counter_reset(c);
+
+  printf("Test reverse route\n");
+  rail_vacancy_assert(v, (rail_contact_point_t *[]){p4, p3, p2, p1}, 4);
+  rail_contact_counter_reset(c);
+
+  printf("Test change in direction (results in error)\n");
+  rail_vacancy_assert_error(v, (rail_contact_point_t *[]){p1, p2, p2, p1}, 4, 4);
+  rail_contact_counter_reset(c);
+
+  printf("Test drive with no entry\n");
+  rail_vacancy_assert_error(v, (rail_contact_point_t *[]){p2, p1}, 2, 5);
+  rail_contact_counter_reset(c);
+
+  printf("Test drive with double inner trigger\n");
+  rail_vacancy_assert(v, (rail_contact_point_t *[]){p1, p2, p1, p3, p2, p4, p3, p4}, 8);
+  rail_contact_counter_reset(c);
+
+  printf("Test change in direction with change before\n");
+  rail_vacancy_assert_with_change(v, c, (rail_contact_point_t *[]){p1, p2, p1, p2}, 4, (rail_contact_point_t *[]){p2, p1, p2, p1}, 4);
+\end{lstlisting}
+
+Nach jedem Test wird der Zählerstand des Streckenabschnitts zurückgesetzt, um den nächsten Test vorzubereiten. Die Methode \texttt{rail\_contact\_counter\_reset} wurde bereits in \autoref{text:Entwicklung-der-GFA:Implementierung-der-Gleisfreimeldeanlage:Achszähler:Logik-und-Methoden-der-Achszähler} \nameref{text:Entwicklung-der-GFA:Implementierung-der-Gleisfreimeldeanlage:Achszähler:Logik-und-Methoden-der-Achszähler} vorgestellt.
+
+\subsection{Tests für Weichen}\label{text:Entwicklung-der-GFA:Softwaretests:Tests-für-Weichen}
+
+Kommt noch.. Morgen oder Montag oder so..
