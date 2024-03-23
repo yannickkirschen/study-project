@@ -1,0 +1,45 @@
+\section{Implementierung der Gleisfreimeldeanlage}\label{text:Entwicklung-der-GFA:Implementierung-der-Gleisfreimeldeanlage}
+
+In diesem Abschnitt wird die Implementierung der Gleisfreimeldeanlage mit Schwerpunkt auf den Achszählern beschrieben. Des Weiteren werden alle Tests - sowohl die Software- als auch die Hardware-Tests - beschrieben, die durchgeführt wurden, um die Funktionalität der Anlage zu gewährleisten.
+
+\subsection{Achszähler}\label{text:Entwicklung-der-GFA:Implementierung-der-Gleisfreimeldeanlage:Achszähler}
+
+Die (gerichteten) Achszähler sind der Kern der Gleisfreimeldeanlage. Jeder gerichtete Achszähler besteht hierbei aus zwei Reed-Kontakten (Kontaktpunkte), welche mit einem Mikrocontroller verbunden sind. 
+
+\subsubsection{Definitionen der Structs}\label{text:Entwicklung-der-GFA:Implementierung-der-Gleisfreimeldeanlage:Achszähler:Definitionen-der-Structs}
+
+Die Achszähler sind in der Software als Structs definiert. Ein Struct ist eine Datenstruktur, die mehrere Variablen unterschiedlichen Typs zusammenfasst. In diesem Fall werden die Achszähler als Structs definiert, um die Werte der Achszähler zu speichern und zu verarbeiten. Die Definition der Structs ist in \autoref{lst:Structs} dargestellt. Ein Kontaktpunkt wird durch das Struct \texttt{rail\_contact\_point\_t} repräsentiert und hat nur eine ID, die den Kontaktpunkt eindeutig identifiziert. Ein gerichteter Achszähler wird durch das Struct \texttt{rail\_contact\_point\_directed\_t} repräsentiert und hat eine ID, zwei Kontaktpunkte (einen inneren und einen äußeren) und zwei boolsche Variablen, die anzeigen, ob ein Zug in den Achszähler einfährt oder ihn verlässt. 
+\newline
+Wenn ein Achszähler von zwei Streckenabschnitten verwendet wird oder die Strecke in beide Richtungen befahren werden kann, werden zwei gerichtete Achszähler verwendet, welche sich die Kontaktpunkte teilen. Somit kommt es nicht zu Konflikten mit den Kontaktpunkten \texttt{inner} und \texttt{outer}.
+
+\begin{lstlisting}[caption={Definition der Structs},label={lst:Structs},language=C]
+  typedef struct {
+    int id;
+  } rail_contact_point_t;
+
+  typedef struct {
+    int id;
+
+    rail_contact_point_t *outer;
+    rail_contact_point_t *inner;
+
+    bool is_entering;
+    bool is_leaving;
+} rail_contact_point_directed_t;
+\end{lstlisting}
+
+Ein Streckenabschnitt wird in der Software als Counter (Zähler) repräsentiert. Ein Counter hat eine ID, einen Zählerstand (count), ein Array von gerichteten Achszählern, samt ihrer Anzahl und ein weiteres Array von gerichteten Achszählern um festzustellen, ob ein Zug den Streckenabschnitt verlässt und alle Achsen über den gleichen Achszähler fahren. Verlassen nicht alle Achsen den Streckenabschnitt über den gleichen Achszähler, würde dies bedeuten, dass der vordere Teil des Zuges bei einer Weiche in eine andere Richtung fährt als der hintere Teil, was zur direkten Entgleisung führen kann. Die Definition des Structs \texttt{rail\_counter\_t} ist in \autoref{lst:Structs2} dargestellt.
+
+\begin{lstlisting}[caption={Definition des Structs rail\_counter\_t},label={lst:Structs2},language=C]
+  typedef struct {
+    int id;
+    int count;
+
+    rail_contact_point_directed_t **contact_points_directed;
+    int number_contact_points_directed;
+
+    rail_contact_point_directed_t **directions_to;
+    int number_directions_to;
+  } rail_contact_counter_t;
+\end{lstlisting}
+
