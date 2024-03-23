@@ -1,0 +1,25 @@
+\section{Gleisfreimeldeanlage}\label{text:Entwicklung-des-Stellwerks:Gleisfreimeldeanlage}
+
+In \autoref{text:Methodik:Achszähler} \nameref{text:Methodik:Achszähler} wurden verschiedene technische Umsetzungen von Achszählern für Modelleisenbahnen beschrieben. Für dieses Projekt wurden Reed-Kontakte verwendet, da es sich dabei um die einfachste Umsetzung handelt. Ein Bild eines Testaufbaus ist in \todo{Link} zu sehen.
+
+\todo{Code-Styling}
+
+In \autoref{code:Entwicklung-des-Stellwerks:Gleisfreimeldeanlage:contact-point} ist die zentrale Datenstruktur der Gleisfreimeldeanlage aufgeführt.
+
+\begin{margin}
+    \begin{lstlisting}[language=C, label=code:Entwicklung-des-Stellwerks:Gleisfreimeldeanlage:contact-point, caption={Repräsentation eines Kontaktpunktes mit Richtung}]
+typedef struct {
+    int id;
+
+    rail_contact_point_t *outer; // dieser struct hat nur eine ID
+    rail_contact_point_t *inner; // dieser struct hat nur eine ID
+
+    bool is_entering;
+    bool is_leaving;
+} rail_contact_point_directed_t;
+    \end{lstlisting}
+\end{margin}
+
+Da für einen Achszähler die Richtung eines Fahrzeugs bestimmt werden soll, enthält der oben aufgeführte gerichtete Achszähler zwei einfache Achszähler, sowie die Information, ob ein Fahrzeug gerade einen Freimeldeabschnitt betritt oder verlässt.
+
+Löst einer der Kontakte aus, wird eine Reihe von unterschiedlichen Konstellationen abgefragt, um herauszufinden, in welche Richtung sich ein Fahrzeug bewegt (also welche Freimeldeabschnitte betroffen sind) und ob diese Bewegung überhaupt möglich ist. Wird eine unlogische Bewegung festgestellt, muss davon ausgegangen werden, dass sich ein Fahrzeug nicht so bewegt wie es soll und unverzüglich ein Fehler an das Stellwerk gesendet werden. Dieses würde dann einen Nothaltauftrag auslösen.

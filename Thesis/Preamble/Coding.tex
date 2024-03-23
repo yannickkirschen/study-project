@@ -1,7 +1,7 @@
 %!TEX root = ../Thesis.tex
 
 % Common languages
-\lstloadlanguages{Python,Java,C,bash}
+% \lstloadlanguages{Python,Java,C,bash}
 
 \lstset{
     numbers=left,               % Line numbers right
@@ -26,6 +26,8 @@
 \definecolor{String}{HTML}{067D17}
 \definecolor{Annotation}{HTML}{9E880D}
 \definecolor{Comment}{HTML}{8C8C8C}
+
+\definecolor{CIdentifier}{HTML}{342176}
 
 \definecolor{JSONNumber}{HTML}{1750EB}
 \definecolor{JSONDelimiter}{HTML}{000000}
@@ -82,6 +84,21 @@
     morekeywords={as, async, await, break, const, continue, crate, dyn, else, enum, extern, false, fn, for, if, impl, in, let, loop, match,
             mod, move, mut, pub, ref, return, Self, self, static, struct, super, trait, true, type, union, unsafe, use, where, while},
     keywordstyle=\color{Keyword}
+}
+
+\lstdefinelanguage{C}{
+    commentstyle=\color{Comment},
+    morecomment=[s]{/*}{*/},
+    morecomment=[l]//,
+    morestring=[b]",
+    morestring=[b]',
+    moredelim=*[directive]\#,
+    stringstyle=\color{String},
+    morekeywords={auto, break, bool, case, char, const, continue, default, do, double, else, enum, extern, float, for, goto, if, int, long, register, return, short, signed, sizeof, static, struct, switch, typedef, union, unsigned, void, volatile, while},
+    keywordstyle=\color{Keyword},
+    moredirectives={define,elif,else,endif,error,if,ifdef,ifndef,line,include,pragma,undef,warning},
+    identifierstyle=\color{CIdentifier},
+    moreidentifier={rail_contact_point_t,rail_contact_point_directed_t}
 }
 
 \lstdefinelanguage{XML}{
