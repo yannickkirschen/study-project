@@ -1,1 +1,13 @@
 \section{Weichendecoder}\label{text:Entwicklung-des-Stellwerks:Weichendecoder}
+
+Aufgrund der zuvor erwähnten Probleme bei der Kommunikation, wurde auch der Weichendecoder nicht implementiert. Hierfür kann eine mögliche Umsetzung konzeptuell beschrieben werden.
+
+Je nachdem welche Weichen verwendet werden, gibt es verschiedene Möglichkeiten sie zu stellen:
+
+\begin{description}
+    \item[Integrierte Steuerung] Im einfachsten Fall wird eine Weiche genutzt, die entweder bereits eine integrierte Steuerung hat, oder aber miteiner solchen nachgerüstet werden kann. Weichen mit integrierter Steuerung gibt es beispielsweise von LEGO\textsuperscript{\tiny{\textregistered}} für das 12V- und 9V-System.
+    \item[Elektromagnet] Hat die verwendete Weiche keine integrierte Steuerung und lässt sich auch nicht mit dieser nachrüsten, muss eine eigene Lösung entwickelt werden. Diese Weichen sind für den Handbetrieb konzipiert und haben eine Noppe, auf der ein Stein zum vereinfachten Stellen befestigt werden kann. Eine Möglichkeit ist es, einen Permanentmagneten auf dieser Noppe zu platzieren und in geeignetem Abstand einen Elektromagneten anzubringen. Je nach Polung kann die Weiche gestellt werden.
+    \item[LED als Indikator] Die simpelste Lösung ist eine LED, die in der Nähe der Weiche angebracht ist und die gewünschte Stellung anzeigt. Der Anwender muss die Weiche dann manuell in die richtige Stellung bringen und beispielsweise über einen Knopf deren Endlage bestätigen.
+\end{description}
+
+Eine mögliche Erweiterung der Weichensteuerung ist die Nutzung von elektrischen Kontakten, die die korrekte Endlage einer Weiche überprüfen. Somit würde die Funktionalität einer realen Weiche recht genau nachgebildet werden.
