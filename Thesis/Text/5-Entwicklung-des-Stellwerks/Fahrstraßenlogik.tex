@@ -23,11 +23,11 @@ Diese Liste, die streng genommen ein assoziatives Array ist, kann in einer einfa
 \[A \rightarrow W1 \rightarrow N1 \rightarrow P1\] und
 \[A \rightarrow W1 \rightarrow N2 \rightarrow P2 \rightarrow W2 \rightarrow P1\]
 
-gefunden werden. Letzterer ergibt zwar mathematisch Sinn, kann aber aufgrund der Weiche nicht befahren werden. Daher ist eine Filterung notwendig, die schon in der Suche an einer Weiche entscheidet, ob ein Pfad logisch ist oder nicht. In diesem Fall würden für die Fahrstraße folgende Bedingungen gelten:
+gefunden werden. Letzterer ergibt zwar mathematisch Sinn, kann aber aufgrund der Weiche nicht befahren werden. Daher ist eine Filterung notwendig, die schon in der Suche an einer Weiche entscheidet, ob ein Pfad logisch ist oder nicht. In diesem Fall würde die Fahrstraße folgendermaßen aussehen:
 
-\[A: Fahrt\]
+\[A: Fahrt!\]
 \[W1: rechts\]
-\[N1: Halt\]
-\[P1: Halt\]
+\[N1: Halt!\]
+\[P1: Halt!\]
 
 Die Software prüft nun, ob die benötigten Fahrwegelemente frei sind und stellt sie in die entsprechenden Positionen. Ist die Fahrstraße nicht möglich, weil eine Weiche zum Beispiel Teil einer anderen Fahrstraße ist, wird die Fahrstraße nicht gestellt und ein Fehler ausgegeben. Zum Stellen von Signalen und Weichen werden die Befehle an die jeweiligen Decoder geschickt.

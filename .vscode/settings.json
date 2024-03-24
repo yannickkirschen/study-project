@@ -1,55 +1,62 @@
 {
-    "cSpell.language": "en,de",
-    "cSpell.words": [
-        "Adjazenzliste",
-        "Besetztsein",
-        "bootsel",
-        "Flankenschutzweichen",
-        "Gleisoval",
-        "gpio",
-        "Nothaltauftrag",
-        "pico",
-        "Pico",
-        "Picos",
-        "Polwendeschaltern",
-        "Routensuche",
-        "Spurplanprinzip",
-        "struct",
-        "Verschlussplanprinzip"
-    ],
-    "editor.formatOnSave": true,
-    "editor.wordWrap": "on",
-    "editor.rulers": [
-        80,
-        120
-    ],
-    "latex-workshop.latex.autoBuild.cleanAndRetry.enabled": false,
-    "latex-workshop.latex.autoBuild.run": "never",
-    "latex-workshop.latexindent.args": [
-        "-c",
-        "%DIR%/build/",
-        "%TMPFILE%",
-        "-y=defaultIndent: '%INDENT%'"
-    ],
-    "[makefile]": {
-        "editor.insertSpaces": false,
-        "editor.detectIndentation": false
+  "cSpell.language": "en,de",
+  "cSpell.words": [
+    "Adjazenzliste",
+    "arrdel",
+    "arrlen",
+    "arrput",
+    "Besetztsein",
+    "bootsel",
+    "Flankenschutzweichen",
+    "Gleisoval",
+    "gpio",
+    "hmget",
+    "hmlen",
+    "hmput",
+    "Nothaltauftrag",
+    "pico",
+    "Pico",
+    "Picos",
+    "Polwendeschaltern",
+    "Routensuche",
+    "Spurplanprinzip",
+    "struct",
+    "typedef",
+    "Verschlussplanprinzip"
+  ],
+  "editor.formatOnSave": true,
+  "editor.wordWrap": "on",
+  "editor.rulers": [
+    80,
+    120
+  ],
+  "latex-workshop.latex.autoBuild.cleanAndRetry.enabled": false,
+  "latex-workshop.latex.autoBuild.run": "never",
+  "latex-workshop.latexindent.args": [
+    "-c",
+    "%DIR%/build/",
+    "%TMPFILE%",
+    "-y=defaultIndent: '%INDENT%'"
+  ],
+  "[makefile]": {
+    "editor.insertSpaces": false,
+    "editor.detectIndentation": false
+  },
+  "files.associations": {
+    "stdio.h": "c",
+    "error.h": "c"
+  },
+  "makefile.configurations": [
+    {
+      "name": "default",
+      "problemMatchers": [
+        "$gcc"
+      ],
+      "makeArgs": []
     },
-    "files.associations": {
-        "stdio.h": "c",
-        "error.h": "c"
-    },
-    "makefile.configurations": [
-        {
-            "name": "default",
-            "problemMatchers": [
-                "$gcc"
-            ],
-            "makeArgs": []
-        },
-    ],
-    "makefile.compileCommandsPath": ".vscode/compile_commands.json",
-    "makefile.alwaysPreConfigure": true,
-    "C_Cpp.errorSquiggles": "disabled",
-    "cmake.sourceDirectory": "/Users/yannick/Development/study-project/rail/lib/pico-sdk/src/host/hardware_divider",
+  ],
+  "makefile.compileCommandsPath": ".vscode/compile_commands.json",
+  "makefile.alwaysPreConfigure": true,
+  "C_Cpp.errorSquiggles": "disabled",
+  "cmake.sourceDirectory": "/Users/yannick/Development/study-project/rail/lib/pico-sdk/src/host/hardware_divider",
 }
