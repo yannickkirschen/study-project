@@ -4,9 +4,6 @@
 [submodule "mini-rail/lib/stb"]
 	path = mini-rail/lib/stb
 	url = https://github.com/nothings/stb.git
-[submodule "mini-rail/lib/pico-sdk"]
-	path = mini-rail/lib/pico-sdk
-	url = https://github.com/raspberrypi/pico-sdk.git
 [submodule "mini-rail/lib/can2040"]
 	path = mini-rail/lib/can2040
 	url = https://github.com/KevinOConnor/can2040.git
