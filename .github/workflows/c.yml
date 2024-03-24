@@ -24,6 +24,14 @@ jobs:
             git submodule add --force --name pico-sdk https://github.com/raspberrypi/pico-sdk.git mini-rail/lib/pico-sdk
           fi
 
+          if [ ! -d "mini-rail/lib/stb" ]; then
+            git submodule add --force --name stb https://github.com/nothings/stb.git mini-rail/lib/stb
+          fi
+
+          if [ ! -d "mini-rail/lib/can2040" ]; then
+            git submodule add --force --name can2040 https://github.com/KevinOConnor/can2040.git mini-rail/lib/can2040
+          fi
+
       - name: Install dependencies
         run: |
           sudo apt update
