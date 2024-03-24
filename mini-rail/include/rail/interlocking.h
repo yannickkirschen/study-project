@@ -112,7 +112,7 @@ int rail_interlocking_element_find(mini_rail_interlocking_t *interlocking, char 
 mini_rail_element_t *rail_interlocking_route_translate(mini_rail_interlocking_t *interlocking, int *path);
 mini_rail_element_t *rail_interlocking_route_find_and_set(mini_rail_interlocking_t *interlocking, int start_id, int end_id, error_t *error);
 
-void rail_interlocking_routes_clean_unlogical_routes(mini_rail_element_t **routes);
+void rail_interlocking_routes_clean_illogical_routes(mini_rail_element_t **routes);
 void rail_interlocking_routes_clean_opposite_end_signals(mini_rail_element_t **routes, error_t *error);
 mini_rail_element_t *rail_interlocking_route_choose_best(mini_rail_element_t **routes);
 void rail_interlocking_route_set(mini_rail_element_t *route, error_t *error);
