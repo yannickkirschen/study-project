@@ -8,12 +8,12 @@ Zur Entscheidungsfindung, welcher Sensor für die Realisierung des Achszählers 
 
 \subsubsection{IR-Lichtschranke}\label{text:Entwicklung-der-GFA:Achszähler:Sensor-Tests:Lichtschranke}
 
-Für die Tests der IR-Lichtschranke wurde eine Infrarot-LED und ein Fototransistor verwendet. Die LED wurde mit einem Vorwiderstand an eine Spannungsquelle angeschlossen und der Fototransistor an eine LED um die Funktion zu visualisieren. Die Schaltung ist in \autoref{fig:IR-Lichtschranke} dargestellt. Die LED leuchtet, solange der Fototransistor angestrahlt wird. Wird der Fototransistor durch ein Objekt verdeckt, leuchtet die LED nicht mehr. 
+Für die Tests der IR-Lichtschranke wurde eine Infrarot-LED und ein Fototransistor verwendet. Die LED wurde mit einem Vorwiderstand an eine Spannungsquelle angeschlossen und der Fototransistor an eine LED um die Funktion zu visualisieren. Die Schaltung ist in \autoref{abb:IR-Lichtschranke} dargestellt. Die LED leuchtet, solange der Fototransistor angestrahlt wird. Wird der Fototransistor durch ein Objekt verdeckt, leuchtet die LED nicht mehr.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{Assets/Images/4-Entwicklung-der-GFA/IR-Test_bb.png}
-    \caption{Testaufbau der IR-Lichtschranke}\label{fig:IR-Lichtschranke}
+    \caption{Testaufbau der IR-Lichtschranke}\label{abb:IR-Lichtschranke}
 \end{figure}
 
 Die Funktion der Lichtschranke wurde mit folgenden Szenarien jeweils bei indirekter, direkter und keiner Beleuchtung getestet:
@@ -33,24 +33,24 @@ Der Hall-Sensor konnte aus zeitlichen Gründen nicht getestet werden, da die Ent
 
 \subsubsection{Reed-Kontakt}\label{text:Entwicklung-der-GFA:Achszähler:Sensor-Tests:Reed-Kontakt}
 
-Für die Tests des Reed-Kontakts wurde ein solcher Kontakt, ein Magnet und eine LED verwendet. Der Reed-Kontakt, welcher als Schalter fungiert, schließt sich, wenn ein Magnet in die Nähe des Kontakts gebracht wird. Die Schaltung ist in \autoref{fig:Reed-Kontakt} dargestellt. Die LED leuchtet, solange der Reed-Kontakt geschlossen ist. Wird der Magnet entfernt, öffnet sich der Kontakt und die LED leuchtet nicht mehr.
+Für die Tests des Reed-Kontakts wurde ein solcher Kontakt, ein Magnet und eine LED verwendet. Der Reed-Kontakt, welcher als Schalter fungiert, schließt sich, wenn ein Magnet in die Nähe des Kontakts gebracht wird. Die Schaltung ist in \autoref{abb:Reed-Kontakt} dargestellt. Die LED leuchtet, solange der Reed-Kontakt geschlossen ist. Wird der Magnet entfernt, öffnet sich der Kontakt und die LED leuchtet nicht mehr.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{Assets/Images/4-Entwicklung-der-GFA/Reed-Test1_bb.png}
-    \caption{Testaufbau des Reed-Kontakts}\label{fig:Reed-Kontakt}
+    \caption{Testaufbau des Reed-Kontakts}\label{abb:Reed-Kontakt}
 \end{figure}
 
-Durch die Tests konnte festgestellt werden, dass der Reed-Kontakt zuverlässig funktioniert, solange der Magnet mit einem Abstand von maximal 1 cm an den Kontakt gebracht wird. Zusätzlich wurde der Sensor mit einem Magneten getestet, welcher wie in \autoref{fig:Magnet} dargestellt, in einem Klemmbaustein befestigt wurde. Der Klemmbaustein scheint die Funktion des Reed-Kontakts nicht zu beeinflussen.
+Durch die Tests konnte festgestellt werden, dass der Reed-Kontakt zuverlässig funktioniert, solange der Magnet mit einem Abstand von maximal 1 cm an den Kontakt gebracht wird. Zusätzlich wurde der Sensor mit einem Magneten getestet, welcher wie in \autoref{abb:Magnet} dargestellt, in einem Klemmbaustein befestigt wurde. Der Klemmbaustein scheint die Funktion des Reed-Kontakts nicht zu beeinflussen.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.35\textwidth]{Assets/Images/4-Entwicklung-der-GFA/Magnet.png}
-    \caption{Testaufbau des Reed-Kontakts mit Klemmbaustein}\label{fig:Magnet}
+    \caption{Testaufbau des Reed-Kontakts mit Klemmbaustein}\label{abb:Magnet}
 \end{figure}
 
 \subsection{Entscheidung}\label{text:Entwicklung-der-GFA:Achszähler:Entscheidung}
 
-Die Tests der Sensoren haben ergeben, dass sowohl die IR-Lichtschranke als auch der Reed-Kontakt zuverlässig funktionieren und für den Achszähler verwendet werden können. Der Hall-Sensor wurde aufgrund von Zeitmangel nicht getestet, ist jedoch ebenfalls für den Achszähler geeignet. Da die IR-Lichtschranke und der Reed-Kontakt bereits vorhanden sind, wurde entschieden, den Achszähler mit einem Reed-Kontakt zu realisieren. 
+Die Tests der Sensoren haben ergeben, dass sowohl die IR-Lichtschranke als auch der Reed-Kontakt zuverlässig funktionieren und für den Achszähler verwendet werden können. Der Hall-Sensor wurde aufgrund von Zeitmangel nicht getestet, ist jedoch ebenfalls für den Achszähler geeignet. Da die IR-Lichtschranke und der Reed-Kontakt bereits vorhanden sind, wurde entschieden, den Achszähler mit einem Reed-Kontakt zu realisieren.
 \newline
-Gründe für die Entscheidung des Reed-Kontakts sind die geringen Kosten und die einfache Handhabung und Wartbarkeit. Außerdem kommt eine Lösung welche mit Hilfe von Magnetfeldern funktioniert näher an die Realität heran. Die Reed-Kontakte können diskreter direkt in das Gleisbett verbaut werden und sind nicht so offensichtlich eintlang der Strecke sichtbar. 
+Gründe für die Entscheidung des Reed-Kontakts sind die geringen Kosten und die einfache Handhabung und Wartbarkeit. Außerdem kommt eine Lösung welche mit Hilfe von Magnetfeldern funktioniert näher an die Realität heran. Die Reed-Kontakte können diskreter direkt in das Gleisbett verbaut werden und sind nicht so offensichtlich eintlang der Strecke sichtbar.

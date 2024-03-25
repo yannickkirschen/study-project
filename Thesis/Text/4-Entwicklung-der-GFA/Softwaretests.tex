@@ -21,7 +21,7 @@ Das Testprogramm startet mit der Initialisierung der einzelnen Komponenten. Da d
 
 Das Testprogramm testet die folgenden Fälle:\footnote{Die Fälle, die mit einem * markiert sind, erwarten einen Fehler}
 \begin{itemize}
-    \item Ein Zug fährt normal über die Gerade 
+    \item Ein Zug fährt normal über die Gerade
     \item Ein Zug fährt rückwärts über die Gerade
     \item Ein Zug ändert unangekündigt die Richtung im Streckenabschnitt*
     \item Ein Zug fährt aus einem Streckenabschnitt, ohne in diesen eingefahren zu sein*
@@ -29,8 +29,8 @@ Das Testprogramm testet die folgenden Fälle:\footnote{Die Fälle, die mit einem
     \item Ein Zug fährt über die Gerade, wendet und fährt wieder zurück
 \end{itemize}
 
-Beim Testen der Geraden wird die Methode \texttt{rail\_vacancy\_assert} verwendet, um die Funktionalität der Gleisfreimeldeanlage zu überprüfen. Diese Methode erwartet als Parameter die Gleisfreimeldeanlage, ein Array von Kontaktpunkten und die Anzahl der Kontaktpunkte. Die Methode triggert die Kontaktpunkte in der Reihenfolge, in der sie im Array übergeben wurden und überprüft, dass kein Fehler auftritt.\newline 
-Die Methode \texttt{rail\_vacancy\_assert\_error} erwartet zusätzlich den Fehlercode, der erwartet wird. Diese Methode wird verwendet, um Fehler zu testen, die auftreten, wenn ein Zug unangekündigt die Richtung ändert oder aus einem Streckenabschnitt fährt, ohne in diesen eingefahren zu sein.\newline 
+Beim Testen der Geraden wird die Methode \texttt{rail\_vacancy\_assert} verwendet, um die Funktionalität der Gleisfreimeldeanlage zu überprüfen. Diese Methode erwartet als Parameter die Gleisfreimeldeanlage, ein Array von Kontaktpunkten und die Anzahl der Kontaktpunkte. Die Methode triggert die Kontaktpunkte in der Reihenfolge, in der sie im Array übergeben wurden und überprüft, dass kein Fehler auftritt.\newline
+Die Methode \texttt{rail\_vacancy\_assert\_error} erwartet zusätzlich den Fehlercode, der erwartet wird. Diese Methode wird verwendet, um Fehler zu testen, die auftreten, wenn ein Zug unangekündigt die Richtung ändert oder aus einem Streckenabschnitt fährt, ohne in diesen eingefahren zu sein.\newline
 Die Methode \texttt{rail\_vacancy\_assert\_with\_change} erhält zwei Arrays von Kontaktpunkten. In dieser Methode werden zunächst die Kontaktpunkte im ersten Array getriggert, dann wird die Funktion zum Ändern der Richtung aufgerufen und anschließend die Kontaktpunkte im zweiten Array getriggert. Diese Methode wird verwendet, um zu testen, ob die Gleisfreimeldeanlage korrekt reagiert, wenn ein Zug die Richtung ändert. Der Ausschnitt des Testprogramms ist in \autoref{lst:Testprogramm} dargestellt.
 
 \begin{lstlisting}[caption={Ausschnitt des Testprogramms für Geraden},label={lst:Testprogramm},language=C]
@@ -76,10 +76,10 @@ Die Tests für Weichen sind gleich aufgebaut wie die Tests für Geraden. Auch di
     \centering
     \includegraphics[width=0.7\textwidth]{Assets/Images/4-Entwicklung-der-GFA/Weiche.png}
     \caption{Gleisbild der simulierten Weiche}
-    \label{fig:Weiche}
+    \label{abb:Weiche}
 \end{figure}
 
-Alle Achszähler (d1-d3) gehören zu einer Weiche und sind wie in \autoref{fig:Weiche} dargestellt angeordnet. Da die Gleisfreimeldeanlage die Logik einer Fahrstraße nicht überprüft, kann diese Weiche in der Theorie von D1 nach D2, von D1 nach D3 und von D2 nach D3 gestellt werden. \footnote{Die Gegenseiten der Fahrstraßen können natürlich ebenso befahren werden (D2 nach D1, D3 nach D1, D3 nach D2).} Die Tests für die Weichen überprüfen, ob die Gleisfreimeldeanlage korrekt reagiert, wenn eine Weiche gestellt wird. Die Methode \texttt{rail\_vacancy\_assert} wird auch hier verwendet, um die Funktionalität der Gleisfreimeldeanlage zu überprüfen. Der Ausschnitt des Testprogramms ist in \autoref{lst:Testprogramm2} dargestellt.
+Alle Achszähler (d1-d3) gehören zu einer Weiche und sind wie in \autoref{abb:Weiche} dargestellt angeordnet. Da die Gleisfreimeldeanlage die Logik einer Fahrstraße nicht überprüft, kann diese Weiche in der Theorie von D1 nach D2, von D1 nach D3 und von D2 nach D3 gestellt werden. \footnote{Die Gegenseiten der Fahrstraßen können natürlich ebenso befahren werden (D2 nach D1, D3 nach D1, D3 nach D2).} Die Tests für die Weichen überprüfen, ob die Gleisfreimeldeanlage korrekt reagiert, wenn eine Weiche gestellt wird. Die Methode \texttt{rail\_vacancy\_assert} wird auch hier verwendet, um die Funktionalität der Gleisfreimeldeanlage zu überprüfen. Der Ausschnitt des Testprogramms ist in \autoref{lst:Testprogramm2} dargestellt.
 
 \begin{lstlisting}[caption={Ausschnitt des Testprogramms für Weichen},label={lst:Testprogramm2},language=C]
   rail_vacancy_assert(v, (rail_contact_point_t *[]){p1, p2, p3, p4}, 4);
