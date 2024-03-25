@@ -23,7 +23,8 @@ manually, read on.
 There is also the Pico SDK which is required to build the embedded code. You
 need to download the SDK by running `git submodule update --init`. Then set
 the environment variable `PICO_SDK_PATH` to the path of the SDK
-(`$(pwd)/rail/lib/pico-sdk`).
+(`$(pwd)/rail/lib/pico-sdk`) and `CAN2040_LIB_PATH` of the CAN library
+(`$(pwd)/rail/lib/can2040`).
 
 ### Building for the host computer
 
