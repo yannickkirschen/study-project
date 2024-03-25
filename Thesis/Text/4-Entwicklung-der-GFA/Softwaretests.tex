@@ -19,12 +19,12 @@ Das Testprogramm startet mit der Initialisierung der einzelnen Komponenten. Da d
     \item v ist die Gleisfreimeldeanlage
 \end{itemize}
 
-Das Testprogramm testet die folgenden Fälle:
+Das Testprogramm testet die folgenden Fälle:\footnote{Die Fälle, die mit einem * markiert sind, erwarten einen Fehler}
 \begin{itemize}
     \item Ein Zug fährt normal über die Gerade 
     \item Ein Zug fährt rückwärts über die Gerade
-    \item Ein Zug ändert unangekündigt die Richtung im Streckenabschnitt
-    \item Ein Zug fährt aus einem Streckenabschnitt, ohne in diesen eingefahren zu sein
+    \item Ein Zug ändert unangekündigt die Richtung im Streckenabschnitt*
+    \item Ein Zug fährt aus einem Streckenabschnitt, ohne in diesen eingefahren zu sein*
     \item Ein Zug mit mehreren Achsen fährt über die Gerade
     \item Ein Zug fährt über die Gerade, wendet und fährt wieder zurück
 \end{itemize}
@@ -62,4 +62,65 @@ Nach jedem Test wird der Zählerstand des Streckenabschnitts zurückgesetzt, um 
 
 \subsection{Tests für Weichen}\label{text:Entwicklung-der-GFA:Softwaretests:Tests-für-Weichen}
 
-Kommt noch.. Morgen oder Montag oder so..
+Die Tests für Weichen sind gleich aufgebaut wie die Tests für Geraden. Auch dieses Testprogramm beginnt mit der Initialisierung der einzelnen Komponenten. Für diese Tests sind die folgenden Definitionen wichtig:
+\begin{itemize}
+    \item p1, p2, p3, p4, p5, p6 sind Kontaktpunkte
+    \item d1 ist ein gerichteter Achszähler, der die Kontaktpunkte p1 und p2 verwendet
+    \item d2 ist ein gerichteter Achszähler, der die Kontaktpunkte p3 und p4 verwendet
+    \item d3 ist ein gerichteter Achszähler, der die Kontaktpunkte p5 und p6 verwendet
+    \item c ist ein Counter/ Streckenabschnitt
+    \item v ist die Gleisfreimeldeanlage
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Assets/Images/4-Entwicklung-der-GFA/Weiche.png}
+    \caption{Gleisbild der simulierten Weiche}
+    \label{fig:Weiche}
+\end{figure}
+
+Alle Achszähler (d1-d3) gehören zu einer Weiche und sind wie in \autoref{fig:Weiche} dargestellt angeordnet. Da die Gleisfreimeldeanlage die Logik einer Fahrstraße nicht überprüft, kann diese Weiche in der Theorie von D1 nach D2, von D1 nach D3 und von D2 nach D3 gestellt werden. \footnote{Die Gegenseiten der Fahrstraßen können natürlich ebenso befahren werden (D2 nach D1, D3 nach D1, D3 nach D2).} Die Tests für die Weichen überprüfen, ob die Gleisfreimeldeanlage korrekt reagiert, wenn eine Weiche gestellt wird. Die Methode \texttt{rail\_vacancy\_assert} wird auch hier verwendet, um die Funktionalität der Gleisfreimeldeanlage zu überprüfen. Der Ausschnitt des Testprogramms ist in \autoref{lst:Testprogramm2} dargestellt.
+
+\begin{lstlisting}[caption={Ausschnitt des Testprogramms für Weichen},label={lst:Testprogramm2},language=C]
+  rail_vacancy_assert(v, (rail_contact_point_t *[]){p1, p2, p3, p4}, 4);
+  rail_contact_counter_reset(c);
+
+  rail_vacancy_assert(v, (rail_contact_point_t *[]){p4, p3, p2, p1}, 4);
+  rail_contact_counter_reset(c);
+
+  rail_vacancy_assert(v, (rail_contact_point_t *[]){p1, p2, p1, p2, p3, p4, p3, p4}, 8);
+  rail_contact_counter_reset(c);
+
+  rail_vacancy_assert(v, (rail_contact_point_t *[]){p1, p2, p3, p4, p1, p2, p3, p4}, 8);
+  rail_contact_counter_reset(c);
+
+  rail_vacancy_assert_error(v, (rail_contact_point_t *[]){p4, p3, p4, p3, p2, p1, p5, p6}, 8, 4);
+  rail_contact_counter_reset(c);
+
+  rail_vacancy_assert_error(v, (rail_contact_point_t *[]){p1, p2, p6, p5, p3, p4, p3, p4}, 8, 3);
+  rail_contact_counter_reset(c);
+
+  rail_vacancy_assert(v, (rail_contact_point_t *[]){p1, p2, p5, p6}, 4);
+  rail_contact_counter_reset(c);
+
+  rail_vacancy_assert_error(v, (rail_contact_point_t *[]){p1, p2, p2, p1}, 4, 6);
+  rail_contact_counter_reset(c);
+
+  rail_vacancy_assert_error(v, (rail_contact_point_t *[]){p2, p1}, 2, 5);
+  rail_contact_counter_reset(c);
+\end{lstlisting}
+
+Das Programm testet die folgenden Fälle:\footnote{Die Fälle, die mit einem * markiert sind, erwarten einen Fehler}
+\begin{itemize}
+    \item Ein Zug fährt gerade über die Weiche (D1 nach D2)
+    \item Ein Zug fährt in die andere Richtung über die Weiche (D2 nach D1)
+    \item Ein Zug mit mehreren Achsen fährt gerade über die Weiche (D1 nach D2)
+    \item Zwei Achsen durchfahren die Weiche nacheinander
+    \item Zwei Achsen verlassen die Weiche an unterschiedlichen Stellen (D1 nach D2 \& D3)*
+    \item Zwei Achsen befahren die Weiche an unterschiedlichen Stellen (D3 \& D2 nach D1)*
+    \item Ein Zug fährt im abzweigenden Ast der Weiche (D1 nach D3)
+    \item Ein Zug wendet unangekündigt in der Weiche (D1 nach D1)*
+    \item Ein Zug verlässt die Weiche ohne in diese eingefahren zu sein (Ausfahrt D1)*
+\end{itemize}
+
+Auch hier wird nach jedem Test der Zählerstand des Streckenabschnitts zurückgesetzt, um den nächsten Test vorzubereiten. Die Methode\newline\texttt{rail\_contact\_counter\_reset} wurde bereits in \autoref{text:Entwicklung-der-GFA:Implementierung-der-Gleisfreimeldeanlage:Achszähler:Logik-und-Methoden-der-Achszähler} \nameref{text:Entwicklung-der-GFA:Implementierung-der-Gleisfreimeldeanlage:Achszähler:Logik-und-Methoden-der-Achszähler} vorgestellt.
