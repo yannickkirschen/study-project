@@ -1,1 +1,22 @@
 \chapter{Fazit und Ausblick}\label{text:Fazit-und-Ausblick}
+
+In dieser Arbeit wurde die Entwicklung einer Gleisfreimeldeanlage und eines Stellwerks für eine Modelleisenbahn am Beispiel einer Klemmbausteineisenbahn durchgeführt. Nachdem in \autoref{text:Grundlagen} \nameref{text:Grundlagen} die Grundlagen der Eisenbahn, die Funktionsweise realer Stellwerke, sowie technische Grundlagen von Modelleisenbahnen erläutert wurden, führte \autoref{text:Methodik} \nameref{text:Methodik} aus, wie diese Konzepte auf eine Modelleisenbahn übertragen werden können. Im Anschluss wurden in \autoref{text:Entwicklung-der-GFA} \nameref{text:Entwicklung-der-GFA} sowie in \autoref{text:Entwicklung-des-Stellwerks} \nameref{text:Entwicklung-des-Stellwerks} die Implementierung einer Gleisfreimeldeanlage und eines Stellwerks in der Programmiersprache C beschrieben. \autoref{text:Auswertung} \nameref{text:Auswertung} hat die Ergebnisse ausgewertet und ist insbesondere auf Komplikationen eingegangen, die das Projekt letzten Endes scheitern ließen.
+
+\section{Zusammenfassung}\label{text:Fazit-und-Ausblick:Zusammenfassung}
+
+Es wurde gezeigt, dass die einzelnen entwickelten Komponenten funktionsfähig sind, jedoch lediglich deren Integration nicht umgesetzt werden konnte. Hier wäre es durch weiteres Experimentieren möglich, eine Lösung zu finden.
+
+Bei einer erfolgreichen Umsetzung der Kommunikation zwischen den Komponenten lassen sich einige Folgeschritte ableiten:
+
+\begin{description}
+    \item[Decoder] Wie in \autoref{text:Entwicklung-des-Stellwerks:Signaldecoder} \nameref{text:Entwicklung-des-Stellwerks:Signaldecoder} und \autoref{text:Entwicklung-des-Stellwerks:Weichendecoder} \nameref{text:Entwicklung-des-Stellwerks:Weichendecoder} beschrieben, wurden die Decoder in dieser Arbeit nur konzeptuell behandelt. Für einen sinnvollen, realistischen Betrieb, müssen diese noch implementiert werden.
+    \item[Verkabelung] In die Signale müssen kleine LEDs eingebaut werden und die Weichenantriebe müssen wie in \autoref{text:Entwicklung-des-Stellwerks:Weichendecoder} \nameref{text:Entwicklung-des-Stellwerks:Weichendecoder} beschrieben gebaut werden. Der Komplexität sind hier keine Grenzen gesetzt; so ist zum Beispiel die Entwicklung eigener Platinen möglich, um die Verkabelung zu vereinfachen.
+    \item[Grafische Benutzeroberfläche] Zur Zeit kann das Stellwerk nur über die Kommandozeile bedient werden. Perspektivisch ist eine Bedienung analog zu einem realen \ac{ESTW} wünschenswert. Diese kann beispielsweise in C relativ einfach umgesetzt werden.
+    \item[Zugsteuerung] Diese Arbeit hatte lediglich die Entwicklung eines Stellwerks nach realem Vorbild zum Ziel. Bei einer Modelleisenbahn ist aber oft auch eine Steuerung der Züge wünschenswert. Hierbei gibt es verschiedene Möglichkeiten, beispielsweise die vollständig manuelle Steuerung, oder eine vollautomatische Steuerung mit einem Decoder in jedem Zug über Funk oder Infrarot.
+\end{description}
+
+\section{Reflexion}\label{text:Fazit-und-Ausblick:Reflexion}
+
+Diese Arbeit behandelte viele Aspekte, in denen die Autoren bisher wenig Erfahrung hatten. So stellte die Wahl der Programmiersprache C zu Beginn eine große Herausforderung dar. Aus moderneren Sprachen bekannte Wege mussten anders bestritten werden und nicht selten völlig anders gedacht werden. Die Nutzung von eingebetteten Systemen führte oft zu Problemen, da der Alltag in Vorlesungen oder auf der Arbeit sich fast ausschließlich auf klassische Computer-Architekturen beschränkt. Dies führte letztendlich auch dazu, dass die Kommunikation zwischen den Komponenten nicht mehr umgesetzt werden konnte.
+
+Die Autoren nehmen aus diesem Projekte vor allem viele wertvolle Kenntnisse in der C-Programmierung und der Arbeit mit eingebetteten Systemen mit. Das Projekt motiviert zur Weiterentwicklung des Systems.
