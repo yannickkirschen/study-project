@@ -75,11 +75,10 @@ Die Tests für Weichen sind gleich aufgebaut wie die Tests für Geraden. Auch di
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{Assets/Images/4-Entwicklung-der-GFA/Weiche.png}
-    \caption{Gleisbild der simulierten Weiche}
-    \label{abb:Weiche}
+    \caption{Gleisbild der simulierten Weiche}\label{abb:Weiche}
 \end{figure}
 
-Alle Achszähler (d1-d3) gehören zu einer Weiche und sind wie in \autoref{abb:Weiche} dargestellt angeordnet. Da die Gleisfreimeldeanlage die Logik einer Fahrstraße nicht überprüft, kann diese Weiche in der Theorie von D1 nach D2, von D1 nach D3 und von D2 nach D3 gestellt werden. \footnote{Die Gegenseiten der Fahrstraßen können natürlich ebenso befahren werden (D2 nach D1, D3 nach D1, D3 nach D2).} Die Tests für die Weichen überprüfen, ob die Gleisfreimeldeanlage korrekt reagiert, wenn eine Weiche gestellt wird. Die Methode \texttt{rail\_vacancy\_assert} wird auch hier verwendet, um die Funktionalität der Gleisfreimeldeanlage zu überprüfen. Der Ausschnitt des Testprogramms ist in \autoref{lst:Testprogramm2} dargestellt.
+Alle Achszähler (d1-d3) gehören zu einer Weiche und sind wie in \autoref{abb:Weiche} dargestellt angeordnet. Da die Gleisfreimeldeanlage die Logik einer Fahrstraße nicht überprüft, kann diese Weiche in der Theorie von D1 nach D2, von D1 nach D3 und von D2 nach D3 gestellt werden.\footnote{Die Gegenseiten der Fahrstraßen können natürlich ebenso befahren werden (D2 nach D1, D3 nach D1, D3 nach D2).} Die Tests für die Weichen überprüfen, ob die Gleisfreimeldeanlage korrekt reagiert, wenn eine Weiche gestellt wird. Die Methode \texttt{rail\_vacancy\_assert} wird auch hier verwendet, um die Funktionalität der Gleisfreimeldeanlage zu überprüfen. Der Ausschnitt des Testprogramms ist in \autoref{lst:Testprogramm2} dargestellt.
 
 \begin{lstlisting}[caption={Ausschnitt des Testprogramms für Weichen},label={lst:Testprogramm2},language=C]
   rail_vacancy_assert(v, (rail_contact_point_t *[]){p1, p2, p3, p4}, 4);

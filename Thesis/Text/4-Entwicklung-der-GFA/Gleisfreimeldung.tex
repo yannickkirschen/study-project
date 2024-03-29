@@ -1,6 +1,6 @@
 \section{Implementierung der Gleisfreimeldeanlage}\label{text:Entwicklung-der-GFA:Implementierung-der-Gleisfreimeldeanlage}
 
-In diesem Abschnitt wird die Implementierung der Gleisfreimeldeanlage mit Schwerpunkt auf den Achszählern beschrieben. Des Weiteren werden alle Tests - sowohl die Software- als auch die Hardware-Tests - beschrieben, die durchgeführt wurden, um die Funktionalität der Anlage zu gewährleisten. Hierbei ist zu beachten, dass die Implementierung der Gleisfreimeldeanlage in keinster Weise die Logik einer Route über mehrere Streckenabschnitte hinweg überprüft. Diese Überprüfung findet in der Stellwerkstechnik statt und wird in \autoref{text:Entwicklung-des-Stellwerks:Fahrstrassenlogik} \nameref{text:Entwicklung-des-Stellwerks:Fahrstrassenlogik} beschrieben.
+In diesem Abschnitt wird die Implementierung der Gleisfreimeldeanlage mit Schwerpunkt auf den Achszählern beschrieben. Des Weiteren werden alle Tests --- sowohl die Software- als auch die Hardware-Tests --- beschrieben, die durchgeführt wurden, um die Funktionalität der Anlage zu gewährleisten. Hierbei ist zu beachten, dass die Implementierung der Gleisfreimeldeanlage in keinster Weise die Logik einer Route über mehrere Streckenabschnitte hinweg überprüft. Diese Überprüfung findet in der Stellwerkstechnik statt und wird in \autoref{text:Entwicklung-des-Stellwerks:Fahrstrassenlogik} \nameref{text:Entwicklung-des-Stellwerks:Fahrstrassenlogik} beschrieben.
 
 \subsection{Achszähler}\label{text:Entwicklung-der-GFA:Implementierung-der-Gleisfreimeldeanlage:Achszähler}
 
@@ -8,12 +8,12 @@ Die (gerichteten) Achszähler sind der Kern der Gleisfreimeldeanlage. Jeder geri
 
 \subsubsection{Definitionen der Datenstrukturen}\label{text:Entwicklung-der-GFA:Implementierung-der-Gleisfreimeldeanlage:Achszähler:Definitionen-der-Datenstrukturen}
 
-Die Achszähler sind in der Software als Structs definiert. Ein Struct ist eine Datenstruktur, die mehrere Variablen unterschiedlichen Typs zusammenfasst. In diesem Fall werden die Achszähler als Structs definiert, um die Werte der Achszähler zu speichern und zu verarbeiten. Die Definition der Structs ist in \autoref{code:Entwicklung-der-GFA:Implementierung-der-Gleisfreimeldeanlage:Achszaehler:Definitionen-der-Datenstrukturen} dargestellt. Ein Kontaktpunkt wird durch das Struct \texttt{rail\_contact\_point\_t} repräsentiert und hat nur eine ID, die den Kontaktpunkt eindeutig identifiziert. Ein gerichteter Achszähler wird durch das Struct \texttt{rail\_contact\_point\_directed\_t} repräsentiert und hat eine ID, zwei Kontaktpunkte (einen inneren und einen äußeren) und zwei boolesche Variablen, die anzeigen, ob ein Zug in den Achszähler einfährt oder ihn verlässt.
+Die Achszähler sind in der Software als Datenstrukturen definiert, um die Werte der Achszähler zu speichern und zu verarbeiten. Die Definition der Datenstrukturen ist in \autoref{code:Entwicklung-der-GFA:Implementierung-der-Gleisfreimeldeanlage:Achszaehler:Definitionen-der-Datenstrukturen} dargestellt. Ein Kontaktpunkt wird durch das Struct \texttt{rail\_contact\_point\_t} repräsentiert und hat nur eine ID, die den Kontaktpunkt eindeutig identifiziert. Ein gerichteter Achszähler wird durch das Struct \texttt{rail\_contact\_point\_directed\_t} repräsentiert und hat eine ID, zwei Kontaktpunkte (einen inneren und einen äußeren) und zwei boolesche Variablen, die anzeigen, ob ein Zug in den Achszähler einfährt oder ihn verlässt.
 \newline
 Wenn ein Achszähler von zwei Streckenabschnitten verwendet wird oder die Strecke in beide Richtungen befahren werden kann, werden zwei gerichtete Achszähler verwendet, welche sich die Kontaktpunkte teilen. Somit kommt es nicht zu Konflikten mit den Kontaktpunkten \texttt{inner} und \texttt{outer}.
 
 \begin{margin}
-    \begin{lstlisting}[language=C, caption={Definition der Structs}, label={code:Entwicklung-der-GFA:Implementierung-der-Gleisfreimeldeanlage:Achszaehler:Definitionen-der-Structs}]
+    \begin{lstlisting}[language=C, caption={Definition der Datenstrukturen}, label={code:Entwicklung-der-GFA:Implementierung-der-Gleisfreimeldeanlage:Achszaehler:Definitionen-der-Structs}]
 typedef struct {
     int id;
 } rail_contact_point_t;
@@ -30,10 +30,10 @@ typedef struct {
     \end{lstlisting}
 \end{margin}
 
-Ein Streckenabschnitt wird in der Software als Counter (Zähler) repräsentiert. Ein Counter hat eine ID, einen Zählerstand (count), ein Array von gerichteten Achszählern, samt ihrer Anzahl und ein weiteres Array von gerichteten Achszählern um festzustellen, ob ein Zug den Streckenabschnitt verlässt und alle Achsen über den gleichen Achszähler fahren. Verlassen nicht alle Achsen den Streckenabschnitt über den gleichen Achszähler, würde dies bedeuten, dass der vordere Teil des Zuges bei einer Weiche in eine andere Richtung fährt als der hintere Teil, was zur direkten Entgleisung führen kann. Die Definition des Structs \texttt{rail\_counter\_t} ist in \autoref{lst:Structs2} dargestellt.
+Ein Streckenabschnitt wird in der Software als Counter (Zähler) repräsentiert. Ein Counter hat eine ID, einen Zählerstand (count), ein Array von gerichteten Achszählern, samt ihrer Anzahl und ein weiteres Array von gerichteten Achszählern um festzustellen, ob ein Zug den Streckenabschnitt verlässt und alle Achsen über den gleichen Achszähler fahren. Verlassen nicht alle Achsen den Streckenabschnitt über den gleichen Achszähler, würde dies bedeuten, dass der vordere Teil des Zuges bei einer Weiche in eine andere Richtung fährt als der hintere Teil, was zur direkten Entgleisung führen kann. Die Definition der Datenstruktur \texttt{rail\_counter\_t} ist in \autoref{lst:Structs2} dargestellt.
 
 \begin{margin}
-    \begin{lstlisting}[caption={Definition des Structs rail\_counter\_t},label={lst:Structs2},language=C]
+    \begin{lstlisting}[caption={Definition der Datenstruktur rail\_counter\_t},label={lst:Structs2},language=C]
 typedef struct {
     int id;
     int count;
@@ -47,10 +47,10 @@ typedef struct {
     \end{lstlisting}
 \end{margin}
 
-Mehrere Counter werden in der Software als Gleisfreimeldeanlage (vacancy-detection) zusammengefasst. Eine Gleisfreimeldeanlage hat eine ID und ein Array von Countern, samt ihrer Anzahl. Ein Objekt vom Typ \texttt{rail\_vacancy\_t} wird in der Software verwendet, um die Gleisfreimeldeanlage zu repräsentieren. Hierbei wird dieses Objekt - oder Pointer auf dieses Objekt - an die Funktionen übergeben, um auf die Gleisfreimeldeanlage zuzugreifen. Die Definition des Structs \texttt{rail\_vacancy\_t} ist in \autoref{lst:Structs3} dargestellt.
+Mehrere Counter werden in der Software als Gleisfreimeldeanlage (vacancy-detection) zusammengefasst. Eine Gleisfreimeldeanlage hat eine ID und ein Array von Zählern, samt ihrer Anzahl. Ein Objekt vom Typ \texttt{rail\_vacancy\_t} wird in der Software verwendet, um die Gleisfreimeldeanlage zu repräsentieren. Hierbei wird dieses Objekt --- oder Pointer auf dieses Objekt --- an die Funktionen übergeben, um auf die Gleisfreimeldeanlage zuzugreifen. Die Definition der Datenstruktur \texttt{rail\_vacancy\_t} ist in \autoref{lst:Structs3} dargestellt.
 
 \begin{margin}
-    \begin{lstlisting}[caption={Definition des Structs rail\_vacancy\_t},label={lst:Structs3},language=C]
+    \begin{lstlisting}[caption={Definition der Datenstruktur rail\_vacancy\_t},label={lst:Structs3},language=C]
 typedef struct {
     rail_contact_counter_t **contact_counters;
     int number_contact_counters;
@@ -60,7 +60,7 @@ typedef struct {
 
 \subsubsection{Logik und Methoden}\label{text:Entwicklung-der-GFA:Implementierung-der-Gleisfreimeldeanlage:Achszähler:Logik-und-Methoden-der-Achszähler}
 
-Für alle in \autoref{text:Entwicklung-der-GFA:Implementierung-der-Gleisfreimeldeanlage:Achszähler:Definitionen-der-Datenstrukturen} \nameref{text:Entwicklung-der-GFA:Implementierung-der-Gleisfreimeldeanlage:Achszähler:Definitionen-der-Datenstrukturen} definierten Structs gibt es Methoden zur Initialisierung, diese sind trivial implementiert und werden hier nicht weiter erläutert. Die erste interessantere Methode ist \texttt{rail\_contact\_counter\_change\_direction}, welche die Richtung eines gerichteten Achszählers ändert. Normalerweise darf ein Zug nur in eine Richtung fahren und nicht in einem Streckenabschnitt wenden. Diese Methode wird genau dann aufgerufen, wenn ein Zug in den Streckenabschnitt einfährt, wendet, und wieder über den selben Achszähler den Streckenabschnitt verlässt. Die Methode \texttt{rail\_contact\_counter\_change\_direction} ist in \autoref{lst:Methoden} dargestellt. Hierbei werden zuerst mehrere Checks durchgeführt um die folgenden Fehler zu vermeiden:
+Für alle in \autoref{text:Entwicklung-der-GFA:Implementierung-der-Gleisfreimeldeanlage:Achszähler:Definitionen-der-Datenstrukturen} \nameref{text:Entwicklung-der-GFA:Implementierung-der-Gleisfreimeldeanlage:Achszähler:Definitionen-der-Datenstrukturen} definierten Datenstrukturen gibt es Methoden zur Initialisierung, diese sind trivial implementiert und werden hier nicht weiter erläutert. Die erste interessantere Methode ist \texttt{rail\_contact\_counter\_change\_direction}, welche die Richtung eines gerichteten Achszählers ändert. Normalerweise darf ein Zug nur in eine Richtung fahren und nicht in einem Streckenabschnitt wenden. Diese Methode wird genau dann aufgerufen, wenn ein Zug in den Streckenabschnitt einfährt, wendet, und wieder über den selben Achszähler den Streckenabschnitt verlässt. Die Methode \texttt{rail\_contact\_counter\_change\_direction} ist in \autoref{lst:Methoden} dargestellt. Hierbei werden zuerst mehrere Checks durchgeführt um die folgenden Fehler zu vermeiden:
 \begin{itemize}
     \item Es ist kein Zug im Streckenabschnitt
     \item Es ist nicht klar in welche Richtung der Zug fährt
