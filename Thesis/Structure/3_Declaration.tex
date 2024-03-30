@@ -1,6 +1,7 @@
 %!TEX root = ../Thesis.tex
 
 \thispagestyle{empty}
+\newcommand\wildcard[2][7cm]{\vspace{2cm}\parbox{#1}{\hrulefill\par#2}}
 
 \section*{\labelDeclaration}
 \vspace*{2em}
@@ -12,5 +13,9 @@ Wir versichern hiermit, dass wir unsere Studienarbeit mit dem Titel „\thesisTi
 \companyLocation, \today
 \vspace{4em}
 
-\rule{6cm}{0.4pt}\\
-\name
+\begingroup
+    \wildcard{\nameOne}
+    \hspace*{\fill}
+    \wildcard{\nameTwo}
+    \par
+\endgroup
